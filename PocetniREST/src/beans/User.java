@@ -14,6 +14,36 @@ public class User {
 	public User() {
 		
 	}
+	
+	
+	public User(String username, String password, String name, String surname, Gender gender, Role role) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.name = name;
+		this.surname = surname;
+		this.gender = gender;
+		this.role = role;
+	}
+	public User(String username, String password, String name, String surname, Role role) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.name = name;
+		this.surname = surname;
+			this.role = role;
+	}
+	public User(String username, String password, String name, String surname, Gender gender) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.name = name;
+		this.surname = surname;
+		this.gender = gender;
+		this.role = Role.ADMIN;
+	}
+
+
 	public String getUsername() {
 		return username;
 	}
@@ -49,6 +79,13 @@ public class User {
 	}
 	public void setRole(Role role) {
 		this.role = role;
+	}
+	
+	public Gender getMaleGender() {
+		return gender.MALE;
+	}
+	public Gender getFemaleGender() {
+		return gender.FEMALE;
 	}
 	
 }

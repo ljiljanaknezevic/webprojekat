@@ -1,11 +1,30 @@
-<!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<script src="registration.js"></script>
 </head>
 <body>
-<p> REGISTRACIJA </p>
-
+    <h1 style="color:pink">Registration</h1>
+    <form id="registerNew">
+		<table>
+			<tr><td>Username</td><td><input type="text" id="username"></td></tr>
+			<tr><td>Name</td><td><input type="text" id="name"></td></tr>
+			<tr><td>Surname</td><td><input type="text" id="surname"></td></tr>
+			<tr><td>Gender</td>
+				<td><select name="gender" id="gender">
+					  <option value="male" selected>Male</option>
+					  <option value="female">Female</option>
+				</td>
+			</tr>
+			<tr><td>Password</td><td><input type="password" id="pass"></td></tr>
+			<tr><td>Confirm password</td><td><input type="password" id="passControl"></td></tr>
+		
+			<tr><td>
+			<input type="submit" id="register" value="register"></td></tr>
+		</table>
+		<p id="error" hidden="true"></p>
+		<p id="success" hidden="true"></p>
+	</form>
 </body>
 </html>
