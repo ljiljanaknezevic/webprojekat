@@ -16,7 +16,7 @@ $(document).ready(function() {
 				username:username,
 				name:name,
 				surname:surname,
-			//	gender:gender,
+				gender:gender,
 				password:password
 			}),
 			contentType:"application/json",

@@ -25,14 +25,7 @@ public class User {
 		this.gender = gender;
 		this.role = role;
 	}
-	public User(String username, String password, String name, String surname, Role role) {
-		super();
-		this.username = username;
-		this.password = password;
-		this.name = name;
-		this.surname = surname;
-			this.role = role;
-	}
+
 	public User(String username, String password, String name, String surname, Gender gender) {
 		super();
 		this.username = username;
