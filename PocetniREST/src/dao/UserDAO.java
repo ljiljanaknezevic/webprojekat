@@ -1,8 +1,11 @@
 package dao;
 
+
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -46,6 +49,30 @@ public class UserDAO {
 		return null;
 	}
 	
+	public void saveUser(User u,String contextPath)
+	{
+		try {
+			
+		File file=new File(contextPath+"/users.json");
+		ObjectMapper mapper=new ObjectMapper();
+		mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+		mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+		ArrayList<User> userList=new ArrayList<>();
+		
+		User[] pom=mapper.readValue(file, User[].class);
+		for(User g:pom) {
+			userList.add(g);
+		}
+		
+		
+		userList.add(u);
+		mapper.writeValue(new File(contextPath+"/users.json"), userList);
+		User r=users.put(u.getUsername(), u);
+		
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
 	private void loadUsers(String contextPath) {
 		
 		try
@@ -97,5 +124,12 @@ public class UserDAO {
 		}
 		return message ;
 	}
+	
+	public boolean find(String username) {
+		if (!users.containsKey(username)) {
+			return false;
+		}
 		
+		return true;
+	}
 }

@@ -49,9 +49,9 @@ public class UserService {
 		}
 	}
 
-		
+//REGISTRACIJA BEZ SERIJALIZACIJE		
 	
-	@POST
+	/*@POST
 	@Path("/registration")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -66,7 +66,7 @@ public class UserService {
 		users.add(user);
 		ctx.setAttribute("users", users);
 		return Response.status(200).build();
-	}
+	}*/
 	
 	@POST
 	@Path("/login")
@@ -120,20 +120,23 @@ public class UserService {
 	
 //REGISTRACIJA PREKO DAO	
 	
-/*	@POST
-	@Path("?registration")
+	@POST
+	@Path("/registration")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response registration(User user) {
+	public Response registration(User user, @Context HttpServletRequest reques) {
 		UserDAO dao=(UserDAO) ctx.getAttribute("userDAO");
-		User newUser=dao.registerNewUser(user);
-		if(newUser==null) {
+		
+		boolean loggedUser=dao.find(user.getUsername());
+		
+		if(loggedUser==true) {
+			//return Response.status(400).build();
 			return Response.status(400).entity("Username alerady exists").build();
-			
 		}
-		else {
-			return Response.status(200).build();
-		}
-	}*/
+		
+		String contextPath=ctx.getRealPath("");
+		dao.saveUser(user,contextPath);
+		return Response.status(200).build();
+	}
 	
 }
