@@ -125,6 +125,9 @@ public class UserService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response registration(User user, @Context HttpServletRequest reques) {
+//PRI USPESNOJ REGISTRACIJI SE PREBACUJE NA SLEDECU STRANICU I TREBA ZAPOCETI SESIJU NOVU?
+		user.setRole(Role.GUEST);
+		
 		UserDAO dao=(UserDAO) ctx.getAttribute("userDAO");
 		
 		boolean loggedUser=dao.find(user.getUsername());
@@ -141,8 +144,11 @@ public class UserService {
 		if (user.getPassword().trim().isEmpty()) {
 			return Response.status(400).entity("Enter password!").build();
 		}
+	/*	if (user.getPassword().trim().) {
+			return Response.status(400).entity("Passwords don't match!").build();
+		}*/
 		if(loggedUser==true) {
-			//return Response.status(400).build();
+			
 			return Response.status(400).entity("Username alerady exists").build();
 		}
 		

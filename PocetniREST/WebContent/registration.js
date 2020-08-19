@@ -12,9 +12,16 @@ $(document).ready(function() {
 			gender=0;
 		else
 			gender=1;		
-				
+		
 		let password=$('#password').val()
-		let passwordControl=$('#passControl').val()
+		let passwordControl=$('#passControl').val()	
+		
+		 if(password != passwordControl){
+            alert('the passwords didn\'t match!');
+			//password=null;
+			//KAKO OZNACITI DA JE POGRESNO
+        }
+		
 		$.ajax({
 			type:"POST",
 			url:"ProjectRents/registration",
@@ -26,12 +33,12 @@ $(document).ready(function() {
 				gender:gender
 			}),
 			contentType:"application/json",
-			success:function(data){
-				
+			success:function(data){	
 				console.log('proslo ');
 				alert('uspesno registrovani');
 			},
 			error:function(message){
+				
 				switch(message.responseText){
 					case('Enter name!'):
 						$('#errorName').text(message.responseText)
@@ -46,6 +53,14 @@ $(document).ready(function() {
 						$('#errorSurname').show()
 						break;
 					case('Enter password!'):
+						$('#errorPassword').text(message.responseText)
+						$('#errorPassword').show()
+						break;
+					case('Username alerady exists'):
+						$('#errorUsername').text(message.responseText)
+						$('#errorUsername').show()
+						break;
+					case('Passwords don\'t match!'):
 						$('#errorPassword').text(message.responseText)
 						$('#errorPassword').show()
 						break;
