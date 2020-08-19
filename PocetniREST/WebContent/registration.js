@@ -29,7 +29,7 @@ $(document).ready(function() {
 			success:function(data){
 				
 				console.log('proslo ');
-				alert('uspesno registrovano');
+				alert('uspesno registrovani');
 			},
 			error:function(message){
 				$('#error').text(message);
