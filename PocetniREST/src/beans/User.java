@@ -74,11 +74,6 @@ public class User {
 		this.role = role;
 	}
 	
-	public Gender getMaleGender() {
-		return gender.MALE;
-	}
-	public Gender getFemaleGender() {
-		return gender.FEMALE;
-	}
+
 	
 }

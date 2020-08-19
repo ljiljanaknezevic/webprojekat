@@ -6,12 +6,18 @@ $(document).ready(function() {
 		let username=$('#username').val()
 		let name=$('#name').val()
 		let surname=$('#surname').val()
-		let gender=$('#gender').val()
+		let gen=$('#gender').val()
+		let gender
+		if(gen=='male')
+			gender=0;
+		else
+			gender=1;		
+				
 		let password=$('#pass').val()
 		let passwordControl=$('#passControl').val()
 		$.ajax({
 			type:"POST",
-			url:"ProjectRents/users",
+			url:"ProjectRents/registration",
 			data:JSON.stringify({
 				username:username,
 				name:name,
@@ -22,8 +28,8 @@ $(document).ready(function() {
 			contentType:"application/json",
 			success:function(data){
 				
-				console.log(data.response)
-				window.location.href='homepage.html';
+				console.log('proslo ');
+				alert('uspesno registrovano');
 			},
 			error:function(message){
 				$('#error').text(message);
