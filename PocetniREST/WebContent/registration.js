@@ -13,7 +13,7 @@ $(document).ready(function() {
 		else
 			gender=1;		
 				
-		let password=$('#pass').val()
+		let password=$('#password').val()
 		let passwordControl=$('#passControl').val()
 		$.ajax({
 			type:"POST",
