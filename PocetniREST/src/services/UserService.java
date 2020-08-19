@@ -76,13 +76,13 @@ public class UserService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response login(User user, @Context HttpServletRequest request) {
 		HttpSession session = request.getSession();
-		//UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
-		ArrayList<User> users = (ArrayList<User>) ctx.getAttribute("users");
 		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
 		String message = userDao.findUser(user.getUsername(), user.getPassword());
 		
-		if(message.equals("bas taj postoji u bazi"))
+		if(message.equals("bas taj postoji u bazi")) {
+			request.getSession().setAttribute("user", user);
 			return Response.status(200).build();
+		}
 		else if(message.equals("bad password"))
 			return Response.status(Status.BAD_REQUEST).entity("The password you entered is incorrect. Try again, or choose another login option.").build();
 		else if (message.equals("doesnt exists username"))

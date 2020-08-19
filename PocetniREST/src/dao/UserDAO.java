@@ -89,28 +89,13 @@ public class UserDAO {
 	}
 	public String findUser(String username, String password) {
 		String message = "bas taj postoji u bazi";
-		/*for(User u :users) {
-			if(u.getUsername().equals(username) && u.getPassword().equals(password)) 
-			{
-				 message = "bas taj postoji u bazi";
-			}else if(u.getUsername().equals(username)) 
-			{
-				message = "bad password";
-			}else
-			{
-				message = "doesnt exists username";
-			}
-		
-		}*/
 		if(!users.containsKey(username)) {
 			message = "doesnt exists username";
 		}	
-		User user = users.get(username);
-		if (!user.getPassword().equals(password)) {
+		else if (!users.get(username).getPassword().equals(password)) {
 			return message = "bad password";
 		}
 		return message ;
-		
 	}
 		
 }
