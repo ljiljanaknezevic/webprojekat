@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	$('form#registerNew').submit(function(event){
+	$('form#registration').submit(function(event){
 		event.preventDefault()
 		console.log('saljemo rest')
 		let username=$('#username').val()
