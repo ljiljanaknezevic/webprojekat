@@ -34,7 +34,9 @@ public class UserService {
 	
 	@PostConstruct
 	public void init() {
-		if(ctx.getAttribute("userDAO") == null) {
+	/*without seriazible
+	 * 
+	 * 	if(ctx.getAttribute("users") == null) {
 	    	String contextPath = ctx.getRealPath("");
 	    	ArrayList<User> users = new ArrayList<User>();
 	    	User u1 = new User("123XD", "Marko", "markovic","pre",Gender.FEMALE);
@@ -42,11 +44,13 @@ public class UserService {
 	    	users.add(u1);
 	    
 			ctx.setAttribute("users", users);
+		}*/
+		if(ctx.getAttribute("userDAO") == null) {
+			String contextPath = ctx.getRealPath("");
+			ctx.setAttribute("userDAO", new UserDAO(contextPath));
 		}
 	}
-	// @GET /users --> vrati sve usere
-		// @POST /users --> kreira novog
-		// users/{bos} @GET --> vraca 1
+
 		
 	
 	/*@POST
@@ -72,13 +76,18 @@ public class UserService {
 		HttpSession session = request.getSession();
 		//UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
 		ArrayList<User> users = (ArrayList<User>) ctx.getAttribute("users");
+		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
+		String message = userDao.findUser(user.getUsername(), user.getPassword());
 		
-		for(User u:users) {
-			if(u.getUsername().equals(user.getUsername())) {
-				return Response.status(Status.BAD_REQUEST).entity("user with given insurance number exists").build();
-				
-			}
-		}
+		if(message.equals("bas taj postoji u bazi"))
+			return Response.status(200).build();
+		else if(message.equals("bad password"))
+			return Response.status(Status.BAD_REQUEST).entity("The password you entered is incorrect. Try again, or choose another login option.").build();
+		else if (message.equals("doesnt exists username"))
+			return Response.status(Status.BAD_REQUEST).entity("There isn’t an account with this username. Please try another username.").build();
+		else 
+			return Response.status(Status.BAD_REQUEST).entity("bad requst").build();
+		
 		/*if(session.getAttribute("user") != null) {
 			return Response.status(400).entity("Already logged in.").build();
 		}
@@ -98,7 +107,6 @@ public class UserService {
 		}else
 			return Response.status(400).entity("Username doesnt exists.").build();
 		*/
-		return Response.status(200).build();
 }
 	/*
 	@GET

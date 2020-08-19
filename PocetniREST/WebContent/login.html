@@ -121,6 +121,10 @@ body {
   color: #f4511e;
   font-size: 15px;
 }
+.error-message {
+  color: #f4511e;
+  font-size: 15px;
+}
 footer {
       background-color: #47add5;;
       color: white;
@@ -165,13 +169,13 @@ footer {
 	<div class="container-fluid text-center">    
       <form class="form-signin" id="login">       
       <h2 class="form-signin-heading">Welcome</h2>
-      <input type="text" class="form-control" name="username" placeholder="Username" />
-      <input type="password" class="form-control" name="password" placeholder="Password" />      
+      <input type="text" class="form-control" id="username" placeholder="Username" required  oninvalid="this.setCustomValidity('Username is required.')" oninput="setCustomValidity('')"/>
+      <input type="password" class="form-control" id="password" placeholder="Password" required oninvalid="this.setCustomValidity('Password is required.')" oninput="setCustomValidity('')"/>      
       <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button> 
        <p>Nemate nalog? <a href="./registrationPage.html">Registrujte se</a></p> 
     </form>
     
-    <p id="error"></p>
+    <p class= "error-message" id="error"></p>
 	<p id="success"></p>
 
     </div>

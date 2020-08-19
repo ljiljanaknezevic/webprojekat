@@ -14,7 +14,6 @@ import beans.enums.Gender;
  * Korisnici se nalaze u fajlu WebContent/users.txt u obliku: <br>
  * firstName;lastName;email;username;password</p>
  * <p><b>NAPOMENA:</b> Lozinke se u praksi <b>nikada</b> ne snimaju u èistu tekstualnom obliku.</p>
-
  *
  */
 
@@ -27,6 +26,7 @@ public class UserDAO {
 	/***
 	 * @param contextPath Putanja do aplikacije u Tomcatu. Može se pristupiti samo iz servleta.
 	 */
+
 	public UserDAO(String contextPath) {
 		loadUsers(contextPath);
 	}
@@ -64,8 +64,8 @@ public class UserDAO {
 			objectMapper.writeValue(new File(contextPath + "/users.json"), proba);
 			
 			
-			String json = "{  \"username\" : \"jov\", \"password\" : \"jov\", \"ime\" : \"Petar\", \"prezime\" : \"Petrovic\", \"pol\" : MALE}";
-			objectMapper.writeValue(file,"{ \"username\" : \"pera\", \"password\" : \"pera\", \"ime\" : \"Petar\", \"prezime\" : \"Petrovic\", \"pol\" : FEMALE");
+			//String json = "{  \"username\" : \"jov\", \"password\" : \"jov\", \"ime\" : \"Petar\", \"prezime\" : \"Petrovic\", \"pol\" : MALE}";
+		//	objectMapper.writeValue(file,"{ \"username\" : \"pera\", \"password\" : \"pera\", \"ime\" : \"Petar\", \"prezime\" : \"Petrovic\", \"pol\" : \"FEMALE\"}");
 			User[] car = objectMapper.readValue(file, User[].class);
 			//List<User> car = objectMapper.readValue(json, objectMapper.getTypeFactory().constructCollectionType(List.class, User.class)); 
 			System.out.println("load User: "+car);
@@ -86,6 +86,31 @@ public class UserDAO {
 		} finally {
 			
 		}
-}
+	}
+	public String findUser(String username, String password) {
+		String message = "bas taj postoji u bazi";
+		/*for(User u :users) {
+			if(u.getUsername().equals(username) && u.getPassword().equals(password)) 
+			{
+				 message = "bas taj postoji u bazi";
+			}else if(u.getUsername().equals(username)) 
+			{
+				message = "bad password";
+			}else
+			{
+				message = "doesnt exists username";
+			}
+		
+		}*/
+		if(!users.containsKey(username)) {
+			message = "doesnt exists username";
+		}	
+		User user = users.get(username);
+		if (!user.getPassword().equals(password)) {
+			return message = "bad password";
+		}
+		return message ;
+		
+	}
 		
 }
