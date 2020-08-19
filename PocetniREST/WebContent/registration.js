@@ -20,10 +20,10 @@ $(document).ready(function() {
 			url:"ProjectRents/registration",
 			data:JSON.stringify({
 				username:username,
+				password:password,
 				name:name,
 				surname:surname,
-				gender:gender,
-				password:password
+				gender:gender
 			}),
 			contentType:"application/json",
 			success:function(data){
