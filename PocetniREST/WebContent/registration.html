@@ -166,18 +166,23 @@ footer {
       <form class="form-signin" id="registration">  
        <h2 class="form-signin-heading">Registration</h2>
       <input type="text" class="form-control" id="username" placeholder="Username" />
+       <p class= "error-message" id="errorUsername"></p>
        <input type="text" class="form-control" id="name" placeholder="Name" />
+      <p class= "error-message" id="errorName"></p>
       <input type="text" class="form-control" id="surname" placeholder="Surname" />      
+       <p class= "error-message" id="errorSurname"></p>
       <select name="gender" id="gender" class="form-control" >
       	<option value="male" selected>Male</option>
       	<option value="female">Female</option>
       </select>
       <input type="password" class="form-control" id="password" placeholder="Password" />    
+       <p class= "error-message" id="errorPassword"></p>
      <input type="password" class="form-control" id="passControl" placeholder="Confirm password" />      
+      <p class= "error-message" id="errorPassControl"></p>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button> 
     </form>
     
-    <p id="error"></p>
+     <p class= "error-message" id="error"></p>
 	<p id="success"></p>
 
     </div>     

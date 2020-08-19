@@ -129,6 +129,18 @@ public class UserService {
 		
 		boolean loggedUser=dao.find(user.getUsername());
 		
+		if (user.getUsername().trim().isEmpty()) {
+			return Response.status(400).entity("Enter username!").build();
+		}
+		if (user.getName().trim().isEmpty()) {
+			return Response.status(400).entity("Enter name!").build();
+		}
+		if (user.getSurname().trim().isEmpty()) {
+			return Response.status(400).entity("Enter surname!").build();
+		}
+		if (user.getPassword().trim().isEmpty()) {
+			return Response.status(400).entity("Enter password!").build();
+		}
 		if(loggedUser==true) {
 			//return Response.status(400).build();
 			return Response.status(400).entity("Username alerady exists").build();

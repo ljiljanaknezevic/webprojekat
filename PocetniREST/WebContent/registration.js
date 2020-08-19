@@ -32,8 +32,24 @@ $(document).ready(function() {
 				alert('uspesno registrovani');
 			},
 			error:function(message){
-				$('#error').text(message);
-				$('#error').show().delay(3000).hide();
+				switch(message.responseText){
+					case('Enter name!'):
+						$('#errorName').text(message.responseText)
+						$('#errorName').show()
+						break;
+					case('Enter username!'):
+						$('#errorUsername').text(message.responseText)
+						$('#errorUsername').show()
+						break;
+					case('Enter surname!'):
+						$('#errorSurname').text(message.responseText)
+						$('#errorSurname').show()
+						break;
+					case('Enter password!'):
+						$('#errorPassword').text(message.responseText)
+						$('#errorPassword').show()
+						break;
+				}
 			}
 		})
 		
