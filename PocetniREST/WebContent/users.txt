@@ -1,1 +1,1 @@
-pera;pera;ime;prezime;FEMALE
+pera;pera;Petar;Petrovic;FEMALE;ADMIN
