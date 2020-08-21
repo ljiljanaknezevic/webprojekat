@@ -7,7 +7,7 @@ $(document).ready(function(){
     			url: "ProjectRents/logout",
     			success: function() {
     				alert("Successfully logged out .");
-    				window.location="./home.html";
+    				window.location="./login.html";
     			}
     		})
     	}
