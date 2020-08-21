@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Home</title>
+  <title>Guest</title>
   <meta charset="utf-8">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,14 +14,21 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
    
-   <link href="css/look.css" rel="stylesheet" id="look-css">
+	<!-- <script src="guest.js"></script>-->
+	
+	<link href="css/look.css" rel="stylesheet" id="look-css">
 </head>
 
+<style>
+
+
+</style>
+
 <body>
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+<nav class="navbar navbar">
+	<div class="container">
+	<div class="navbar-header">	
+	 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -40,8 +47,8 @@
 	        <span class="caret"></span>
 	        </a>
 	        <ul class="dropdown-menu">
-	          <li><a href="./login.html">Log in</a></li>
-	          <li><a href="./registration.html">Registration</a></li>
+	          <li><a href="./login.html"">Log out</a></li>
+	          <li><a href="#">Profile</a></li>
 	            <li role="presentation" class="divider"></li>
 	          <li><a href="#">Page 1-3</a></li>
 	        </ul>
@@ -52,5 +59,13 @@
 
   </div>
 </nav>
+<div>     
+       <h2 >WELCOME BACK</h2>
+      	<p>ULOGOVAN JE GOST</p>
+    
+	<p id="success"></p>
+
+    </div>     
+   
 </body>
 </html>
