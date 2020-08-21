@@ -57,33 +57,41 @@ public class UserDAO {
 	public void saveUser(User u,String contextPath)
 	{
 		try {
-			
+		
+		
 		File file=new File(contextPath+"/users.json");
+		
 		
 		ObjectMapper mapper=new ObjectMapper();
 		mapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 		mapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 		ArrayList<User> userList=new ArrayList<>();
+		//HashMap<String, User> userList= new HashMap<String,User>();
 		
 		//userList.add(new User("pera", "pera", "ime", "prezime",Gender.FEMALE,Role.ADMIN));
 		//userList.add(new User("jov","jov","jovana","jov",0,"0605020313","asfa@gmail.com", "06-06-1985"));
 		//mapper.writeValue(new File(contextPath + "/users.json"), userList);
 		
 		
-		
+		//KADA SE OVO ZAKOMENTARISE RADI ALI ONDA UPISUJE SAMO JEDNOG NE CUVA PRETHODNE REGISTROVANE
+		//SA OVIM NECE DA KREIRA JSON FILE 
 		User[] pom=mapper.readValue(file, User[].class);
-		
+	
 		for(User g:pom) {
-			userList.add(g);	
+			
+			userList.add(g)	;
 		}
 		
 		
 		userList.add(u);
+		
 		mapper.writeValue(new File(contextPath+"/users.json"), userList);
 		User r=users.put(u.getUsername(), u);
 	
 		}catch(IOException e) {
 			e.printStackTrace();
+		}finally {
+			
 		}
 	}
 	private void loadUsers(String contextPath) {
