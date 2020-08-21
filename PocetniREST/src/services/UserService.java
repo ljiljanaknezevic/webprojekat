@@ -68,7 +68,7 @@ public class UserService {
 			return Response.status(Status.BAD_REQUEST).entity("There isn’t an account with this username. Please try another username.").build();
 		else 
 			return Response.status(Status.BAD_REQUEST).entity("bad requst").build();
-}
+	}
 	
 	@POST
 	@Path("/registration")
