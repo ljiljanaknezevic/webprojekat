@@ -34,15 +34,6 @@ public class UserService {
 	
 	@PostConstruct
 	public void init() {
-	/*	if(ctx.getAttribute("users") == null) {
-	    	String contextPath = ctx.getRealPath("");
-	    	ArrayList<User> users = new ArrayList<User>();
-	    	User u1 = new User("123XD", "Marko", "markovic","pre",Gender.FEMALE, Role.ADMIN);
-		    users.add(u1);
-	    	users.add(u1);
-	    
-			ctx.setAttribute("users", users);
-		}*/
 		if(ctx.getAttribute("userDAO") == null) {
 			String contextPath = ctx.getRealPath("");
 			ctx.setAttribute("userDAO", new UserDAO(contextPath));

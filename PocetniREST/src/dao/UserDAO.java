@@ -91,7 +91,6 @@ public class UserDAO {
 		try
 		{
 			File file = new File(contextPath + "/users.json");
-			System.out.println(contextPath);
 			ObjectMapper objectMapper = new ObjectMapper();
 			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
@@ -100,8 +99,8 @@ public class UserDAO {
 			ArrayList<User> proba=new ArrayList<>();
 			
 			//OVO JE ZA DEFAULT VREDNOSTI
-			//proba.add(new User("pera", "pera", "ime", "prezime",Gender.FEMALE,Role.ADMIN));
-			objectMapper.writeValue(new File(contextPath + "/users.json"), proba);
+			//proba.add(new User("pera", "pera", "Petar", "Petric",Gender.FEMALE,Role.ADMIN));
+			//objectMapper.writeValue(new File(contextPath + "/users.json"), proba);
 			
 			
 			//String json = "{  \"username\" : \"jov\", \"password\" : \"jov\", \"ime\" : \"Petar\", \"prezime\" : \"Petrovic\", \"pol\" : MALE}";
