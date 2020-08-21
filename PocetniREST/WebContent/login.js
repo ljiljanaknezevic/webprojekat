@@ -1,8 +1,10 @@
-
+var userLogged = 'none';
 $(document).ready(function(){
 
 	$('form#login').submit(function(event){
 		event.preventDefault();
+		currentUser();
+		
 		var user = new Object();
 		user.username=$('#username').val()
 		user.password=$('#password').val()
@@ -14,8 +16,16 @@ $(document).ready(function(){
 			success : function(temp){
 				currentUser();
 				alert('Succesfully loged in.');
-				//TODO :treba provera koja je uloga i naspram toga da ide na odgovarajucu stranicu
-				window.location="./home.html";
+				if(userLogged == 'none'){
+					window.location="./home.html";
+				}else if(userLogged == 'ADMIN'){
+					window.location="./admin.html";
+				}else if(userLogged == 'HOST'){
+					window.location="./host.html";
+				}else if(userLogged == 'GUEST'){
+					window.location="./guest.html";
+				}
+				
 			},
 			error: function(message) {
 				$('#error').text(message.responseText);
@@ -29,21 +39,20 @@ $(document).ready(function(){
 		$.get({
 			url : "ProjectRents/currentUser",
 			success : function(user){
-				console.log(user.username);
-				console.log(user.role);
-				alert('funkcija');
-				
+				if(user == null){
+					userLogged = 'none';
+					console.log("NO ONE IS LOGGED");
+					currentUserLogged = null;
+				}else{
 					if(user.role == "ADMIN"){
-						console.log("ADMIN IS LOGGED.");
-						currentUserLogged = user;
+						userLogged = 'ADMIN';
 					}else if (user.role == "HOST"){
-						console.log("HOST IS LOGGED");
-						currentUserLogged = user;
+						userLogged = 'HOST';
 					}else if (user.role == "GUEST"){
-						console.log("GUEST IS LOGGED");
-						currentUserLogged = user;
-						
+						userLogged = 'GUEST';
 					}
+					currentUserLogged = user;
+				}
 				}
 			
 		})

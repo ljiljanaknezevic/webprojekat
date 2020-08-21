@@ -50,7 +50,8 @@ public class UserService {
 		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
 		String message = userDao.findUser(user.getUsername(), user.getPassword());
 		if(message.equals("bas taj postoji u bazi")) {
-			request.getSession().setAttribute("user", user);
+			User userr = userDao.findByUsername(user.getUsername());
+			request.getSession().setAttribute("user", userr);
 			return Response.status(200).build();
 		}
 		else if(message.equals("bad password"))
@@ -93,5 +94,14 @@ public class UserService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public User login(@Context HttpServletRequest request) {
 		return (User) request.getSession().getAttribute("user");
+	}
+	
+	@GET
+	@Path("/logout")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response logout(@Context HttpServletRequest request) {
+		request.getSession().invalidate();
+		return Response.status(200).build();
 	}
 }

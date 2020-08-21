@@ -45,7 +45,7 @@ public class UserDAO {
 		this.users = users;
 	}	
 
-	public User getByUsername(String username) {
+	public User findByUsername(String username) {
 		for(User u:users.values()) {
 			if(u.getUsername().equals(username)) {
 				return u;

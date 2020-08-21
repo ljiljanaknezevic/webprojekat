@@ -36,10 +36,11 @@ $(document).ready(function() {
 					alert('uspesno registrovani');
 				},
 				error:function(message){
-					if(message.responseText=='the passwords didn\'t match!'){
-						$('#error').show();
-						$('#error').delay(4000).fadeOut('slow');
-				}
+				//	if(message.responseText=='the passwords didn\'t match!'){
+					$('#error').text(message.responseText);
+					$('#error').show();
+					$('#error').delay(4000).fadeOut('slow');
+			//	}
 					
 				}
 			})
