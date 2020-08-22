@@ -71,9 +71,9 @@ public class UserService {
 		user.setRole(Role.GUEST);
 		
 		UserDAO dao=(UserDAO) ctx.getAttribute("userDAO");
-		
+
 		boolean loggedUser=dao.find(user.getUsername());
-		
+
 	/*	if (user.getPassword().trim().isEmpty()) {
 			return Response.status(400).entity("the passwords didn\\'t match!").build();
 		}*/
@@ -84,7 +84,9 @@ public class UserService {
 		}
 		
 		String contextPath=ctx.getRealPath("");
-		dao.saveUser(user,contextPath);
+		System.out.println("*****************************************************");
+		dao.addToMap(user);
+		dao.saveUser(contextPath);
 		return Response.status(200).build();
 	}
 	

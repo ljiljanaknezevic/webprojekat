@@ -9,6 +9,7 @@ $(document).ready(function(){
 		user.username=$('#username').val()
 		user.password=$('#password').val()
 		var temp = JSON.stringify(user);
+	
 		$.post({
 			url : 'ProjectRents/login',
 			data :temp,
@@ -20,9 +21,9 @@ $(document).ready(function(){
 					window.location="./home.html";
 				}else if(userLogged == 'ADMIN'){
 					window.location="./admin.html";
-				}else if(userLogged == 'HOST'){
+				}else if(userLogged== 'HOST'){
 					window.location="./host.html";
-				}else if(userLogged == 'GUEST'){
+				}else if(userLogged== 'GUEST'){
 					window.location="./guest.html";
 				}
 				
@@ -46,10 +47,13 @@ $(document).ready(function(){
 				}else{
 					if(user.role == "ADMIN"){
 						userLogged = 'ADMIN';
+						console.log("ADMIN IS LOGGED IN");
 					}else if (user.role == "HOST"){
 						userLogged = 'HOST';
+						console.log("ADMIN IS LOGGED IN");
 					}else if (user.role == "GUEST"){
 						userLogged = 'GUEST';
+						console.log("ADMIN IS LOGGED IN");
 					}
 					currentUserLogged = user;
 				}
