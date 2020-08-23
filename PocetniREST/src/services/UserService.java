@@ -2,6 +2,7 @@ package services;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -20,6 +21,7 @@ import javax.ws.rs.core.Response.Status;
 import beans.User;
 import beans.enums.Gender;
 import beans.enums.Role;
+
 import dao.UserDAO;
 
 @Path("")
@@ -103,5 +105,23 @@ public class UserService {
 	public Response logout(@Context HttpServletRequest request) {
 		request.getSession().invalidate();
 		return Response.status(200).build();
+	}
+	
+	@GET
+	@Path("/allUsers")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public List<User> getAllUsers(@Context HttpServletRequest request){
+		User user = (User) request.getSession().getAttribute("user");
+		UserDAO kdao = (UserDAO) ctx.getAttribute("UserDAO");
+		if(user.getRole()==Role.ADMIN) {
+			return kdao.getAll();
+		}
+		/*else if(user.getRole()==Role.HOST)
+		 * {
+		 * 	return kdao.getHostsUsers();
+		 * }*/else {
+			return null;
+		}
 	}
 }

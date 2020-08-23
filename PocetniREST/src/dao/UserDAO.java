@@ -10,6 +10,7 @@ import java.util.List;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
 import beans.User;
 import beans.enums.Gender;
 import beans.enums.Role;
@@ -196,5 +197,11 @@ public class UserDAO {
 		}
 		
 		return true;
+	}
+	public List<User> getAll() {
+		List<User> list = new ArrayList<>();
+		list.addAll(users.values());
+		return list;
+
 	}
 }

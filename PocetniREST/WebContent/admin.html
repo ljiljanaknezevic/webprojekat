@@ -16,7 +16,7 @@
    
    <link href="css/look.css" rel="stylesheet" id="look-css">
    
-	<!-- <script src="admin.js"></script>-->
+	 <script src="admin.js"></script>
 	
 </head>
 
@@ -37,7 +37,7 @@
         <li><a href="#">ABOUT</a></li>
         <li><a href="#services">SERVICES</a></li>
         <li><a href="#portfolio">PORTFOLIO</a></li>
-        <li><a href="#pricing">PRICING</a></li>
+        <li id="users"><a href="#users">USERS</a></li>
         <li class="dropdown">
 	        <a class="dropdown-toggle" data-toggle="dropdown" role ="menu" href="#">
 	        <span class="glyphicon glyphicon-user user"></span>
@@ -59,6 +59,26 @@
 <div>     
        <h2 >WELCOME BACK</h2>
       	<p>ULOGOVAN JE ADMIN</p>
+      	
+      	<form class="form-signin" id="allUsers" hidden="true">       
+      <h2 class="form-signin-heading">All users</h2>
+      <table border="1" id="allusers">
+      <thead>
+        <tr bgcolor="lightgrey">
+          <th>Username</th>
+          <th>Name</th>
+           <th>Surname</th>
+          <th>Gender</th>
+          <th>Role</th>            
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+       
+    </form>
+      	
     
 	<p id="success"></p>
 
