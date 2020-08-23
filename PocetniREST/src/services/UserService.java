@@ -111,9 +111,12 @@ public class UserService {
 	@Produces(MediaType.APPLICATION_JSON)
 //	@Consumes(MediaType.APPLICATION_JSON)
 	public List<User> getAllUsers(@Context HttpServletRequest request){
+		System.out.println("USAO JE U METODU");
 		User user = (User) request.getSession().getAttribute("user");
 		UserDAO kdao = (UserDAO) ctx.getAttribute("UserDAO");
+		System.out.println(user.getRole().toString());
 		if(user.getRole()==Role.ADMIN) {
+			System.out.println("ADMIN JE");
 			return kdao.getAll();
 		}
 		/*else if(user.getRole()==Role.HOST)

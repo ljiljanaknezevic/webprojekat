@@ -47,19 +47,23 @@ $(document).ready(function(){
     });
 $('#users').click(function(e)
 {
+	
 	$.get({
-		url:'ProjectRents/allUsers',
-		contentType:'application.json',
+		url:"ProjectRents/allUsers",
 		success:function(users){
 			$('#allUsers').attr('hidden', false);
 			$('#allUsers tbody').html('');
-			for(let user of users)
+			if(users!=null){
+			for (var i = 0; i < users.length; i++)
 			{
-				addUsersTr(user);
+				console.log(users[i])
+				addUsersTr(users[i]);
+			}
 			}
 		},
-		error:
-			console.log('Neceeeeeeeee')
+		error:function(message){
+			console.log('Error')
+			}
 	});
 });
 });
