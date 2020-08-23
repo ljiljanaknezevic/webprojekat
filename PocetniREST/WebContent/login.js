@@ -36,7 +36,6 @@ $(document).ready(function(){
 		})
 	})
 	function currentUser(){
-
 		$.get({
 			url : "ProjectRents/currentUser",
 			success : function(user){
@@ -47,18 +46,14 @@ $(document).ready(function(){
 				}else{
 					if(user.role == "ADMIN"){
 						userLogged = 'ADMIN';
-						console.log("ADMIN IS LOGGED IN");
 					}else if (user.role == "HOST"){
 						userLogged = 'HOST';
-						console.log("ADMIN IS LOGGED IN");
 					}else if (user.role == "GUEST"){
 						userLogged = 'GUEST';
-						console.log("ADMIN IS LOGGED IN");
 					}
 					currentUserLogged = user;
 				}
-				}
-			
+				}	
 		})
 	}
 

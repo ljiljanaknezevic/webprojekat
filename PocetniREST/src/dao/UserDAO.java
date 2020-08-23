@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -59,6 +60,7 @@ public class UserDAO {
 		ObjectMapper mapper=new ObjectMapper();
 		List<User> userList=new ArrayList<>();
 		System.out.println("----------------------------");
+		
 		userList.addAll(users.values());
 		
 		try {
@@ -120,6 +122,7 @@ public class UserDAO {
 			 users.put(user.getUsername(), user);
 		
 	}
+	
 	public String findUser(String username, String password) {
 		String message = "bas taj postoji u bazi";
 		if(!users.containsKey(username)) {
@@ -137,5 +140,21 @@ public class UserDAO {
 		}
 		
 		return true;
+	}
+	
+	public User editUser(User user, String contextPath) {
+		System.out.println(user.getName());
+		for (String key : users.keySet()) {
+		    if(key.equals(user.getUsername())) {
+		    	user.setName(user.getName());
+		    	user.setGender(user.getGender());
+		    	user.setSurname(user.getSurname());
+		    	users.replace(user.getUsername(), user);
+		    	saveUser(contextPath);
+		    	return user;
+		    }
+		}
+		return null;
+		
 	}
 }
