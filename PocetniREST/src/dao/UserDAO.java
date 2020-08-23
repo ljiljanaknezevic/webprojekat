@@ -60,6 +60,7 @@ public class UserDAO {
 		ObjectMapper mapper=new ObjectMapper();
 		List<User> userList=new ArrayList<>();
 		System.out.println("----------------------------");
+
 		
 		userList.addAll(users.values());
 		
@@ -71,6 +72,8 @@ public class UserDAO {
 	
 		}catch(IOException e) {
 			e.printStackTrace();
+		}finally {
+			
 		}
 	}
 	private void loadUsers(String contextPath) {
