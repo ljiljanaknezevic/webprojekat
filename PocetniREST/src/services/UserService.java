@@ -73,12 +73,9 @@ public class UserService {
 		user.setRole(Role.GUEST);
 		
 		UserDAO dao=(UserDAO) ctx.getAttribute("userDAO");
-		
+
 		boolean loggedUser=dao.find(user.getUsername());
-		
-	/*	if (user.getPassword().trim().isEmpty()) {
-			return Response.status(400).entity("the passwords didn\\'t match!").build();
-		}*/
+
 		
 		if(loggedUser==true) {
 			
@@ -86,7 +83,8 @@ public class UserService {
 		}
 		
 		String contextPath=ctx.getRealPath("");
-		dao.saveUser(user,contextPath);
+		dao.addToMap(user);
+		dao.saveUser(contextPath);
 		return Response.status(200).build();
 	}
 	
@@ -107,6 +105,7 @@ public class UserService {
 		return Response.status(200).build();
 	}
 	
+<<<<<<< HEAD
 	@GET
 	@Path("/allUsers")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -123,5 +122,19 @@ public class UserService {
 		 * }*/else {
 			return null;
 		}
+=======
+	
+	@POST
+	@Path("/userEdit")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response userEdit(User user, @Context HttpServletRequest request) {
+		UserDAO dao=(UserDAO) ctx.getAttribute("userDAO");
+		String contextPath=ctx.getRealPath("");
+		User u =dao.editUser(user, contextPath);
+		request.getSession().setAttribute("user",u );
+	
+		return Response.status(200).build();
+>>>>>>> 1e8f7ccbeb3e6a5a9f486bf54e0229993b0e5d44
 	}
 }

@@ -19,8 +19,47 @@
 </head>
 
 <style>
+.tabs-left, .tabs-right {
+  border-bottom: none;
+  padding-top: 2px;
+}
+.tabs-left {
+  border-right: 1px solid #ddd;
+}
 
+.tabs-left>li, .tabs-right>li {
+  float: none;
+  margin-bottom: 2px;
+}
+.tabs-left>li {
+  margin-right: -1px;
+}
 
+.tabs-left>li.active>a,
+.tabs-left>li.active>a:hover,
+.tabs-left>li.active>a:focus {
+  border-bottom-color: #ddd;
+  border-right-color: transparent;
+}
+
+.tabs-left>li>a {
+  border-radius: 4px 0 0 4px;
+  margin-right: 0;
+  display:block;
+}
+
+.center {
+   position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.clearfix {
+  overflow: auto;
+}
 </style>
 
 <body>
@@ -46,7 +85,7 @@
 	        <span class="caret"></span>
 	        </a>
 	        <ul class="dropdown-menu">
-	          	<li><a href="#" class ="profile">Profile</a></li>
+	          	<li><a href="#profile" class ="profile">Profile</a></li>
 	            <li role="presentation" class="divider"></li>
 	          	<li  id = "logout"><a href="./login.html">Log out</a></li>
 	        </ul>
@@ -57,13 +96,78 @@
 
   </div>
 </nav>
-<div>     
-       <h2 >WELCOME BACK</h2>
-      	<p>ULOGOVAN JE GOST</p>
-    
-	<p id="success"></p>
 
+
+
+
+
+
+
+
+
+
+
+	<div class = "welcome">     
+       <h2 >WELCOME BACK</h2>
+      	<p>ULOGOVAN JE GOST. i ovo je samo primer sta ce tu stajati stalno dok se ne klikne nesto drugo.</p>
     </div>     
+    <!-- BUTTON PROFIL LOOK -->
+    <div>
+ <div  class="col-sm-18 profileLook" hidden = "true">
+   <h3>Profil view</h3>
+        <hr/>
+        <div class="col-xs-2">
+  <!-- Nav tabs  -->
+  <ul class="nav nav-tabs tabs-left sideways" role="tablist">
+    <li role="presentation" class="active"><a href="#edit-profile" aria-controls="edit-profile" role="tab" data-toggle="tab">Edit profile</a></li>
+    <li role="presentation"><a href="#change-password" aria-controls="change-password" role="tab" data-toggle="tab">Change password</a></li>
+  </ul>
+    </div>
+
+        <div class="col-xs-6 center">
+  <!-- Tab panes  -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="edit-profile">
+			<form  id="form-profil-edit">  
+		       <p>Username</p>
+		      <input type="text" class="form-control" id="username" />
+		        <p>Name</p>
+		       <input type="text" class="form-control" id="name" />
+		        <p>Surname</p>
+		      <input type="text" class="form-control" id="surname"/>     
+		      <p>Gender</p> 
+		      <select name="gender" id="gender" class="form-control" >
+		      	<option value="male" >Male</option>
+		      	<option value="female">Female</option>
+		      </select>
+		    	<p id="error" class = "error-message"></p>
+		      <button class="btn btn-lg btn-primary btn-block" type="submit" id = "submit-edit">Submit</button> 
+		    </form>
+	</div>
+	<!-- change password -->
+    <div role="tabpanel" class="tab-pane" id="change-password">
+    		<form  id="form-change-password">  
+    		   <p>Old password</p>
+			<input type="password" class="form-control" id="password" placeholder="Password" required  oninvalid="this.setCustomValidity('Password is required.')" oninput="setCustomValidity('')"/>    
+     		   <p>New password</p>
+     		<input type="password" class="form-control" id="passControl1" placeholder="New password" required  oninvalid="this.setCustomValidity('New password is required.')" oninput="setCustomValidity('')"/>      
+    		   <p>Confirm new password</p>
+    		<input type="password" class="form-control" id="passControl2" placeholder="Confirm new password" required  oninvalid="this.setCustomValidity('Confirm new password is required.')" oninput="setCustomValidity('')"/>      
+    		<p id="error" class = "error-message"></p>   
+    		<button class="btn btn-lg btn-primary btn-block" type="submit" id = "submit-change" disabled>Change password</button> 
+    		</form>
+	</div>
+  </div>
+
+  </div>
+
+        <div class="clearfix"></div>
+
+      </div>
+
+     
+
+</div>
    
 </body>
 </html>
