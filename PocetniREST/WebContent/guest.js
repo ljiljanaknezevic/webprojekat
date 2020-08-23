@@ -44,11 +44,7 @@ $(document).ready(function(){
     	$('#gender').val(gender);
     })
 
-<<<<<<< HEAD
 
-
-
-=======
     $('#submit-edit').click(function(){
     	event.preventDefault();
     	let username=$('#username').val()
@@ -80,6 +76,5 @@ $(document).ready(function(){
     		}
     	})
     })
-    	
->>>>>>> 1e8f7ccbeb3e6a5a9f486bf54e0229993b0e5d44
+
 })

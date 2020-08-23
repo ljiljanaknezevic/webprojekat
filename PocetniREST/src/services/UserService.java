@@ -105,11 +105,11 @@ public class UserService {
 		return Response.status(200).build();
 	}
 	
-<<<<<<< HEAD
+
 	@GET
 	@Path("/allUsers")
 	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
+//	@Consumes(MediaType.APPLICATION_JSON)
 	public List<User> getAllUsers(@Context HttpServletRequest request){
 		User user = (User) request.getSession().getAttribute("user");
 		UserDAO kdao = (UserDAO) ctx.getAttribute("UserDAO");
@@ -120,10 +120,11 @@ public class UserService {
 		 * {
 		 * 	return kdao.getHostsUsers();
 		 * }*/else {
+			 System.out.println("NIJE ADMIN U PITANJU");
 			return null;
 		}
-=======
-	
+
+	}
 	@POST
 	@Path("/userEdit")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -135,6 +136,6 @@ public class UserService {
 		request.getSession().setAttribute("user",u );
 	
 		return Response.status(200).build();
->>>>>>> 1e8f7ccbeb3e6a5a9f486bf54e0229993b0e5d44
+
 	}
 }

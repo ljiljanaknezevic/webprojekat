@@ -57,7 +57,9 @@ $('#users').click(function(e)
 			{
 				addUsersTr(user);
 			}
-		}
+		},
+		error:
+			console.log('Neceeeeeeeee')
 	});
 });
 });

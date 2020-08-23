@@ -145,13 +145,13 @@ public class UserDAO {
 		
 		return true;
 	}
-<<<<<<< HEAD
+
 	public List<User> getAll() {
 		List<User> list = new ArrayList<>();
 		list.addAll(users.values());
 		return list;
 
-=======
+}
 	
 	public User editUser(User user, String contextPath) {
 		System.out.println(user.getName());
@@ -166,7 +166,6 @@ public class UserDAO {
 		    }
 		}
 		return null;
-		
->>>>>>> 1e8f7ccbeb3e6a5a9f486bf54e0229993b0e5d44
+
 	}
 }
