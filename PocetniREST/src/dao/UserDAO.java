@@ -60,10 +60,7 @@ public class UserDAO {
 		ObjectMapper mapper=new ObjectMapper();
 		List<User> userList=new ArrayList<>();
 		System.out.println("----------------------------");
-
-		
 		userList.addAll(users.values());
-		
 		try {
 			
 		File file=new File(contextPath+"/users.json");
@@ -159,5 +156,21 @@ public class UserDAO {
 		}
 		return null;
 		
+	}
+	public User editUserPassword(User user, String contextPath) {
+		
+		String newPassword = user.getPassword();
+		User copyUser = findByUsername(user.getUsername());
+		for (String key : users.keySet()) {
+		    if(key.equals(user.getUsername())) {
+		    	System.out.println("edit user password  ~~~~~~~~~~~~~~");
+		    	
+		    	copyUser.setPassword(user.getPassword());
+		    	users.put(copyUser.getUsername(), copyUser);
+		    	saveUser(contextPath);
+		    	return user;
+		    }
+		}
+		return null;
 	}
 }

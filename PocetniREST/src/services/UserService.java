@@ -46,7 +46,6 @@ public class UserService {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response login(User user, @Context HttpServletRequest request) {
-		HttpSession session = request.getSession();
 		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
 		String message = userDao.findUser(user.getUsername(), user.getPassword());
 		if(message.equals("bas taj postoji u bazi")) {
@@ -110,10 +109,34 @@ public class UserService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response userEdit(User user, @Context HttpServletRequest request) {
 		UserDAO dao=(UserDAO) ctx.getAttribute("userDAO");
-		String contextPath=ctx.getRealPath("");
-		User u =dao.editUser(user, contextPath);
-		request.getSession().setAttribute("user",u );
+		for(User u:dao.getUsers().values()) {
+			if(u.getUsername().equals(user.getUsername())) {
+				String contextPath=ctx.getRealPath("");
+				User us =dao.editUser(user, contextPath);
+				request.getSession().setAttribute("user",us );
+				return Response.status(200).build();
+			}
+		}
+		return Response.status(400).build();
+	}
 	
-		return Response.status(200).build();
+	@POST
+	@Path("/userEditPassword")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response userEditPassword(User user, @Context HttpServletRequest request) {
+		UserDAO dao=(UserDAO) ctx.getAttribute("userDAO");
+		System.out.println("*****************************");
+		System.out.println(user.getPassword());
+		System.out.println(user.getUsername());
+		for(User u:dao.getUsers().values()) {
+			if(u.getUsername().equals(user.getUsername())) {
+				String contextPath=ctx.getRealPath("");
+				User us =dao.editUserPassword(user, contextPath);
+				request.getSession().setAttribute("user",us );
+				return Response.status(200).build();
+			}
+		}
+		return Response.status(400).build();
 	}
 }

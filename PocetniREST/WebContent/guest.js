@@ -56,7 +56,6 @@ $(document).ready(function(){
 			gender=0;
 		else
 			gender=1;		
-    	console.log(role)
     	$.ajax({
     		type :"POST",
     		url :"ProjectRents/userEdit",
@@ -75,5 +74,47 @@ $(document).ready(function(){
     		}
     	})
     })
+    
+    //change password
+     $('form#form-change-password').submit(function(){
+    	event.preventDefault();
+    	let oldpassword=$('#old-password').val()
+    	let newpassword=$('#new-password').val()
+		let confirmpassword=$('#confirm-new-password').val()
+	
+    	var checkOldPass = true;
+    	if(oldpassword != password){
+    		$('#error-old').text('password isnt correct for your username.try again.');
+			$('#error-old').show();
+			$('#error-old').delay(2000).fadeOut('slow');
+			checkOldPass = false
+			//console.log('password isnt correct for your username.try again.oldpassword != password')
+    	}
     	
+    	if(checkOldPass){
+    		if(newpassword != confirmpassword){
+    		$('#error-confirm').text('confirm password doesnt match new password.try again');
+			$('#error-confirm').show();
+			$('#error-confirm').delay(4000).fadeOut('slow');
+    		console.log('confirm password doesnt match new password.try again.newpassword != confirmpassword')
+    		}
+	    	else {
+	    		password = newpassword;
+	    		$.ajax({
+		    		type :"POST",
+		    		url :"ProjectRents/userEditPassword",
+		    		data :JSON.stringify({
+		    			username:username,
+		    			password: password
+		    			}),
+		    		contentType : "application/json",
+		    		success : function(data){
+		    			console.log(' *********** EDITED *************')
+		    			alert('successfully edited profile.')
+		    		}
+		    	})	    		
+	    	}
+    	}
+    	
+    })
 })

@@ -130,7 +130,7 @@
     <div role="tabpanel" class="tab-pane active" id="edit-profile">
 			<form  id="form-profil-edit">  
 		       <p>Username</p>
-		      <input type="text" class="form-control" id="username" />
+		      <input type="text" class="form-control" id="username" disabled/>
 		        <p>Name</p>
 		       <input type="text" class="form-control" id="name" />
 		        <p>Surname</p>
@@ -148,13 +148,14 @@
     <div role="tabpanel" class="tab-pane" id="change-password">
     		<form  id="form-change-password">  
     		   <p>Old password</p>
-			<input type="password" class="form-control" id="password" placeholder="Password" required  oninvalid="this.setCustomValidity('Password is required.')" oninput="setCustomValidity('')"/>    
+			<input type="password" class="form-control" id="old-password" placeholder="Password" required  oninvalid="this.setCustomValidity('Password is required.')" oninput="setCustomValidity('')"/>    
+     		   <p id="error-old" class = "error-message"></p>   
      		   <p>New password</p>
-     		<input type="password" class="form-control" id="passControl1" placeholder="New password" required  oninvalid="this.setCustomValidity('New password is required.')" oninput="setCustomValidity('')"/>      
-    		   <p>Confirm new password</p>
-    		<input type="password" class="form-control" id="passControl2" placeholder="Confirm new password" required  oninvalid="this.setCustomValidity('Confirm new password is required.')" oninput="setCustomValidity('')"/>      
-    		<p id="error" class = "error-message"></p>   
-    		<button class="btn btn-lg btn-primary btn-block" type="submit" id = "submit-change" disabled>Change password</button> 
+     		<input type="password" class="form-control" id="new-password" placeholder="New password" required  oninvalid="this.setCustomValidity('New password is required.')" oninput="setCustomValidity('')"/>      
+    			<p>Confirm new password</p>
+    		<input type="password" class="form-control" id="confirm-new-password" placeholder="Confirm new password" required  oninvalid="this.setCustomValidity('Confirm new password is required.')" oninput="setCustomValidity('')"/>      
+    		<p id="error-confirm" class = "error-message"></p>   
+    		<button class="btn btn-lg btn-primary btn-block" type="submit" id = "submit-change" >Change password</button> 
     		</form>
 	</div>
   </div>
