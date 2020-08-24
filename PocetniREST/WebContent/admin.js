@@ -65,34 +65,37 @@ $('#users').click(function(e)
 			}
 	});
 });
-/*$('#search').submit((event)=>{
+$('#search').submit((event)=>{
 	event.preventDefault();
+	
 	let username;
+	let name;
+	let surname;
+	
 	username=$('#searchUsername').val();
-	let name=$('#searchName').val();
-	let surname=$('#searchSurname').val();
+	name=$('#searchName').val();
+	surname=$('#searchSurname').val();
 	
 	$.post({
 		url:'ProjectRents/searchUsername',
-		contentType:'application/json',
 		data:JSON.stringify({
 			username:username,
 			name:name,
 			surname:surname
-		})
-			success:function (users){
+		}),
+		contentType:'application/json',
+		success:function(users){
 			$('#searchResults').attr('hidden',false);
 			$('#searchTable tbody').html('');
-			for(let user od users)
+			$('#allUsers').attr('hidden', true);
+			for (let user of users)
 			{
 				addSearchTable(user);
 			}
-		},
-		error:function(message){
-			console.log('Search error');
-		}		
+		}
 	});
-	});*/
+	
+});
 });
 
 

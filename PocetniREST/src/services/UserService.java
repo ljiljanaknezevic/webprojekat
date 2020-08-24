@@ -192,12 +192,12 @@ public class UserService {
 			if(!u.getUsername().toLowerCase().trim().contains(parm.getUsername().trim()) && !parm.getUsername().trim().isEmpty()) {
 				continue;
 			}
-			if(!u.getName().toLowerCase().trim().contains(parm.getName().trim()) && !parm.getName().trim().isEmpty()) {
+		/*	if(!u.getName().toLowerCase().trim().contains(parm.getName().trim()) && !parm.getName().trim().isEmpty()) {
 				continue;
 			}
 			if(!u.getSurname().toLowerCase().trim().contains(parm.getSurname().trim()) && !parm.getSurname().trim().isEmpty()) {
 				continue;
-			}
+			}*/
 			
 			retval.add(u);
 		}
