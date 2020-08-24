@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response.Status;
 import beans.User;
 import beans.enums.Gender;
 import beans.enums.Role;
-
+import dao.SearchUsers;
 import dao.UserDAO;
 
 @Path("")
@@ -120,19 +120,22 @@ public class UserService {
 	@Produces(MediaType.APPLICATION_JSON)
 //	@Consumes(MediaType.APPLICATION_JSON)
 	public List<User> getAllUsers(@Context HttpServletRequest request){
-		System.out.println("USAO JE U METODU");
+		//System.out.println("USAO JE U METODU");
 		User user = (User) request.getSession().getAttribute("user");
-		UserDAO kdao = (UserDAO) ctx.getAttribute("UserDAO");
-		System.out.println(user.getRole().toString());
-		if(user.getRole()==Role.ADMIN) {
+		//System.out.println(user.getRole());
+		UserDAO kdao = (UserDAO) ctx.getAttribute("userDAO");
+		//System.out.println("******************************");
+		if(user.getRole().toString().equals("GUEST")) {
 			System.out.println("ADMIN JE");
 			return kdao.getAll();
 		}
-		/*else if(user.getRole()==Role.HOST)
-		 * {
-		 * 	return kdao.getHostsUsers();
-		 * }*/else {
-			 System.out.println("NIJE ADMIN U PITANJU");
+		else if(user.getRole()==Role.HOST)
+		  {
+			System.out.println("HOST JE");
+		  	return kdao.getHostsUsers(user);
+		  }
+		else {
+			 System.out.println("GOST JE");
 			return null;
 		}
 
@@ -175,4 +178,35 @@ public class UserService {
 		return Response.status(400).build();
 
 	}
+	@POST
+	@Path("/searchUsername")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response searchByUsername(SearchUsers parm,@Context HttpServletRequest request) {
+	UserDAO dao=(UserDAO) ctx.getAttribute("userDAO");
+	List<User> retval=new ArrayList<User>();
+	if(parm!=null && dao!=null)
+	{
+		for(User u:dao.getAll())
+		{
+			if(!u.getUsername().toLowerCase().trim().contains(parm.getUsername().trim()) && !parm.getUsername().trim().isEmpty()) {
+				continue;
+			}
+			if(!u.getName().toLowerCase().trim().contains(parm.getName().trim()) && !parm.getName().trim().isEmpty()) {
+				continue;
+			}
+			if(!u.getSurname().toLowerCase().trim().contains(parm.getSurname().trim()) && !parm.getSurname().trim().isEmpty()) {
+				continue;
+			}
+			
+			retval.add(u);
+		}
+		return Response.ok(retval).status(200).build();
+	}else {
+		return Response.status(400).build();
+	}
+	
+	
 }
+}
+	

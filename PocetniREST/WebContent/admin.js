@@ -5,28 +5,28 @@ function addUsersTr(user){
 	
 	let tdSurname = $('<td>' + user.surname + '</td>');
 	
-	let gender;
-	switch(user.gender)
-	{
-		case 0: gender="Male";break;
-		case 1: gender="Female";break;
-	}
+	let tdGender = $('<td>' + user.gender + '</td>');
+	let tdRole = $('<td>' + user.role+ '</td>');
+	tr.append(tdUsername).append(tdName).append(tdSurname).append(tdGender).append(tdRole);
 	
-	let role;
-	switch(user.role)
-	{
-		case 0: role="Admin";break;
-		case 1: role="Host";break;
-		case 2: role="Guest";break;
-	}
 	
-	let tdGender = $('<td>' + gender + '</td>');
-	let tdRole = $('<td>' + role+ '</td>');
-	
-	tr.append(tdUsername).append(tdName).append(td.Surname).append(td.Gender).append(td.Role);
-	$('tbody').append(tr);
+	$('#tbodyAll').append(tr);
 }
-
+function addSearchTable(user)
+{
+	let tr = $('<tr></tr>');
+	let tdUsername = $('<td>' + user.username + '</td>');
+	let tdName = $('<td>' + user.name+ '</td>');
+	
+	let tdSurname = $('<td>' + user.surname + '</td>');
+	
+	let tdGender = $('<td>' + user.gender + '</td>');
+	let tdRole = $('<td>' + user.role+ '</td>');
+	tr.append(tdUsername).append(tdName).append(tdSurname).append(tdGender).append(tdRole);
+	
+	
+	$('#tbSearch').append(tr);
+}
 
 
 
@@ -51,14 +51,13 @@ $('#users').click(function(e)
 	$.get({
 		url:"ProjectRents/allUsers",
 		success:function(users){
+			$('#search').attr('hidden', false);
 			$('#allUsers').attr('hidden', false);
 			$('#allUsers tbody').html('');
 			if(users!=null){
-			for (var i = 0; i < users.length; i++)
-			{
-				console.log(users[i])
-				addUsersTr(users[i]);
-			}
+				for(let user of users){
+					addUsersTr(user);
+				}
 			}
 		},
 		error:function(message){
@@ -66,6 +65,34 @@ $('#users').click(function(e)
 			}
 	});
 });
+/*$('#search').submit((event)=>{
+	event.preventDefault();
+	let username;
+	username=$('#searchUsername').val();
+	let name=$('#searchName').val();
+	let surname=$('#searchSurname').val();
+	
+	$.post({
+		url:'ProjectRents/searchUsername',
+		contentType:'application/json',
+		data:JSON.stringify({
+			username:username,
+			name:name,
+			surname:surname
+		})
+			success:function (users){
+			$('#searchResults').attr('hidden',false);
+			$('#searchTable tbody').html('');
+			for(let user od users)
+			{
+				addSearchTable(user);
+			}
+		},
+		error:function(message){
+			console.log('Search error');
+		}		
+	});
+	});*/
 });
 
 

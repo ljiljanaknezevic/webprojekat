@@ -59,8 +59,36 @@
 <div>     
        <h2 >WELCOME BACK</h2>
       	<p>ULOGOVAN JE ADMIN</p>
-      	
-      	<form class="form-signin" id="allUsers" hidden="true">       
+      	   	
+      <form id="search" hidden="true">
+    	<table>
+    		<tr><td>Search by username</td><td><input type="text" id="searchUsername"></td>
+    		<tr><td>Search by name</td><td><input type="text" id="searchName"></td>
+    		<tr><td>Search by surname</td><td><input type="text" id="searchSurname"></td>
+    		<td><input type="submit" id="submitSearch" value="search"></td></tr>
+    	</table>
+</form>
+
+	
+<div id="searchResults" hidden="true">
+<form id="searchTable" >
+	<table border="1" id="tableSearch">
+	<thead>
+	<tr>
+		<th>Username</th>
+          <th>Name</th>
+           <th>Surname</th>
+          <th>Gender</th>
+          <th>Role</th> 
+	</tr>
+	</thead>
+	
+	<tbody id="tbSearch">
+      </tbody>
+	</table>
+</form>
+</div>
+<form class="form-signin" id="allUsers" hidden="true">       
       <h2 class="form-signin-heading">All users</h2>
       <table border="1" id="allusers">
       <thead>
@@ -72,7 +100,7 @@
           <th>Role</th>            
         </tr>
       </thead>
-      <tbody>
+      <tbody id="tbodyAll">
       </tbody>
     </table>
 
