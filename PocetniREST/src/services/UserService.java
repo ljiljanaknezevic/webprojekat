@@ -51,6 +51,10 @@ public class UserService {
 		if(message.equals("bas taj postoji u bazi")) {
 			User userr = userDao.findByUsername(user.getUsername());
 			request.getSession().setAttribute("user", userr);
+			User u = new User();
+			u.setUsername(user.getUsername());
+			u.setName(user.getName());
+			u.setRole(user.getRole());
 			return Response.status(200).build();
 		}
 		else if(message.equals("bad password"))
@@ -59,6 +63,12 @@ public class UserService {
 			return Response.status(Status.BAD_REQUEST).entity("There isn’t an account with this username. Please try another username.").build();
 		else 
 			return Response.status(Status.BAD_REQUEST).entity("bad requst").build();
+	
+		/*User loggedUser = userDao.findUser(user.getUsername(), user.getPassword());
+		if (loggedUser == null)
+			return null;
+		request.getSession().setAttribute("user", loggedUser);
+		return loggedUser;*/
 	}
 	
 	@POST

@@ -132,6 +132,13 @@ public class UserDAO {
 			return message = "bad password";
 		}
 		return message ;
+		/*if(!users.containsKey(username)) {
+			return null;
+		}	
+		else if (!users.get(username).getPassword().equals(password)) {
+			return null;
+		}
+		return findByUsername(username) ;*/
 	}
 	
 	public boolean find(String username) {
