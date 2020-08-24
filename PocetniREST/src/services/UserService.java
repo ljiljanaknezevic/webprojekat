@@ -2,6 +2,7 @@ package services;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -20,6 +21,7 @@ import javax.ws.rs.core.Response.Status;
 import beans.User;
 import beans.enums.Gender;
 import beans.enums.Role;
+
 import dao.UserDAO;
 
 @Path("")
@@ -112,7 +114,29 @@ public class UserService {
 		return Response.status(200).build();
 	}
 	
-	
+
+	@GET
+	@Path("/allUsers")
+	@Produces(MediaType.APPLICATION_JSON)
+//	@Consumes(MediaType.APPLICATION_JSON)
+	public List<User> getAllUsers(@Context HttpServletRequest request){
+		System.out.println("USAO JE U METODU");
+		User user = (User) request.getSession().getAttribute("user");
+		UserDAO kdao = (UserDAO) ctx.getAttribute("UserDAO");
+		System.out.println(user.getRole().toString());
+		if(user.getRole()==Role.ADMIN) {
+			System.out.println("ADMIN JE");
+			return kdao.getAll();
+		}
+		/*else if(user.getRole()==Role.HOST)
+		 * {
+		 * 	return kdao.getHostsUsers();
+		 * }*/else {
+			 System.out.println("NIJE ADMIN U PITANJU");
+			return null;
+		}
+
+	}
 	@POST
 	@Path("/userEdit")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -130,6 +154,7 @@ public class UserService {
 		return Response.status(400).build();
 	}
 	
+
 	@POST
 	@Path("/userEditPassword")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -148,5 +173,6 @@ public class UserService {
 			}
 		}
 		return Response.status(400).build();
+
 	}
 }

@@ -11,6 +11,7 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
 import beans.User;
 import beans.enums.Gender;
 import beans.enums.Role;
@@ -148,6 +149,13 @@ public class UserDAO {
 		
 		return true;
 	}
+
+	public List<User> getAll() {
+		List<User> list = new ArrayList<>();
+		list.addAll(users.values());
+		return list;
+
+}
 	
 	public User editUser(User user, String contextPath) {
 		System.out.println(user.getName());
@@ -162,7 +170,7 @@ public class UserDAO {
 		    }
 		}
 		return null;
-		
+
 	}
 	public User editUserPassword(User user, String contextPath) {
 		

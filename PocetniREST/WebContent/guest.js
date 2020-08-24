@@ -44,6 +44,7 @@ $(document).ready(function(){
     	$('#gender').val(gender);
     })
 
+
     $('#submit-edit').click(function(){
     	event.preventDefault();
     	let username=$('#username').val()
