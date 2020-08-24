@@ -149,9 +149,9 @@ public class UserDAO {
 		
 		return true;
 	}
-
-	public List<User> getAll() {
-		List<User> list = new ArrayList<>();
+	
+	public ArrayList<User> getAll() {
+		ArrayList<User> list = new ArrayList<>();
 		list.addAll(users.values());
 		return list;
 
@@ -188,4 +188,16 @@ public class UserDAO {
 		}
 		return null;
 	}
+
+	public List<User> getHostsUsers(User user) {
+		ArrayList<User> list = new ArrayList<>();
+		for (Object value : users.values()) {
+			//TODO:USLOV JE DA JE GOST REZERVISAO APARTMAN KOD DOMACINA
+		   list.add((User) value);
+		}
+	//	list.addAll(users.values());
+		return list;
+		
+	}
+
 }
