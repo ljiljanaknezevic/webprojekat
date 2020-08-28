@@ -77,10 +77,22 @@ public class UserService {
 	@Path("/registration")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response registration(User user, @Context HttpServletRequest reques) {
-//PRI USPESNOJ REGISTRACIJI SE PREBACUJE NA SLEDECU STRANICU I TREBA ZAPOCETI SESIJU NOVU?
-		user.setRole(Role.GUEST);
-		
+	public Response registration(User user, @Context HttpServletRequest request) {
+		User AloggedUser=(User) request.getSession().getAttribute("user");
+		//System.out.println("****************************************************");
+		if(AloggedUser!=null) {
+			if(AloggedUser.getRole().toString().equals("ADMIN"))
+			{
+				System.out.println("LOGUJE GA ADMIN");
+				user.setRole(Role.HOST);
+			}
+		}
+		else
+		{
+			user.setRole(Role.GUEST);
+			
+		}
+
 		UserDAO dao=(UserDAO) ctx.getAttribute("userDAO");
 
 		boolean loggedUser=dao.find(user.getUsername());
@@ -94,6 +106,16 @@ public class UserService {
 		String contextPath=ctx.getRealPath("");
 		dao.addToMap(user);
 		dao.saveUser(contextPath);
+		///////////////////////////////////////////
+		User userr = dao.findByUsername(user.getUsername());
+		request.getSession().setAttribute("user", userr);
+		User u = new User();
+		u.setUsername(user.getUsername());
+		u.setName(user.getName());
+		u.setRole(user.getRole());
+		/////////////////////////////////////////////
+		
+		
 		return Response.status(200).build();
 	}
 	

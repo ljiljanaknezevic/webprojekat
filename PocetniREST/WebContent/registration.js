@@ -1,4 +1,37 @@
+var userLogged = 'none';
 $(document).ready(function() {
+		function currentUser(){
+		
+		$.get({
+			url : "ProjectRents/currentUser",
+			success : function(user){
+				if(user == null){
+					userLogged = 'none';
+					console.log("NO ONE IS LOGGED");
+					currentUserLogged = null;
+				}else{
+					/*if(user.role == "ADMIN"){
+						userLogged = 'ADMIN';
+					}else if (user.role == "HOST"){
+						userLogged = 'HOST';
+					}else if (user.role == "GUEST"){
+						userLogged = 'GUEST';
+					}*/
+					userLogged = user.role;
+					currentUserLogged = user;
+				}
+				console.log("********************* ",userLogged)
+				 if(userLogged == 'ADMIN'){
+						window.location="./admin.html";
+					}else if(userLogged== 'HOST'){
+						window.location="./host.html";
+					}else if(userLogged== 'GUEST'){
+						window.location="./guest.html";
+					}else
+						console.log('neceeee')
+			}	
+		})
+	}
 	
 	$('form#registration').submit(function(event){
 		event.preventDefault()
@@ -15,6 +48,11 @@ $(document).ready(function() {
 		
 		let password=$('#password').val()
 		let passwordControl=$('#passControl').val()	
+		
+		var user = new Object();
+		user.username=username
+		user.password=password
+		var temp = JSON.stringify(user);
 		
 		 if(password != passwordControl){
        		$('#error').text('Password doesnt match. Try again.').show();
@@ -33,7 +71,8 @@ $(document).ready(function() {
 				contentType:"application/json",
 				success:function(data){	
 					console.log('proslo ');
-					alert('uspesno registrovani');
+					//alert('uspesno registrovani');
+					currentUser();
 				},
 				error:function(message){
 				//	if(message.responseText=='the passwords didn\'t match!'){
