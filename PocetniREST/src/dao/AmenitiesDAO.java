@@ -71,19 +71,28 @@ public class AmenitiesDAO {
 			
 		}
 	}
+	public boolean find(UUID username) {
+		if (!amenities.containsKey(username)) {
+			return false;
+		}
+		
+		return true;
+	}
 
 	public void addToMap(Amenities am) {
 		if(amenities.values() !=null) {
-			if(!amenities.containsKey(am.getId()))
-				amenities.put(am.getId(), am);
-		}else
+			if(!amenities.containsKey(am.getId())) {
+				//if(isUnique(am.getName()))
+					amenities.put(am.getId(), am);
+			}
+			}else
 			amenities.put(am.getId(), am);
 		
 	}
 
 	public boolean isUnique(String name) {
 		for(Amenities a : amenities.values()) {
-			if(a.getName().equals(name))
+			if(a.getName().equals(name) )
 				return false;
 		}
 		return true;
@@ -92,15 +101,18 @@ public class AmenitiesDAO {
 	public ArrayList<Amenities> getAllAmenities() {
 		ArrayList<Amenities> ameniti = new ArrayList<Amenities>();
 		for(Amenities a : amenities.values()) {
-			ameniti.add(a);
+			if(a.isDeleted() == false)
+				ameniti.add(a);
 		}
 		return ameniti;
 	}
 	
 	public Amenities findAmenitie(UUID id) {
 		for(Amenities a : amenities.values()) {
-			if(a.getId().equals(id))
-				return a;
+			if(a.getId().equals(id)) {
+				if(a.isDeleted() == false)
+					return a;
+			}
 		}
 		return null;
 	}
@@ -109,6 +121,17 @@ public class AmenitiesDAO {
 		for (UUID key : amenities.keySet()) {
 		    if(key.equals(am.getId())) {
 		    	am.setName(am.getName());
+		    	amenities.replace(am.getId(), am);
+		    	saveAmenities(contextPath);
+		    	return am;
+		    }
+		}
+		return null;
+	}
+	public Amenities deleteAmenitie(Amenities am, String contextPath) {
+		for (UUID key : amenities.keySet()) {
+		    if(key.equals(am.getId())) {
+		    	am.setDeleted(true);
 		    	amenities.replace(am.getId(), am);
 		    	saveAmenities(contextPath);
 		    	return am;

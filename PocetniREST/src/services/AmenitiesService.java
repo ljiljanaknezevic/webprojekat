@@ -1,6 +1,7 @@
 package services;
 
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
@@ -10,6 +11,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -51,13 +53,14 @@ public class AmenitiesService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addingAmenities(Amenities am) {
 		AmenitiesDAO dao = (AmenitiesDAO) ctx.getAttribute("amenitiesDAO");
-		
-		am.setId(UUID.randomUUID());
+		System.out.println(am.getName());
 		boolean isUnique = dao.isUnique(am.getName());
-		
-		if(!isUnique)
+		if(!isUnique) {
 			return Response.status(400).entity("Amenitie name already exists.").build();
+		}
 		String contextPath = ctx.getRealPath("");
+		am.setId(UUID.randomUUID());
+		am.setDeleted(false);
 		dao.addToMap(am);
 		dao.saveAmenities(contextPath);
 		return Response.ok(dao.getAllAmenities()).build();
@@ -69,6 +72,7 @@ public class AmenitiesService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response editingAmenities(Amenities am) {
 		AmenitiesDAO dao = (AmenitiesDAO) ctx.getAttribute("amenitiesDAO");
+		am.setDeleted(false);
 		boolean isUnique = dao.isUnique(am.getName());
 		if(!isUnique)
 			return Response.status(400).entity("Amenitie name already exists.").build();
@@ -77,6 +81,21 @@ public class AmenitiesService {
 		ameniti.setName(am.getName());
 		String contextPath=ctx.getRealPath("");
 		dao.editAmenitie(ameniti, contextPath);
+		return Response.ok(dao.getAllAmenities()).build();
+	}
+	@POST
+	@Path("/deleteAmenities{id}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response deletingAmenities(@PathParam("id") UUID id) {
+		AmenitiesDAO dao = (AmenitiesDAO) ctx.getAttribute("amenitiesDAO");
+		
+		Amenities ameniti = dao.findAmenitie(id);
+		
+		String contextPath=ctx.getRealPath("");
+	//	dao.deleteAmenitie(ameniti, contextPath);
+		ameniti.setDeleted(true);
+		dao.saveAmenities(contextPath);
 		return Response.ok(dao.getAllAmenities()).build();
 	}
 }

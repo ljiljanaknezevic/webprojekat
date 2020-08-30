@@ -102,10 +102,12 @@ $('#search').submit((event)=>{
 	// amenities 
 	var modal = document.getElementById('myModal');
 	var modal1 = document.getElementById('modal-amenities');
+	var modal2 = document.getElementById('modal-delete');
 	
 	// Get the <span> element that closes the modal
 	var span = document.getElementsByClassName("close")[0];
 	var span1 = document.getElementsByClassName("close")[1];
+	var span2 = document.getElementsByClassName("close")[2];
 
 	// When the user clicks on <span> (x), close the modal
 	span.onclick = function() {
@@ -117,7 +119,9 @@ $('#search').submit((event)=>{
 
 	}
 	
-
+	span2.onclick = function() {
+		modal2.style.display = "none";
+	}
 	// When the user clicks anywhere outside of the modal, close it
 	window.onclick = function(event) {
 		if (event.target == modal) {
@@ -127,6 +131,11 @@ $('#search').submit((event)=>{
 	window.onclick = function(event) {
 	    if (event.target == modal1) {
 	        modal1.style.display = "none";
+	    }
+	}
+	window.onclick = function(event) {
+	    if (event.target == modal2) {
+	        modal2.style.display = "none";
 	    }
 	}
 	function drawAmenities(data){
@@ -151,11 +160,8 @@ $('#search').submit((event)=>{
 				drawAmenities(data);
 			}
 		})
-		
-		var editAmeniti = new Object();
 		$('#amenitiesTable').on('click','button',function(event){
 			if($(event.target).attr("id")=="edit-amenities"){
-				console.log('ediitovanje')
 				modal1.style.display="block";
 			
 				$('#amenities-name-edit').val($(event.target).parent().parent().children().first().next().text());
@@ -167,23 +173,58 @@ $('#search').submit((event)=>{
 					var amenitie = new Object();
 					amenitie.name =$('#amenities-name-edit').val();
 					amenitie.id = $('#amenities-id-edit').val();
+					if(ameniti.name != ""){
+						$.post({
+							url:'ProjectRents/editAmenities',
+							contentType:'application/json',
+							data: JSON.stringify(amenitie),
+							success: function(data){
+								modal1.style.display="none";
+								drawAmenities(data);
+							},
+							error:function(){
+								modal1.style.display="block";
+								$('#error-amenities-edit').text('Amenitie name already exists. Try again.');
+								$('#error-amenities-edit').show();
+								$('#error-amenities-edit').delay(4000).fadeOut('slow');
+							}
+						})
+					}else{
+						modal1.style.display="block";
+						$('#error-amenities-edit').text('You didnt entered any name. Try again.');
+						$('#error-amenities-edit').show();
+						$('#error-amenities-edit').delay(4000).fadeOut('slow');
+					}
+				})
+			}else if( $(event.target).attr("id")=="delete-amenitie"){
+				//modal2.style.display = "block";
+				
+				var id =$(event.target).parent().parent().children().first().text();
+				$.post({
+					url:"ProjectRents/deleteAmenities"+id,
+					contentType:'multipart/form-data',
+					//data :JSON.stringify(id),
+					success:function(data){
+						drawAmenities(data);
+						modal2.style.display="none";
+						alert("Successfully deleted ");
+					}
+				})
+				/*$('#yes').click(function(){
 					$.post({
-						url:'ProjectRents/editAmenities',
-						contentType:'application/json',
-						data: JSON.stringify(amenitie),
-						success: function(data){
-							modal1.style.display="none";
+						url:"ProjectRents/deleteAmenities"+id,
+						contentType:'multipart/form-data',
+						//data :JSON.stringify(id),
+						success:function(data){
 							drawAmenities(data);
-						},
-						error:function(){
-							modal1.style.display="block";
-							$('#error-amenities-edit').text('Amenitie name already exists. Try again.');
-							$('#error-amenities-edit').show();
-							$('#error-amenities-edit').delay(4000).fadeOut('slow');
+							modal2.style.display="none";
+							alert("Successfully deleted ");
 						}
 					})
 				})
-				
+				$('#no').click(function(){
+					modal2.style.display = "none";
+				})*/
 			}
 		})
 		
@@ -191,8 +232,8 @@ $('#search').submit((event)=>{
 		$('#addA').click(function(){
 			modal.style.display="block";
 			$('#amenities-name').val('');
-			
-			$('#addAmenities').click(function() {
+		})
+		$('#addAmenities').click(function() {
 				var amenitie = new Object();
 				amenitie.name = $('#amenities-name').val();
 				if($('#amenities-name').val() == "")
@@ -209,9 +250,6 @@ $('#search').submit((event)=>{
 						contentType: 'application/json',
 						data:JSON.stringify(amenitie),
 						success:function(data){
-							for (i in data){
-								console.log(data[i].name)
-							}
 							drawAmenities(data);
 							modal.style.display="none";
 						},
@@ -224,8 +262,6 @@ $('#search').submit((event)=>{
 				
 				}
 			})
-		})
-		
 	})
 
 });
