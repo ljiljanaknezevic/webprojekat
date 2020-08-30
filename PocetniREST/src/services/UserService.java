@@ -85,38 +85,57 @@ public class UserService {
 			{
 				System.out.println("LOGUJE GA ADMIN");
 				user.setRole(Role.HOST);
+				
+				UserDAO dao=(UserDAO) ctx.getAttribute("userDAO");
+
+				boolean loggedUser=dao.find(user.getUsername());
+
+				
+				if(loggedUser==true) {
+					
+					return Response.status(400).entity("Username alerady exists").build();
+				}
+				
+				String contextPath=ctx.getRealPath("");
+				dao.addToMap(user);
+				dao.saveUser(contextPath);
+				
+				
+				return Response.status(200).build();
 			}
+			return Response.status(403).build();
 		}
 		else
 		{
 			user.setRole(Role.GUEST);
 			
-		}
+			UserDAO dao=(UserDAO) ctx.getAttribute("userDAO");
 
-		UserDAO dao=(UserDAO) ctx.getAttribute("userDAO");
+			boolean loggedUser=dao.find(user.getUsername());
 
-		boolean loggedUser=dao.find(user.getUsername());
-
-		
-		if(loggedUser==true) {
 			
-			return Response.status(400).entity("Username alerady exists").build();
+			if(loggedUser==true) {
+				
+				return Response.status(400).entity("Username alerady exists").build();
+			}
+			
+			String contextPath=ctx.getRealPath("");
+			dao.addToMap(user);
+			dao.saveUser(contextPath);
+			///////////////////////////////////////////
+			User userr = dao.findByUsername(user.getUsername());
+			request.getSession().setAttribute("user", userr);
+			User u = new User();
+			u.setUsername(user.getUsername());
+			u.setName(user.getName());
+			u.setRole(user.getRole());
+			/////////////////////////////////////////////
+			
+			
+			return Response.status(200).build();
 		}
+
 		
-		String contextPath=ctx.getRealPath("");
-		dao.addToMap(user);
-		dao.saveUser(contextPath);
-		///////////////////////////////////////////
-		User userr = dao.findByUsername(user.getUsername());
-		request.getSession().setAttribute("user", userr);
-		User u = new User();
-		u.setUsername(user.getUsername());
-		u.setName(user.getName());
-		u.setRole(user.getRole());
-		/////////////////////////////////////////////
-		
-		
-		return Response.status(200).build();
 	}
 	
 	@GET
