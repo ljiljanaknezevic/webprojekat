@@ -1,30 +1,87 @@
 package beans;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.UUID;
 
 import javax.ws.rs.core.Response.Status;
 
-import org.apache.tomcat.jni.Time;
+
+import beans.enums.ApartmentStatus;
 import beans.enums.ApartmentType;
 
 public class Apartment {
 
+	private UUID id;
 	private ApartmentType type;
 	private int numberOfRooms;
 	private int numberOfGuest;
 	private Location location;
-	private ArrayList<Date> dates;
-	private ArrayList<Date> availablles; //dostupni datumi za izdavanje ...
-	private Host host;
+	private ArrayList<String> dates;
+	private ArrayList<String> availables; //dostupni datumi za izdavanje ...
+	//private Host host;  //da li umesto citave klase host da cuvamo samo username hosta
+	private String hostUsername;
 	private ArrayList<Comment> comments;
 	private ArrayList<String> images;
 	private double price;
-	private Time checkIn;
-	private Time checkOut;
-	private Status status;
-	private ArrayList<Amenities> amenities;
+	private String checkIn = "2";
+	private String checkOut = "10";
+	private ApartmentStatus status  = ApartmentStatus.ACTIV ;
+	//last veriosn was <AMenities>. Milica idea is to saving list of ID od amenities that want to include
+	private ArrayList<UUID> amenities;
 	private ArrayList<Reservation> reservations;
+	
+	/*public Apartment(UUID id, ApartmentType type, int numberOfRooms, int numberOfGuest, Location location,
+			ArrayList<String> Strings, ArrayList<String> availables, Host host, ArrayList<Comment> comments,
+			ArrayList<String> images, double price, String checkIn, String checkOut, ApartmentStatus status,
+			ArrayList<Amenities> amenities, ArrayList<Reservation> reservations) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.numberOfRooms = numberOfRooms;
+		this.numberOfGuest = numberOfGuest;
+		this.location = location;
+		this.Strings = Strings;
+		this.availables = availables;
+		this.host = host;
+		this.comments = comments;
+		this.images = images;
+		this.price = price;
+		this.checkIn = checkIn;
+		this.checkOut = checkOut;
+		this.status = status;
+		this.amenities = amenities;
+		this.reservations = reservations;
+	}*/
+	public Apartment(UUID id, ApartmentType type, int numberOfRooms, int numberOfGuest, /*Location location,*/
+			ArrayList<String> dates, String hostUsername,
+			ArrayList<String> images, double price, String checkIn, String checkOut, ApartmentStatus status,
+			ArrayList<UUID> amenities) {
+		super();
+		this.id = id;
+		this.type = type;
+		this.numberOfRooms = numberOfRooms;
+		this.numberOfGuest = numberOfGuest;
+	//	this.location = location;
+		this.dates = dates;
+		this.hostUsername = hostUsername;
+		this.images = images;
+		this.price = price;
+		this.checkIn = checkIn;
+		this.checkOut = checkOut;
+		this.status = status;
+		this.amenities = amenities;
+		
+		
+		this.availables = new ArrayList<String>();
+		this.comments = new ArrayList<Comment>();
+		this.reservations = new ArrayList<Reservation>();
+	}
+	public UUID getId() {
+		return id;
+	}
+	public void setId(UUID id) {
+		this.id = id;
+	}
 	public ApartmentType getType() {
 		return type;
 	}
@@ -49,24 +106,24 @@ public class Apartment {
 	public void setLocation(Location location) {
 		this.location = location;
 	}
-	public ArrayList<Date> getDates() {
+	public ArrayList<String> getDates() {
 		return dates;
 	}
-	public void setDates(ArrayList<Date> dates) {
+	public void setDates(ArrayList<String> dates) {
 		this.dates = dates;
 	}
-	public ArrayList<Date> getAvailablles() {
-		return availablles;
+	public ArrayList<String> getavailables() {
+		return availables;
 	}
-	public void setAvailablles(ArrayList<Date> availablles) {
-		this.availablles = availablles;
+	public void setavailables(ArrayList<String> availables) {
+		this.availables = availables;
 	}
-	public Host getHost() {
+/*	public Host getHost() {
 		return host;
 	}
 	public void setHost(Host host) {
 		this.host = host;
-	}
+	}*/
 	public ArrayList<Comment> getComments() {
 		return comments;
 	}
@@ -85,28 +142,28 @@ public class Apartment {
 	public void setPrice(double price) {
 		this.price = price;
 	}
-	public Time getCheckIn() {
+	public String getCheckIn() {
 		return checkIn;
 	}
-	public void setCheckIn(Time checkIn) {
+	public void setCheckIn(String checkIn) {
 		this.checkIn = checkIn;
 	}
-	public Time getCheckOut() {
+	public String getCheckOut() {
 		return checkOut;
 	}
-	public void setCheckOut(Time checkOut) {
+	public void setCheckOut(String checkOut) {
 		this.checkOut = checkOut;
 	}
-	public Status getStatus() {
+	public ApartmentStatus getStatus() {
 		return status;
 	}
-	public void setStatus(Status status) {
+	public void setStatus(ApartmentStatus status) {
 		this.status = status;
 	}
-	public ArrayList<Amenities> getAmenities() {
+	public ArrayList<UUID> getAmenities() {
 		return amenities;
 	}
-	public void setAmenities(ArrayList<Amenities> amenities) {
+	public void setAmenities(ArrayList<UUID> amenities) {
 		this.amenities = amenities;
 	}
 	public ArrayList<Reservation> getReservations() {
@@ -115,6 +172,14 @@ public class Apartment {
 	public void setReservations(ArrayList<Reservation> reservations) {
 		this.reservations = reservations;
 	}
-	
+	public String getHostUsername() {
+		return hostUsername;
+	}
+	public void setHostUsername(String hostUsername) {
+		this.hostUsername = hostUsername;
+	}
+	public Apartment() {
+		
+	}
 	
 }

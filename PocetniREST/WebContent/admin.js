@@ -99,6 +99,8 @@ $('#search').submit((event)=>{
 	});
 
 
+	//AMENITIES TAB
+
 	// amenities 
 	var modal = document.getElementById('myModal');
 	var modal1 = document.getElementById('modal-amenities');
@@ -151,8 +153,6 @@ $('#search').submit((event)=>{
 	$('a[href="#amenities"]').click(function(){
 		$('#dugmad').attr('hidden', false);
 		var ameniti = new Object();
-		//ameniti.id = $('#').val();
-		//ameniti.name = $('#amenities-name').val();
 		$.get({
 			url:'ProjectRents/getAllAmenities',
 			contentType:'application/json',
