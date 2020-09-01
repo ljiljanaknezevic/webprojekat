@@ -1,10 +1,13 @@
 package services;
 
+import java.io.InputStream;
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -38,13 +41,14 @@ public class ApartmentService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addApartment(Apartment ap) {
+		System.out.println("USAO JE ");
 		ApartmentDAO dao = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
 		
 		String contextPath = ctx.getRealPath("");
 		ap.setId(UUID.randomUUID());
 		System.out.println(ap.getHostUsername() + " "+ap.getNumberOfGuest() + " "
 				+ap.getNumberOfRooms() + " "+ ap.getPrice() + " "+ap.getAmenities()+" " +ap.getDates()+" "+ap.getType() + " "
-				+ap.getId());
+				+ap.getId()+ap.getImages());
 		dao.addToMap(ap);
 		dao.saveApartments(contextPath);
 		return Response.ok().build();
