@@ -21,15 +21,15 @@ public class Apartment {
 	//private Host host;  //da li umesto citave klase host da cuvamo samo username hosta
 	private String hostUsername;
 	private ArrayList<Comment> comments;
-	private ArrayList<String> images;
+	private ArrayList<String> images ;
 	private double price;
 	private String checkIn = "2";
 	private String checkOut = "10";
-	private ApartmentStatus status  = ApartmentStatus.ACTIV ;
+	private ApartmentStatus status  = ApartmentStatus.PASSIVE ;
 	//last veriosn was <AMenities>. Milica idea is to saving list of ID od amenities that want to include
 	private ArrayList<UUID> amenities;
 	private ArrayList<Reservation> reservations;
-	
+	private boolean isDeleted = false;
 	/*public Apartment(UUID id, ApartmentType type, int numberOfRooms, int numberOfGuest, Location location,
 			ArrayList<String> Strings, ArrayList<String> availables, Host host, ArrayList<Comment> comments,
 			ArrayList<String> images, double price, String checkIn, String checkOut, ApartmentStatus status,
@@ -55,23 +55,25 @@ public class Apartment {
 	public Apartment(UUID id, ApartmentType type, int numberOfRooms, int numberOfGuest, /*Location location,*/
 			ArrayList<String> dates, String hostUsername,
 			ArrayList<String> images, double price, String checkIn, String checkOut, ApartmentStatus status,
-			ArrayList<UUID> amenities) {
+			ArrayList<UUID> amenities, boolean isDeleted) {
 		super();
 		this.id = id;
 		this.type = type;
 		this.numberOfRooms = numberOfRooms;
 		this.numberOfGuest = numberOfGuest;
-	//	this.location = location;
+		this.isDeleted = isDeleted;
+		////////////////////
+		this.location = new Location();
 		this.dates = dates;
 		this.hostUsername = hostUsername;
-		this.images = images;
+		///////////////////////////
+		this.images = new ArrayList<String>();
 		this.price = price;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
 		this.status = status;
 		this.amenities = amenities;
-		
-		
+		this.isDeleted = false;
 		this.availables = new ArrayList<String>();
 		this.comments = new ArrayList<Comment>();
 		this.reservations = new ArrayList<Reservation>();
@@ -180,6 +182,12 @@ public class Apartment {
 	}
 	public Apartment() {
 		
+	}
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 	
 }

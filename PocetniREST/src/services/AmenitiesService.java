@@ -53,7 +53,6 @@ public class AmenitiesService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addingAmenities(Amenities am) {
 		AmenitiesDAO dao = (AmenitiesDAO) ctx.getAttribute("amenitiesDAO");
-		System.out.println(am.getName());
 		boolean isUnique = dao.isUnique(am.getName());
 		if(!isUnique) {
 			return Response.status(400).entity("Amenitie name already exists.").build();

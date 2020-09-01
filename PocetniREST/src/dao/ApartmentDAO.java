@@ -75,10 +75,31 @@ public class ApartmentDAO {
 			if(!apartments.containsKey(am.getId())) {
 				apartments.put(am.getId(), am);
 			}
-			}else
+		}else
 				apartments.put(am.getId(), am);
 	}
 
+	public ArrayList<Apartment> getAllApartments(){
+		ArrayList<Apartment> apart = new ArrayList<Apartment>();
+		for(Apartment a:apartments.values()) {
+			if(!a.isDeleted())
+				apart.add(a);
+		}
+		return apart;
+	}
+	public ArrayList<Apartment> getHostsApartments(String host){
+		ArrayList<Apartment> apart = new ArrayList<Apartment>();
 
+		for(Apartment a:apartments.values()) {
+			if(a.getHostUsername().equals(host)) {
+				if(!a.isDeleted())
+					apart.add(a);
+			}
+		}
+		return apart;
+	}
 
+	public Apartment findApartment(UUID id) {
+		return apartments.get(id);
+	}
 }
