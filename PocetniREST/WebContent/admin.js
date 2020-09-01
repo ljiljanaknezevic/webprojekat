@@ -144,7 +144,10 @@ $('#search').submit((event)=>{
 		let temp='';
 		for (i in data){
 			console.log(data[i].name)
-			temp+=`<tr id="`+data[i].id+`"><td>`+data[i].id +`</td><td>`+data[i].name+`</td><td><button id="edit-amenities" class="btn btn-primary">Edit</button></td><td><button id="delete-amenitie" class="btn btn-primary">Delete </button></td></tr>`;
+			temp+=`<tr id="`+data[i].id+`"><td>`+data[i].id
+			+`</td><td>`+data[i].name+`</td>
+			<td><button id="edit-amenities" class="btn btn-primary">Edit</button></td>
+			<td><button id="delete-amenitie" class="btn btn-primary">Delete </button></td></tr>`;
 		}
 		$('#amenitiesTable').html(temp);
 	}

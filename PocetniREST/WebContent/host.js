@@ -9,8 +9,24 @@ function drawAmenities(data){
 				temp+=`<tr><td><input  id="`+data[i].id+`" type="checkbox"/></td><td>`+data[i].name+`</td></tr>`;
 			}
 			$('#amenitiesTable').html(temp);
-	}
+}
 
+
+function drawApartments(data){
+	let temp='';
+	for (i in data){
+		temp+=`<tr id="`+data[i].id+`">
+			<td>`+data[i].status+`</td>
+			<td>`+data[i].type+`</td>
+			<td>`+data[i].location+`</td>
+			<td>`+data[i].numberOfRooms+`</td>
+			<td>`+data[i].numberOfGuest+`</td>
+			<td>`+data[i].price+`</td>
+			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
+			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td></tr>`;
+	}
+	$('#apartmentsTable').html(temp);
+}
 $(document).ready(function(){
 	
 	$.ajax({
@@ -19,6 +35,15 @@ $(document).ready(function(){
 		contentType : "application/json",
 		success :function(data){
 			username = data.username;
+		}
+	})
+	
+	$.ajax({
+		url:'ProjectRents/getHostsApartments',
+		type : 'GET',
+		contentType : 'application/json',
+		success : function(data){
+			drawApartments(data)
 		}
 	})
 	
@@ -48,7 +73,16 @@ $(document).ready(function(){
 	}
 	
 	$('#addApartment').click(function(){
+		checkList=[];
 		modal.style.display = "block";
+		$('#number-od-rooms').val("");
+		$('#location').val(""); 
+		$('#number-od-guests').val("");
+		$('#Dates').val("");
+		$('#price-per-night').val("");
+		$('#check-in').val("");
+		$('#check-out').val("");
+		//AMENITIIIIES
 		$.ajax({
 			url:'ProjectRents/getAllAmenities',
 			type : "GET",
@@ -76,10 +110,12 @@ $(document).ready(function(){
 		apartment.dates= dani.split(',');
 		let price = $('#price-per-night').val();apartment.price = price;
 		//TODO :images
-		//for HOST-a username
 		apartment.hostUsername = username;
-		apartment.checkIn = $('#check-in').val();
-		apartment.checkOut = $('#check-out').val();
+		if($('#check-in').val() != "")
+			apartment.checkIn = $('#check-in').val();
+		if($('#check-out').val() != "")
+			apartment.checkOut = $('#check-out').val();
+		
 		for (i = 0; i < checkIdList.length; i++) {
 			 if ($('#'+checkIdList[i]).is(':checked')) {
 					checkList.push(checkIdList[i]);
@@ -87,17 +123,15 @@ $(document).ready(function(){
 		}
 		apartment.id = id;
 		apartment.amenities = checkList;
-		let objFile = $("#PictureUploadAd");
-		let file = objFile[0].files[0];
-		let fileName = file == undefined ? '' : file.name;
-		apartment.images = fileName;
 		$.ajax({
 			url:"ProjectRents/addApartment",
 			type :"POST",
 			data: JSON.stringify(apartment),
 			contentType:"application/json",
 			success :function(data){
-				console.log("proslo")
+				modal.style.display = "none"
+				alert('Successfully added apartment.')
+				drawApartments(data)
 			}
 		})
 		
@@ -116,4 +150,21 @@ $(document).ready(function(){
 	    });
 	
 
+	//DELETE AND EDTI APARTMENT
+	$('#apartmentsTable').on('click','button',function(event){
+		if( $(event.target).attr("id")=="delete-apartment"){
+			var trid = $(event.target).closest('tr').attr('id'); // table row ID 
+			console.log(trid + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+			$.ajax({
+				url:"ProjectRents/deleteApartment"+trid,
+				type : "POST",
+				contentType:'multipart/form-data',
+				success:function(data){
+					drawApartments(data);
+					alert("Successfully deleted. ");
+				}
+			})
+		
+		}
+	})
 })
