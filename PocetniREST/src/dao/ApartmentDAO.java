@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Amenities;
 import beans.Apartment;
+import beans.enums.ApartmentStatus;
 
 public class ApartmentDAO {
 
@@ -98,6 +99,21 @@ public class ApartmentDAO {
 		}
 		return apart;
 	}
+	
+	public ArrayList<Apartment> getAllActiveApartments(){
+		ArrayList<Apartment> apart = new ArrayList<Apartment>();
+		for(Apartment a:apartments.values()) {
+			if(a.getStatus()==ApartmentStatus.ACTIV) {
+				if(!a.isDeleted())
+					apart.add(a);
+			}
+			
+		}
+		return apart;
+	}
+	
+	
+	
 
 	public Apartment findApartment(UUID id) {
 		return apartments.get(id);

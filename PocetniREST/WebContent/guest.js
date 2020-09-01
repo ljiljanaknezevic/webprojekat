@@ -1,3 +1,18 @@
+function drawApartments(data){
+	let temp='';
+	for (i in data){
+		temp+=`<tr id="`+data[i].id+`">
+			<td>`+data[i].status+`</td>
+			<td>`+data[i].type+`</td>
+			<td>`+data[i].location+`</td>
+			<td>`+data[i].numberOfRooms+`</td>
+			<td>`+data[i].numberOfGuest+`</td>
+			<td>`+data[i].price+`</td>
+			<td><button id="make-reservation" class="btn btn-primary">Make reservation</button></td></tr>`;
+	}
+	$('#apartmentsTable').html(temp);
+}
+
 var username = 'none';
 var name = 'none';
 var surname = 'none';
@@ -5,7 +20,36 @@ var gender = 'none';
 var password ='none';
 var role = 'none';
 $(document).ready(function(){
-
+	
+	$.get({
+		url:'ProjectRents/allActiveApartments',
+		contentType : 'application/json',
+		success : function(data){
+			drawApartments(data)
+			console.log("Uspesno")
+		}
+		
+	})
+	//MODAL
+	var modal = document.getElementById('myModal');
+	var span = document.getElementsByClassName("close")[0];
+	span.onclick = function() {
+		modal.style.display = "none";
+	}
+	window.onclick = function(event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+	}
+	
+	
+		$('#make-reservation').click(function(){
+		modal.style.display = "block";
+		$('#nights-of-stay').val("");
+		$('#message-for-host').val(""); 
+		$('#start-date').val("");
+	})
+	
 	$.get({
 		url: 'ProjectRents/currentUser',
 		success: function(user) {
@@ -19,7 +63,10 @@ $(document).ready(function(){
 				 gender = 'male';
 			 else gender = 'female';
 			
-		}
+		},
+		error:function(message){
+			console.log('Error')
+			}
 	});
 	
     $('ul.dropdown-menu li').click(function(e) 

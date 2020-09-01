@@ -54,7 +54,7 @@ public class Apartment {
 	}*/
 	public Apartment(UUID id, ApartmentType type, int numberOfRooms, int numberOfGuest, /*Location location,*/
 			ArrayList<String> dates, String hostUsername,
-			ArrayList<String> images, double price, String checkIn, String checkOut, ApartmentStatus status,
+			/*ArrayList<String> images,*/ double price, String checkIn, String checkOut, ApartmentStatus status,
 			ArrayList<UUID> amenities, boolean isDeleted) {
 		super();
 		this.id = id;

@@ -30,7 +30,7 @@ function readURL(input) {
     img.src = url;
 }*/
 
-function getBase64Image(imgElem) {
+/*function getBase64Image(imgElem) {
 // imgElem must be on the same server otherwise a cross-origin error will be thrown "SECURITY_ERR: DOM Exception 18"
     var canvas = document.createElement("canvas");
     //canvas.width = imgElem.clientWidth;
@@ -41,7 +41,7 @@ function getBase64Image(imgElem) {
 	ctx.drawImage(imgElem, 0, 0);
     var dataURL = canvas.toDataURL("image/png");
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-}
+}*/
 
 function drawAmenities(data){
 			let temp='';
@@ -154,14 +154,11 @@ $(document).ready(function(){
 		apartment.dates= dani.split(',');
 		let price = $('#price-per-night').val();apartment.price = price;
 		//TODO :images
-<<<<<<< HEAD
-		let images=$('#blah').src;
-		var base64 = getBase64Image(document.getElementById("blah"));
-		apartment.images=base64;
-		console.log(base64);
-		//for HOST-a username
-=======
->>>>>>> cf01799faffd7b17cca206f152d2159e3b03dbe8
+		//let images=$('#blah').src;
+		//var base64 = getBase64Image(document.getElementById("blah"));
+		//apartment.images=base64;
+		//console.log(base64);
+
 		apartment.hostUsername = username;
 		if($('#check-in').val() != "")
 			apartment.checkIn = $('#check-in').val();

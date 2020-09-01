@@ -1,21 +1,20 @@
 package services;
 
-<<<<<<< HEAD
 import java.io.InputStream;
-=======
+
 import java.util.ArrayList;
->>>>>>> cf01799faffd7b17cca206f152d2159e3b03dbe8
+
 import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
-<<<<<<< HEAD
+
 import javax.ws.rs.FormParam;
-=======
+
 import javax.ws.rs.GET;
->>>>>>> cf01799faffd7b17cca206f152d2159e3b03dbe8
+
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -68,22 +67,29 @@ public class ApartmentService {
 		return Response.ok(	dao.getHostsApartments(u.getUsername())	).build();
 	}
 	
+	@GET
+	@Path("/allActiveApartments")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllActiveApartments(@Context HttpServletRequest request) {
+		System.out.println("USAO JE U SERVICE");
+		ApartmentDAO dao=(ApartmentDAO) ctx.getAttribute("apartmentDAO");
+		return Response.ok(dao.getAllActiveApartments()).build();
+	}
+	
 	@POST
 	@Path("/addApartment")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addApartment(Apartment ap) {
-		System.out.println("USAO JE ");
+		//System.out.println("USAO JE ");
 		ApartmentDAO dao = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
 		
 		String contextPath = ctx.getRealPath("");
 		ap.setId(UUID.randomUUID());
-<<<<<<< HEAD
 		System.out.println(ap.getHostUsername() + " "+ap.getNumberOfGuest() + " "
 				+ap.getNumberOfRooms() + " "+ ap.getPrice() + " "+ap.getAmenities()+" " +ap.getDates()+" "+ap.getType() + " "
-				+ap.getId()+ap.getImages());
-=======
->>>>>>> cf01799faffd7b17cca206f152d2159e3b03dbe8
+				+ap.getId());
+
 		dao.addToMap(ap);
 		dao.saveApartments(contextPath);
 		return Response.ok(dao.getHostsApartments(ap.getHostUsername())).build();
