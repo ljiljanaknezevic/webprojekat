@@ -71,7 +71,6 @@ public class ApartmentService {
 	@Path("/allActiveApartments")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllActiveApartments(@Context HttpServletRequest request) {
-		System.out.println("USAO JE U SERVICE");
 		ApartmentDAO dao=(ApartmentDAO) ctx.getAttribute("apartmentDAO");
 		return Response.ok(dao.getAllActiveApartments()).build();
 	}
