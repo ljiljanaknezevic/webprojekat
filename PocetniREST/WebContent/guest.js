@@ -1,3 +1,19 @@
+function drawMyReservations(data){
+	let temp='';
+	for (i in data){
+		temp+=`<tr id="`+data[i].reservationId+`">
+			<td>`+data[i].apartmentId+`</td>
+			<td>`+data[i].arrivalDate+`</td>
+			<td>`+data[i].numberOfStay+`</td>
+			<td>`+data[i].totalPrice+`</td>
+			<td>`+data[i].message+`</td>
+			<td>`+data[i].status+`</td>
+			//<td><button id="cancel-reservation" class="btn btn-primary">Cancel reservation</button></td>
+			</tr>`;
+	}
+	$('#myreservationsTable').html(temp);
+}
+
 function drawApartments(data){
 	let temp='';
 	for (i in data){
@@ -13,13 +29,32 @@ function drawApartments(data){
 	$('#apartmentsTable').html(temp);
 }
 
-var username = 'none';
+
+var id='';
+var username = '';
 var name = 'none';
 var surname = 'none';
 var gender = 'none';
 var password ='none';
 var role = 'none';
 $(document).ready(function(){
+	$('#myreservations').click(function(e){
+		
+		$.get({
+			url:"ProjectRents/guestsReservations",
+			success:function(myreservations){
+				$('#myreservations').attr('hidden',false);
+				$('#myreservations tbody').html('');
+				$('#content').attr('hidden',true);
+				drawMyReservations(myreservations);
+			},
+			error:function(message){
+			console.log('Error with my reservations')
+			}
+		})
+	})
+	
+	
 	
 	$.get({
 		url:'ProjectRents/allActiveApartments',
@@ -59,7 +94,7 @@ $(document).ready(function(){
 				reservation.guest=username;
 				reservation.status=0;
 				reservation.totalPrice=0;
-				reservation.reservationId='none';
+				reservation.reservationId=id;
 				
 				
 				console.log(trid);

@@ -12,13 +12,14 @@
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
-   
+  
 	<script src="guest.js"></script>
 	
 	<link href="css/look.css" rel="stylesheet" id="look-css">
 </head>
 
 <style>
+
 .tabs-left, .tabs-right {
   border-bottom: none;
   padding-top: 2px;
@@ -123,7 +124,7 @@
         <li><a href="#">ABOUT</a></li>
         <li><a href="#services">SERVICES</a></li>
         <li><a href="#portfolio">PORTFOLIO</a></li>
-        <li><a href="#pricing">PRICING</a></li>
+        <li id="myreservations"><a href="#myreservations">MY RESERVATIONS</a></li>
         <li class="dropdown">
 	        <a class="dropdown-toggle" data-toggle="dropdown" role ="menu" href="#">
 	        <span class="glyphicon glyphicon-user user"></span>
@@ -141,7 +142,7 @@
 
   </div>
 </nav>
- <div id ="content">     
+ <div id ="content" hidden="false">     
       <!-- this is for #apartments content -->
       	<br><br>
       	   	<div  style="text-align: center">
@@ -153,7 +154,6 @@
 	                  <th colspan="9" style="text-align: center;">APARTMENTS</th>
 	                </tr>
 	                	<tr class="success">
-	                	<th>Apartment Id</th>
 	                	<th>Status</th>
 	                	<th>Apartment Type</th>
 	                	<th>Location</th>
@@ -171,6 +171,24 @@
      		</div> 
 			</div>
 			</div>
+			
+<form class="form-signin" id="myReservations" hidden="true">       
+      <h2 class="form-signin-heading">My Reservations</h2>
+      <table border="1" id="myreservationsTable">
+      <thead>
+        <tr bgcolor="lightgrey">
+         <th>Apartment id</th>
+          <th>Arrivale date</th>
+          <th>Nights of stay</th>
+           <th>Total price</th>
+          <th>Message for host</th>
+          <th>Status</th>            
+        </tr>
+      </thead>
+      <tbody id="tbodyReservations">
+      </tbody>
+    </table>
+    </form>
 			
    	<!-- MODAL FOR RESERVATIONS -->
    	  <div id="myModal" class="modal">

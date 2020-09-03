@@ -12,7 +12,7 @@ public class Reservation {
 	private int numberOfStay;
 	private double totalPrice;
 	private String message;
-	private Guest guest;
+	private String guest;    //BILA JE KLASA GUEST ZA GOSTA,MOZDA STAVITI GOSTOV ID
 	private ReservationStatus status;
 	
 	
@@ -21,7 +21,7 @@ public class Reservation {
 		super();
 	}
 	public Reservation(UUID reservationId, UUID apartmentId, Date arrivalDate, int numberOfStay, double totalPrice,
-			String message, Guest guest, ReservationStatus status) {
+			String message, String guest, ReservationStatus status) {
 		super();
 		this.reservationId = reservationId;
 		this.apartmentId = apartmentId;
@@ -68,10 +68,10 @@ public class Reservation {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public Guest getGuest() {
+	public String getGuest() {
 		return guest;
 	}
-	public void setGuest(Guest guest) {
+	public void setGuest(String guest) {
 		this.guest = guest;
 	}
 	public ReservationStatus getStatus() {

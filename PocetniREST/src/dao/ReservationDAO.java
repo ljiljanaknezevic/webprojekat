@@ -81,4 +81,14 @@ public void addToMap(Reservation r) {
 	public Reservation findReservation(UUID id) {
 		return reservations.get(id);
 }
+	public ArrayList<Reservation> getGuestsReservations(String guest) {
+		ArrayList<Reservation> reservation=new ArrayList<Reservation>();
+		
+		for(Reservation r:reservations.values()){
+			if(r.getGuest().equals(guest)) {
+				reservation.add(r);
+			}
+		}
+		return reservation;
+	}
 }
