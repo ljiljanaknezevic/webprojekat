@@ -29,7 +29,22 @@ function addSearchTable(user)
 }
 
 
-
+function drawApartments(data){
+	let temp='';
+	for (i in data){
+		temp+=`<tr id="`+data[i].id+`">
+			<td>`+data[i].hostUsername+`</td>
+			<td>`+data[i].status+`</td>
+			<td>`+data[i].type+`</td>
+			<td>`+data[i].location+`</td>
+			<td>`+data[i].numberOfRooms+`</td>
+			<td>`+data[i].numberOfGuest+`</td>
+			<td>`+data[i].price+`</td>
+			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
+			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td></tr>`;
+	}
+	$('#apartmentsTable').html(temp);
+}
 
 $(document).ready(function(){
 
@@ -155,6 +170,7 @@ $('#search').submit((event)=>{
 	
 	$('a[href="#amenities"]').click(function(){
 		$('#dugmad').attr('hidden', false);
+		$('#content-apartmant').attr('hidden', true);
 		var ameniti = new Object();
 		$.get({
 			url:'ProjectRents/getAllAmenities',
@@ -200,8 +216,6 @@ $('#search').submit((event)=>{
 					}
 				})
 			}else if( $(event.target).attr("id")=="delete-amenitie"){
-				//modal2.style.display = "block";
-				
 				var id =$(event.target).parent().parent().children().first().text();
 				$.post({
 					url:"ProjectRents/deleteAmenities"+id,
@@ -213,21 +227,6 @@ $('#search').submit((event)=>{
 						alert("Successfully deleted ");
 					}
 				})
-				/*$('#yes').click(function(){
-					$.post({
-						url:"ProjectRents/deleteAmenities"+id,
-						contentType:'multipart/form-data',
-						//data :JSON.stringify(id),
-						success:function(data){
-							drawAmenities(data);
-							modal2.style.display="none";
-							alert("Successfully deleted ");
-						}
-					})
-				})
-				$('#no').click(function(){
-					modal2.style.display = "none";
-				})*/
 			}
 		})
 		
@@ -266,7 +265,37 @@ $('#search').submit((event)=>{
 				}
 			})
 	})
-
+	
+	//APARTMENT view
+	$.ajax({
+			url:'ProjectRents/getAllApartments',
+			type : 'GET',
+			contentType : 'application/json',
+			success : function(data){
+				drawApartments(data)
+			}
+	})
+	$('a[href="#apartments"]').click(function(){
+		
+		$('#content-apartmant').attr('hidden', false);
+		$('#dugmad').attr('hidden', true);
+	})
+		//DELETE AND EDTI APARTMENT
+	$('#apartmentsTable').on('click','button',function(event){
+		if( $(event.target).attr("id")=="delete-apartment"){
+			var trid = $(event.target).closest('tr').attr('id'); // table row ID 
+			$.ajax({
+				url:"ProjectRents/deleteApartment"+trid,
+				type : "POST",
+				contentType:'multipart/form-data',
+				success:function(data){
+					drawApartments(data);
+					alert("Successfully deleted. ");
+				}
+			})
+		
+		}
+	})
 });
 
 

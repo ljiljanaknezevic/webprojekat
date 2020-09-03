@@ -159,6 +159,16 @@
   		<div class="modal-content" style="text-align: center;" >
     	 
     	 <table width="500" align="center">
+        <tr id = "tr-status" hidden = "true">
+          <th height="50" >Status:</th>
+          <th height="50"  >
+			<select name="status" id="status" class="form-control" required 
+				 oninvalid="this.setCustomValidity('Type is required.')" oninput="setCustomValidity('')">
+      			<option value="ACTIV">ACTIV</option>
+      			<option value="PASSIVE">PASSIVE</option>
+     		 </select>
+		  </th>
+        </tr>
         <tr >
           <th height="50" >Type:</th>
           <th height="50"  >
@@ -236,5 +246,7 @@
        <br>
   	  </div> 
    	</div>
+   	
+   	
 </body>
 </html>

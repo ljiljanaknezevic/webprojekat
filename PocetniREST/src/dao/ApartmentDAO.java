@@ -113,7 +113,6 @@ public class ApartmentDAO {
 	}
 	
 	
-	
 
 	public Apartment findApartment(UUID id) {
 		return apartments.get(id);

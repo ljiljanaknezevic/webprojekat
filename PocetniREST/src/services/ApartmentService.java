@@ -48,7 +48,6 @@ public class ApartmentService {
 	}
 	
 	
-	//KORISTI ZA ADMINA, JER ON VIDI SVE APARTMANE ja mislim .milicad
 	@GET
 	@Path("/getAllApartments")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -75,6 +74,13 @@ public class ApartmentService {
 		ApartmentDAO dao=(ApartmentDAO) ctx.getAttribute("apartmentDAO");
 		return Response.ok(dao.getAllActiveApartments()).build();
 	}
+	@GET
+	@Path("/getApartmentById{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getApartmentById(@PathParam("id") UUID id) {
+		ApartmentDAO dao=(ApartmentDAO) ctx.getAttribute("apartmentDAO");
+		return Response.ok(dao.findApartment(id)).build();
+	}
 	
 	@POST
 	@Path("/addApartment")
@@ -86,15 +92,33 @@ public class ApartmentService {
 		
 		String contextPath = ctx.getRealPath("");
 		ap.setId(UUID.randomUUID());
-		System.out.println(ap.getHostUsername() + " "+ap.getNumberOfGuest() + " "
-				+ap.getNumberOfRooms() + " "+ ap.getPrice() + " "+ap.getAmenities()+" " +ap.getDates()+" "+ap.getType() + " "
-				+ap.getId());
-
 		dao.addToMap(ap);
 		dao.saveApartments(contextPath);
 		return Response.ok(dao.getHostsApartments(ap.getHostUsername())).build();
 	}
-	
+	@POST
+	@Path("/editApartment")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response editApartment(Apartment ap) {
+		ApartmentDAO dao = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
+		String contextPath = ctx.getRealPath("");
+
+		Apartment a =dao.findApartment(ap.getId());
+		a.setAmenities(ap.getAmenities());
+		a.setCheckIn(ap.getCheckIn());
+		a.setCheckOut(ap.getCheckOut());
+		a.setStatus(ap.getStatus());
+		a.setDates(ap.getDates());
+		a.setImages(ap.getImages());
+		a.setLocation(ap.getLocation());
+		a.setNumberOfGuest(ap.getNumberOfGuest());
+		a.setNumberOfRooms(ap.getNumberOfRooms());
+		a.setPrice(ap.getPrice());
+		a.setType(ap.getType());
+		dao.saveApartments(contextPath);
+		return Response.ok(dao.getHostsApartments(ap.getHostUsername())).build();
+	}
 	@POST
 	@Path("/deleteApartment{id}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
