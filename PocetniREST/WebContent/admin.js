@@ -187,8 +187,9 @@ $('#search').submit((event)=>{
 		$('#dugmad').attr('hidden', false);
 		$('#content-apartmant').attr('hidden', true);
 		var ameniti = new Object();
-		$.get({
+		$.ajax({
 			url:'ProjectRents/getAllAmenities',
+			type :"GET",
 			contentType:'application/json',
 			success:function(data){
 				drawAmenities(data);

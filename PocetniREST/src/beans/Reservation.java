@@ -8,7 +8,7 @@ import beans.enums.ReservationStatus;
 public class Reservation {
 	private UUID reservationId;
 	private UUID apartmentId; //apartmant koji je rezervisan
-	private Date arrivalDate;
+	private String arrivalDate;
 	private int numberOfStay;
 	private double totalPrice;
 	private String message;
@@ -20,7 +20,7 @@ public class Reservation {
 	public Reservation() {
 		super();
 	}
-	public Reservation(UUID reservationId, UUID apartmentId, Date arrivalDate, int numberOfStay, double totalPrice,
+	public Reservation(UUID reservationId, UUID apartmentId, String arrivalDate, int numberOfStay, double totalPrice,
 			String message, String guest, ReservationStatus status) {
 		super();
 		this.reservationId = reservationId;
@@ -44,10 +44,10 @@ public class Reservation {
 	public void setApartmentId(UUID apartmentId) {
 		this.apartmentId = apartmentId;
 	}
-	public Date getArrivalDate() {
+	public String getArrivalDate() {
 		return arrivalDate;
 	}
-	public void setArrivalDate(Date arrivalDate) {
+	public void setArrivalDate(String arrivalDate) {
 		this.arrivalDate = arrivalDate;
 	}
 	public int getNumberOfStay() {

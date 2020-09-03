@@ -11,7 +11,7 @@ function drawMyReservations(data){
 			//<td><button id="cancel-reservation" class="btn btn-primary">Cancel reservation</button></td>
 			</tr>`;
 	}
-	$('#myreservationsTable').html(temp);
+	$('#tbodyReservations').html(temp);
 }
 
 function drawApartments(data){
@@ -38,14 +38,18 @@ var gender = 'none';
 var password ='none';
 var role = 'none';
 $(document).ready(function(){
+	
+	$('#content').attr('hidden',false);
+	
 	$('#myreservations').click(function(e){
-		
-		$.get({
+		$('#myReservations').attr('hidden',false);
+		$('#content').attr('hidden',true);
+		$('#myreservationsTable tbody').html('');
+		$.ajax({
 			url:"ProjectRents/guestsReservations",
+			type : "GET",
 			success:function(myreservations){
-				$('#myreservations').attr('hidden',false);
-				$('#myreservations tbody').html('');
-				$('#content').attr('hidden',true);
+				
 				drawMyReservations(myreservations);
 			},
 			error:function(message){
