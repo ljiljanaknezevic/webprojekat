@@ -242,7 +242,13 @@ $(document).ready(function(){
 				success :function(data){
 					modal.style.display = "none"
 					alert('Successfully edited apartment.')
-					drawApartments(data)
+					var hostsLists = [];
+					for( i in data){
+						if(data[i].hostUsername == username){
+							hostsLists.push(data[i]);
+						}
+					}
+					drawApartments(hostsLists)
 				}
 			})
 		}
@@ -273,11 +279,17 @@ $(document).ready(function(){
 				type : "POST",
 				contentType:'multipart/form-data',
 				success:function(data){
-					drawApartments(data);
+					var hostsLists = [];
+					for( i in data){
+						if(data[i].hostUsername == username){
+							hostsLists.push(data[i]);
+						}
+					}
+					drawApartments(hostsLists)
 					alert("Successfully deleted. ");
 				}, 
 				error:function(){
-					alert('Editing failed. Try again.')
+					alert('Deleting failed. Try again.')
 				}
 			})
 		

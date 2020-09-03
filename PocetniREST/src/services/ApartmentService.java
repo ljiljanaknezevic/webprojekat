@@ -116,7 +116,7 @@ public class ApartmentService {
 		a.setPrice(ap.getPrice());
 		a.setType(ap.getType());
 		dao.saveApartments(contextPath);
-		return Response.ok(dao.getHostsApartments(ap.getHostUsername())).build();
+		return Response.ok(dao.getAllApartments()).build();
 	}
 	@POST
 	@Path("/deleteApartment{id}")
@@ -128,7 +128,7 @@ public class ApartmentService {
 		String contextPath = ctx.getRealPath("");
 		a.setDeleted(true);
 		dao.saveApartments(contextPath);
-		return Response.ok(dao.getHostsApartments(a.getHostUsername())).build();
+		return Response.ok(dao.getAllApartments()).build();
 	}
 	
 }
