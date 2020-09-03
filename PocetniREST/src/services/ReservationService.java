@@ -11,6 +11,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -19,6 +20,7 @@ import javax.ws.rs.core.Response;
 import beans.Apartment;
 import beans.Reservation;
 import beans.User;
+import beans.enums.ReservationStatus;
 import dao.ApartmentDAO;
 import dao.ReservationDAO;
 
@@ -79,5 +81,53 @@ public class ReservationService {
 		dao.saveReservations(contextPath);
 		return Response.ok().build();
 	}
-
+	
+	@POST
+	@Path("/cancelReservation{id}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response cancelReservation(@PathParam("id") UUID id) {
+		ReservationDAO dao=(ReservationDAO) ctx.getAttribute("reservationDAO");
+		Reservation r=dao.findReservation(id);
+		String contextPath=ctx.getRealPath("");
+		r.setStatus(ReservationStatus.CANCELED);
+		dao.saveReservations(contextPath);
+		return Response.ok(dao.getAllReservations()).build();
+	}
+	
+	
+	@POST
+	@Path("/acceptReservation{id}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response acceptReservation(@PathParam("id") UUID id) {
+		ReservationDAO dao=(ReservationDAO) ctx.getAttribute("reservationDAO");
+		Reservation r=dao.findReservation(id);
+		String contextPath=ctx.getRealPath("");
+		r.setStatus(ReservationStatus.ACCEPTED);
+		dao.saveReservations(contextPath);
+		return Response.ok(dao.getAllReservations()).build();
+	}
+	
+	@POST
+	@Path("/rejectReservation{id}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response rejectReservation(@PathParam("id") UUID id) {
+		ReservationDAO dao=(ReservationDAO) ctx.getAttribute("reservationDAO");
+		Reservation r=dao.findReservation(id);
+		String contextPath=ctx.getRealPath("");
+		r.setStatus(ReservationStatus.REJECTED);
+		dao.saveReservations(contextPath);
+		return Response.ok(dao.getAllReservations()).build();
+	}
+	
+	@GET
+	@Path("/allReservations")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllReservations() {
+	ReservationDAO dao = (ReservationDAO) ctx.getAttribute("reservationDAO");
+	return Response.ok(dao.getAllReservations()).build();
+	}
 }

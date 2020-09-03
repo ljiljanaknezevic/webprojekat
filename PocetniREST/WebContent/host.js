@@ -55,6 +55,48 @@ function drawAmenities(data){
 			$('#amenitiesTable').html(temp);
 }
 
+function drawReservations(data){
+	let temp='';
+	for (i in data){
+		if(data[i].status=='CREATED'){
+			temp+=`<tr id="`+data[i].reservationId+`">
+			<td>`+data[i].apartmentId+`</td>
+			<td>`+data[i].arrivalDate+`</td>
+			<td>`+data[i].numberOfStay+`</td>
+			<td>`+data[i].totalPrice+`</td>
+			<td>`+data[i].message+`</td>
+			<td>`+data[i].status+`</td>
+			<td><button  id="accept-reservation" class="btn btn-primary">Cancel reservation</button></td>
+			</tr>`;
+		}
+		else if(data[i].status=='CREATED' || data[i].status=='ACCEPTED'){
+				temp+=`<tr id="`+data[i].reservationId+`">
+			<td>`+data[i].apartmentId+`</td>
+			<td>`+data[i].arrivalDate+`</td>
+			<td>`+data[i].numberOfStay+`</td>
+			<td>`+data[i].totalPrice+`</td>
+			<td>`+data[i].message+`</td>
+			<td>`+data[i].status+`</td>
+			<td><button  id="reject-reservation" class="btn btn-primary">Cancel reservation</button></td>
+			</tr>`;
+		}
+		//TODO:USLOV ZA ISTEK DATUMA NOCENJA
+	else
+	{
+		temp+=`<tr id="`+data[i].reservationId+`">
+			<td>`+data[i].apartmentId+`</td>
+			<td>`+data[i].arrivalDate+`</td>
+			<td>`+data[i].numberOfStay+`</td>
+			<td>`+data[i].totalPrice+`</td>
+			<td>`+data[i].message+`</td>
+			<td>`+data[i].status+`</td>
+			</tr>`;
+	}
+				
+	}
+	
+	$('#tbodyReservations').html(temp);
+}
 
 function drawApartments(data){
 	let temp='';
@@ -165,6 +207,8 @@ function someFunc(event){
 }
 $(document).ready(function(){
 	
+	$('#content').attr('hidden',false);
+	
 	$.ajax({
 		url:"ProjectRents/currentUser",
 		type : "GET",
@@ -182,6 +226,57 @@ $(document).ready(function(){
 			drawApartments(data)
 		}
 	})
+	
+	
+	//RESERVATION TAB
+	$('a[href="#reservationsClick"]').click(function(e){
+		console.log("USAO JE U CLICK");
+		$('#myReservations').attr('hidden',false);
+		$('#content').attr('hidden',true);
+		$.ajax({
+			url:"ProjectRents/hostsReservations",
+			type : "GET",
+			success:function(reservations){
+				drawReservations(reservations);
+			},
+			error:function(message){
+			console.log('Error with reservations')
+			}
+		})
+	})
+	
+	//CLICKS IN RESERVATION TABLE
+	
+		$('#tbodyReservations').on('click','button',function(event){
+		if($(event.target).attr('id')=="accept-reservation"){
+			var trid = $(event.target).closest('tr').attr('id');
+				$.ajax({
+				url:"ProjectRents/acceptReservation"+trid,
+				type : "POST",
+				contentType:'multipart/form-data',
+				success:function(data){
+					drawMyReservations(data);
+					alert("Successfully accepted. ");
+				}
+			})
+		}
+	})
+	
+	$('#tbodyReservations').on('click','button',function(event){
+		if($(event.target).attr('id')=="reject-reservation"){
+			var trid = $(event.target).closest('tr').attr('id');
+				$.ajax({
+				url:"ProjectRents/rejectReservation"+trid,
+				type : "POST",
+				contentType:'multipart/form-data',
+				success:function(data){
+					drawMyReservations(data);
+					alert("Successfully rejected. ");
+				}
+			})
+		}
+	})
+	
 	
 	 $('ul.dropdown-menu li').click(function(e) 
     { 

@@ -1,6 +1,19 @@
 function drawMyReservations(data){
 	let temp='';
 	for (i in data){
+		if(data[i].status=='CREATED' || data[i].status=='ACCEPTED'){
+			temp+=`<tr id="`+data[i].reservationId+`">
+			<td>`+data[i].apartmentId+`</td>
+			<td>`+data[i].arrivalDate+`</td>
+			<td>`+data[i].numberOfStay+`</td>
+			<td>`+data[i].totalPrice+`</td>
+			<td>`+data[i].message+`</td>
+			<td>`+data[i].status+`</td>
+			<td><button  id="cancel-reservation" class="btn btn-primary">Cancel reservation</button></td>
+			</tr>`;
+		}
+	else
+	{
 		temp+=`<tr id="`+data[i].reservationId+`">
 			<td>`+data[i].apartmentId+`</td>
 			<td>`+data[i].arrivalDate+`</td>
@@ -8,9 +21,12 @@ function drawMyReservations(data){
 			<td>`+data[i].totalPrice+`</td>
 			<td>`+data[i].message+`</td>
 			<td>`+data[i].status+`</td>
-			//<td><button id="cancel-reservation" class="btn btn-primary">Cancel reservation</button></td>
+			<td><button disabled  id="cancel-reservation" class="btn btn-primary">Cancel reservation</button></td>
 			</tr>`;
 	}
+				
+	}
+	
 	$('#tbodyReservations').html(temp);
 }
 
@@ -58,7 +74,20 @@ $(document).ready(function(){
 		})
 	})
 	
-	
+	$('#tbodyReservations').on('click','button',function(event){
+		if($(event.target).attr('id')=="cancel-reservation"){
+			var trid = $(event.target).closest('tr').attr('id');
+				$.ajax({
+				url:"ProjectRents/cancelReservation"+trid,
+				type : "POST",
+				contentType:'multipart/form-data',
+				success:function(data){
+					drawMyReservations(data);
+					alert("Successfully canceled. ");
+				}
+			})
+		}
+	})
 	
 	$.get({
 		url:'ProjectRents/allActiveApartments',

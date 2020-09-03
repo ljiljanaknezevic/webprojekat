@@ -85,6 +85,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#apartments">APARTMENTS</a></li>
+         <li><a href="#reservationsClick">RESERVATIONS</a></li>
         <li><a href="./registration.html">REGISTER NEW HOST</a></li>
         
         <!-- admins roles -->
@@ -247,7 +248,27 @@
       </tbody>
     </table>
     </form>
-      	
+      <!-- RESERVATIONS -->	
+      <div id = "allReservations" hidden = "true">
+		<div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+        <table class="table  table-bordered" >
+              <thead class="success">
+			     <tr class = "success">
+			     <th>Reservation id</th>
+		         <th>Apartment id</th>
+		          <th>Arrivale date</th>
+		          <th>Nights of stay</th>
+		           <th>Total price</th>
+		          <th>Message for host</th>
+		          <th>Status</th>       
+		          <th></th>     
+		        </tr>
+		      </thead>
+		      <tbody id="tbodyAllReservations">
+		      </tbody>
+            </table>
+    		</div> 
+    		</div>
     
 	<p id="success"></p>
 
