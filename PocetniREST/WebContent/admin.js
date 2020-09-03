@@ -1,3 +1,10 @@
+var checkList = [];
+var checkIdListEdit = [];
+var checkIdList = [];
+var username = '';
+var id = '';
+var trid = '';
+
 function addUsersTr(user){
 	let tr = $('<tr></tr>');
 	let tdUsername = $('<td>' + user.username + '</td>');
@@ -29,8 +36,31 @@ function addSearchTable(user)
 }
 
 
-
-
+function drawApartments(data){
+	let temp='';
+	for (i in data){
+		temp+=`<tr id="`+data[i].id+`">
+			<td>`+data[i].hostUsername+`</td>
+			<td>`+data[i].status+`</td>
+			<td>`+data[i].type+`</td>
+			<td>`+data[i].location+`</td>
+			<td>`+data[i].numberOfRooms+`</td>
+			<td>`+data[i].numberOfGuest+`</td>
+			<td>`+data[i].price+`</td>
+			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
+			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td></tr>`;
+	}
+	$('#apartmentsTable').html(temp);
+}
+function drawAmenitiesInApartment(data){
+	let temp='';
+	checkIdList= [];
+	for (i in data){
+		checkIdList.push(data[i].id);
+		temp+=`<tr><td><input  id="`+data[i].id+`" type="checkbox"/></td><td>`+data[i].name+`</td></tr>`;
+	}
+	$('#amenitiesTableApartment').html(temp);
+}
 $(document).ready(function(){
 
     $('ul.dropdown-menu li').click(function(e) 
@@ -104,7 +134,7 @@ $('#search').submit((event)=>{
 	// amenities 
 	var modal = document.getElementById('myModal');
 	var modal1 = document.getElementById('modal-amenities');
-	var modal2 = document.getElementById('modal-delete');
+	var modal2 = document.getElementById('modal-apartment');
 	
 	// Get the <span> element that closes the modal
 	var span = document.getElementsByClassName("close")[0];
@@ -151,10 +181,11 @@ $('#search').submit((event)=>{
 		}
 		$('#amenitiesTable').html(temp);
 	}
-	
+
 	
 	$('a[href="#amenities"]').click(function(){
 		$('#dugmad').attr('hidden', false);
+		$('#content-apartmant').attr('hidden', true);
 		var ameniti = new Object();
 		$.get({
 			url:'ProjectRents/getAllAmenities',
@@ -200,34 +231,16 @@ $('#search').submit((event)=>{
 					}
 				})
 			}else if( $(event.target).attr("id")=="delete-amenitie"){
-				//modal2.style.display = "block";
-				
 				var id =$(event.target).parent().parent().children().first().text();
 				$.post({
 					url:"ProjectRents/deleteAmenities"+id,
 					contentType:'multipart/form-data',
-					//data :JSON.stringify(id),
 					success:function(data){
 						drawAmenities(data);
 						modal2.style.display="none";
 						alert("Successfully deleted ");
 					}
 				})
-				/*$('#yes').click(function(){
-					$.post({
-						url:"ProjectRents/deleteAmenities"+id,
-						contentType:'multipart/form-data',
-						//data :JSON.stringify(id),
-						success:function(data){
-							drawAmenities(data);
-							modal2.style.display="none";
-							alert("Successfully deleted ");
-						}
-					})
-				})
-				$('#no').click(function(){
-					modal2.style.display = "none";
-				})*/
 			}
 		})
 		
@@ -266,7 +279,153 @@ $('#search').submit((event)=>{
 				}
 			})
 	})
+	
+	//APARTMENT view
+	$.ajax({
+			url:'ProjectRents/getAllApartments',
+			type : 'GET',
+			contentType : 'application/json',
+			success : function(data){
+				drawApartments(data)
+			}
+	})
+	$('a[href="#apartments"]').click(function(){
+		
+		$('#content-apartmant').attr('hidden', false);
+		$('#dugmad').attr('hidden', true);
+	})
+		//DELETE AND EDTI APARTMENT
+	$('#apartmentsTable').on('click','button',function(event){
+		if( $(event.target).attr("id")=="delete-apartment"){
+			var trid = $(event.target).closest('tr').attr('id'); // table row ID 
+			$.ajax({
+				url:"ProjectRents/deleteApartment"+trid,
+				type : "POST",
+				contentType:'multipart/form-data',
+				success:function(data){
+					drawApartments(data);
+					alert("Successfully deleted. ");
+				}
+			})
+		
+		}
+	})
+	//EDITING APARTMENT
+	$('#add-apartment').click(function(){
+		let apartment = new Object();
+		let gen=$('#type').val()
+		let type
+		if(gen=='apartment')
+			type=0;
+		else
+			type=1;
+		console.log(type)
+		apartment.type = type;
+		console.log(apartment.type)
+		let numRooms = $('#number-od-rooms').val();	apartment.numberOfRooms = numRooms;
+		let numGuest = $('#number-od-guests').val();apartment.numberOfGuest = numGuest;
+		//TODO :location
+		//let adress=$('#location-entered').val();
+		//getLocation(adress);
 
+		let dani = $('#Dates').val();
+		apartment.dates= dani.split(',');
+		let price = $('#price-per-night').val();apartment.price = price;
+		//TODO :images
+		//let images=$('#blah').src;
+		//var base64 = getBase64Image(document.getElementById("blah"));
+		//apartment.images=base64;
+		//console.log(base64);
+
+		apartment.hostUsername = username;
+			apartment.checkIn = $('#check-in').val();
+			apartment.checkOut = $('#check-out').val();
+		
+		for (i = 0; i < checkIdList.length; i++) {
+			 if ($('#'+checkIdList[i]).is(':checked')) {
+				 checkIdListEdit.push(checkIdList[i]);
+			}
+		}
+		apartment.id = trid;
+		apartment.amenities = checkIdListEdit;
+		apartment.status = $('#status').val();
+		$.ajax({
+			url:"ProjectRents/editApartment",
+			type :"POST",
+			data: JSON.stringify(apartment),
+			contentType:"application/json",
+			success :function(data){
+				modal2.style.display = "none"
+				alert('Successfully edited apartment.')
+				drawApartments(data)
+			}
+		})
+	})
+	
+	$('#datepicker').datepicker({
+        startDate: new Date(),
+        multidate: true,
+        format: "dd/mm/yyyy",
+        daysOfWeekHighlighted: "5,6",
+        datesDisabled: ['31/08/2017'],
+        language: 'en'
+    }).on('changeDate', function(e) {
+        // `e` here contains the extra attributes
+        $(this).find('.input-group-addon .count').text(' ' + e.dates.length);
+    });
+	
+	$('#apartmentsTable').on('click','button',function(event){
+		if( $(event.target).attr("id")=="edit-apartment"){
+			checkIdListEdit=[];
+			trid = $(event.target).closest('tr').attr('id'); // table row ID
+			var dates, checkIn, checkOut, amenities;
+			//AMENITIIIIES
+			$.ajax({
+				url:'ProjectRents/getAllAmenities',
+				type : "GET",
+				contentType:'application/json',
+				success:function(data){
+					drawAmenitiesInApartment(data);
+				}
+			})
+			
+			$.ajax({
+				url:"ProjectRents/getApartmentById" + trid,
+				type : "GET",
+				contentType:'application/json',
+				success:function(apartment){
+					 checkIn = apartment.checkIn;
+					 checkOut = apartment.checkOut;
+					 var hostUsername = apartment.hostUsername;
+					 dates = apartment.dates;
+					var images = apartment.images;
+					 amenities = apartment.amenities;
+					 for (i = 0; i < amenities.length; i++) {
+						 $('#'+amenities[i]).prop('checked', true);
+					}
+					 $('#host').val(hostUsername);
+					$('#datepicker').datepicker('setDate', dates);
+					 $('#Dates').val(dates);
+					$('#check-in').val(checkIn);
+					$('#check-out').val(checkOut);
+				}
+			});
+			modal2.style.display = "block";
+			
+			
+			$('#status').val($(event.target).parent().parent().children().first().next().text());
+			if($(event.target).parent().parent().children().first().next().text() == "APARTMENT")
+				$('#type').val("apartment");
+			else 
+				$('#type').val("room");
+			$('#location').val($(event.target).parent().parent().children().first().next().next().text()); //nema nista pa nema sta da ispise
+			$('#number-od-rooms').val($(event.target).parent().parent().children().first().next().next().next().next().text());
+			$('#number-od-guests').val($(event.target).parent().parent().children().first().next().next().next().next().next().text());
+			$('#price-per-night').val($(event.target).parent().parent().children().first().next().next().next().next().next().text());
+			
+			$('#add-apartment').text("EDIT APARTMENT");
+		}
+	})
 });
 
 

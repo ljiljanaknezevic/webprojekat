@@ -23,8 +23,8 @@ public class Apartment {
 	private ArrayList<Comment> comments;
 	private ArrayList<String> images ;
 	private double price;
-	private String checkIn = "2";
-	private String checkOut = "10";
+	private String checkIn = "14:00";
+	private String checkOut = "10:00";
 	private ApartmentStatus status  = ApartmentStatus.PASSIVE ;
 	//last veriosn was <AMenities>. Milica idea is to saving list of ID od amenities that want to include
 	private ArrayList<UUID> amenities;

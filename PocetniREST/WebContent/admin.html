@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
   </script><link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
@@ -13,9 +13,15 @@
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
-   
    <link href="css/look.css" rel="stylesheet" id="look-css">
-   
+	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" rel="stylesheet"/>
+
 	 <script src="admin.js"></script>
 	<script src="registration.js"></script>
 </head>
@@ -78,7 +84,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">ABOUT</a></li>
+        <li><a href="#apartments">APARTMENTS</a></li>
         <li><a href="./registration.html">REGISTER NEW HOST</a></li>
         
         <!-- admins roles -->
@@ -101,7 +107,7 @@
 
   </div>
 </nav>
-<div id ="content">     
+		<div id ="content">     
       <!-- this is for #amenities content -->
       	<br><br>
       	   	<div id="dugmad" style="text-align: center" hidden="true">
@@ -128,9 +134,38 @@
 	            </table>
      		</div> 
 			</div>
+				   <!-- this is for end of #amenities content -->
+			
+			        <div id ="content-apartmant" hidden = "true">     
+      <!-- this is for #apartments content -->
+			<br>
+			 <div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+	        <table class="table  table-bordered" >
+	              <thead class="success">
+	                <tr class="success">
+	                  <th colspan="9" style="text-align: center;">APARTMENTS</th>
+	                </tr>
+	                	<tr class="success">
+	                	<th>Host username</th>
+	                	<th>Status</th>
+	                	<th>Apartment Type</th>
+	                	<th>Location</th>
+	                	<th>Number of rooms</th>
+	                	<th>Number of guests</th>
+	                	<th>Price</th>
+	                	<th></th>
+	                  	<th></th>
+	               	 	</tr>
+	                </thead>
+	                <tbody id="apartmentsTable">
+	                </tbody>
+	            </table>
+     		</div> 
 			</div>
-	   <!-- this is for #amenities content -->
-	   
+			</div>
+			 <!-- this is for #apartments content -->
+			</div>
+	
 	   
       <form id="search" hidden="true">
     	<table>
@@ -223,31 +258,106 @@
        <br>
   	  </div> 
   	  </div>
-     		 <!-- modal for delete ameniti -->
-   
-        <div id="modal-delete" class="modal">
+  	  
+  	  
+         <!-- modals for editing apartments -->
+     <div id="modal-apartment" class="modal">
 
   		<!-- Modal content -->
   		<div class="modal-content" style="text-align: center;" >
-    	 <span class="close">&times;</span>
-    	 <table width="200" align="center">
-    	 <tr>
-    	 	<p id = "delete-name" class = "header-name"></p>
-    	 </tr>
-    	 <br>
+    	 
+    	 <table width="500" align="center">
+        <tr id = "tr-status" hidden = "true">
         <tr>
-          <th height="50">Are you sure you want to delete it?</th>
+          <th height="50">Host :</th>
+          <th height="50"><input type ="text" id = "host"  disabled></th>
         </tr>
         <tr>
-        	<th height="50" >
-        		<button id = "yes" class ="btn btn-primary">Yes</button>
-        	</th>
-         	 <th height="50" ><button id ="no" class = "btn btn-primary">No </button></th>
+          <th height="50" >Status:</th>
+          <th height="50"  >
+			<select name="status" id="status" class="form-control" required 
+				 oninvalid="this.setCustomValidity('Type is required.')" oninput="setCustomValidity('')">
+      			<option value="ACTIV">ACTIV</option>
+      			<option value="PASSIVE">PASSIVE</option>
+     		 </select>
+		  </th>
+        </tr>
+        <tr >
+          <th height="50" >Type:</th>
+          <th height="50"  >
+			<select name="type" id="type" class="form-control" required 
+				 oninvalid="this.setCustomValidity('Type is required.')" oninput="setCustomValidity('')">
+      			<option value="apartment" selected>APARTMENT</option>
+      			<option value="room">ROOM</option>
+     		 </select>
+		  </th>
+        </tr>
         <tr>
-       </table>
-       	<p id="error-amenities-delete" class = "error-message"></p> 
+          <th height="50">Number of rooms:</th>
+          <th height="50"><input type ="number" id = "number-od-rooms"  required></th>
+        </tr>
+        <tr>
+          <th height="50">Number of guests:</th>
+          <th height="50"><input type ="number" id = "number-od-guests" required></th>
+        </tr>
+        <tr>
+          <th height="50">Location :</th>
+          <th height="50"><input type ="text" id = "location-entered" required></th>
+        </tr>
+         <tr>
+          <th height="50">Dates for rent :</th>
+          <th height="50">
+			<div class="input-group date form-group" id="datepicker">
+ 			   <input type="text" class="form-control" id="Dates" name="Dates" placeholder="Select days" required />
+ 			   <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i><span class="count"></span></span>
+			</div>
+			</th>
+        </tr>
+         <tr>
+          <th height="50">Price per night:</th>
+          <th height="50"><input type ="number" id = "price-per-night" required></th>
+        </tr>
+         <tr>
+          <th height="50">Check in time :</th>
+          <th height="50"><input type ="time" id = "check-in" required></th>
+        </tr>
+         <tr>
+          <th height="50">Check out time :</th>
+          <th height="50"><input type ="time" id = "check-out" required></th>
+        </tr>
+        <form method="post" enctype="multipart/form-data">
+		 	<tr>
+		   <th height="50"><label for="file">Images of apartment :</label></th>
+		  	<th height="50"><input type="file" id="file" name="file" multiple required></th>
+		  	<th><img id="blah" src="#" alt="your image" /></th>
+		   </tr>
+		</form>
+         <tr>
+          <th height="50">Amenities of apartment :</th>
+          <th height="200">
+			           <div style="width: 100%;max-height: 200px;overflow: auto; margin: 0 auto; ">
+				        <table class="table  table-bordered a-table" >
+				              <thead class="success">
+				                <tr class="success">
+				                  <th colspan="9" style="text-align: center;">AMENITIES</th>
+				                </tr>
+				                	<tr class="success">
+				                  	<th></th>
+				                	<th>Name</th>
+				               	 	</tr>
+				                </thead>
+				                <tbody id="amenitiesTableApartment">
+				                </tbody>
+				            </table>
+          </th>
+        </tr>
+       <span class="close">&times;</span>
+        </table>
+       <br>
+       	<p id="error-apartment" class = "error-message"></p> 
+       <button id="add-apartment" class="btn btn-primary">ADD APARTMENT</button>
        <br>
   	  </div> 
-  	  </div>
+   	</div>
 </body>
 </html>

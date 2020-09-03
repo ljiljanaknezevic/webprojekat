@@ -1,7 +1,9 @@
 var checkList = [];
+var checkIdListEdit = [];
 var checkIdList = [];
 var username = '';
 var id = '';
+var trid = '';
 function readURL(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
@@ -45,6 +47,7 @@ function readURL(input) {
 
 function drawAmenities(data){
 			let temp='';
+			checkIdList= [];
 			for (i in data){
 				checkIdList.push(data[i].id);
 				temp+=`<tr><td><input  id="`+data[i].id+`" type="checkbox"/></td><td>`+data[i].name+`</td></tr>`;
@@ -115,7 +118,10 @@ $(document).ready(function(){
 	
 	$('#addApartment').click(function(){
 		checkList=[];
+		$('#datepicker').datepicker('setDate', null);
+		$('#add-apartment').text("ADD APARTMENT");
 		modal.style.display = "block";
+		$('#tr-status').attr('hidden', true);	
 		$('#number-od-rooms').val("");
 		$('#location').val(""); 
 		$('#number-od-guests').val("");
@@ -136,6 +142,7 @@ $(document).ready(function(){
 	
 	//button for saving dates about apartment
 	$('#add-apartment').click(function(){
+		if ($(this).text()=="ADD APARTMENT") {
 		var apartment = new Object();
 		let gen=$('#type').val()
 		let type
@@ -184,7 +191,67 @@ $(document).ready(function(){
 				drawApartments(data)
 			}
 		})
-		
+		}
+		else{
+			//EDIT APARTMENT CLICK
+
+			let apartment = new Object();
+			let gen=$('#type').val()
+			let type
+			if(gen=='apartment')
+				type=0;
+			else
+				type=1;
+			console.log(type)
+			apartment.type = type;
+			console.log(apartment.type)
+			let numRooms = $('#number-od-rooms').val();	apartment.numberOfRooms = numRooms;
+			let numGuest = $('#number-od-guests').val();apartment.numberOfGuest = numGuest;
+			//TODO :location
+			//let adress=$('#location-entered').val();
+			//getLocation(adress);
+
+			let dani = $('#Dates').val();
+			apartment.dates= dani.split(',');
+			let price = $('#price-per-night').val();apartment.price = price;
+			//TODO :images
+			//let images=$('#blah').src;
+			//var base64 = getBase64Image(document.getElementById("blah"));
+			//apartment.images=base64;
+			//console.log(base64);
+
+			apartment.hostUsername = username;
+			if($('#check-in').val() != "")
+				apartment.checkIn = $('#check-in').val();
+			if($('#check-out').val() != "")
+				apartment.checkOut = $('#check-out').val();
+			
+			for (i = 0; i < checkIdList.length; i++) {
+				 if ($('#'+checkIdList[i]).is(':checked')) {
+					 checkIdListEdit.push(checkIdList[i]);
+				}
+			}
+			apartment.id = trid;
+			apartment.amenities = checkIdListEdit;
+			apartment.status = $('#status').val();
+			$.ajax({
+				url:"ProjectRents/editApartment",
+				type :"POST",
+				data: JSON.stringify(apartment),
+				contentType:"application/json",
+				success :function(data){
+					modal.style.display = "none"
+					alert('Successfully edited apartment.')
+					var hostsLists = [];
+					for( i in data){
+						if(data[i].hostUsername == username){
+							hostsLists.push(data[i]);
+						}
+					}
+					drawApartments(hostsLists)
+				}
+			})
+		}
 	})
 	 
 	$('#datepicker').datepicker({
@@ -206,18 +273,80 @@ $(document).ready(function(){
 	//DELETE AND EDTI APARTMENT
 	$('#apartmentsTable').on('click','button',function(event){
 		if( $(event.target).attr("id")=="delete-apartment"){
-			var trid = $(event.target).closest('tr').attr('id'); // table row ID 
-			console.log(trid + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+			 trid = $(event.target).closest('tr').attr('id'); // table row ID 
 			$.ajax({
 				url:"ProjectRents/deleteApartment"+trid,
 				type : "POST",
 				contentType:'multipart/form-data',
 				success:function(data){
-					drawApartments(data);
+					var hostsLists = [];
+					for( i in data){
+						if(data[i].hostUsername == username){
+							hostsLists.push(data[i]);
+						}
+					}
+					drawApartments(hostsLists)
 					alert("Successfully deleted. ");
+				}, 
+				error:function(){
+					alert('Deleting failed. Try again.')
 				}
 			})
 		
+		}
+	})
+	
+	$('#apartmentsTable').on('click','button',function(event){
+		if( $(event.target).attr("id")=="edit-apartment"){
+			checkIdListEdit=[];
+			$('#tr-status').attr('hidden', false);	
+			 trid = $(event.target).closest('tr').attr('id'); // table row ID
+			var dates, checkIn, checkOut, amenities;
+			//AMENITIIIIES
+			$.ajax({
+				url:'ProjectRents/getAllAmenities',
+				type : "GET",
+				contentType:'application/json',
+				success:function(data){
+					drawAmenities(data);
+				}
+			})
+			$.ajax({
+				url:"ProjectRents/getApartmentById" + trid,
+				type : "GET",
+				contentType:'application/json',
+				success:function(apartment){
+					 checkIn = apartment.checkIn;
+						console.log(checkIn)
+
+					 checkOut = apartment.checkOut;
+					var hostUsername = apartment.hostUsername;
+					 dates = apartment.dates;
+					var images = apartment.images;
+					 amenities = apartment.amenities;
+					 for (i = 0; i < amenities.length; i++) {
+						 $('#'+amenities[i]).prop('checked', true);
+					}
+					$('#datepicker').datepicker('setDate', dates);
+					 $('#Dates').val(dates);
+					$('#check-in').val(checkIn);
+					$('#check-out').val(checkOut);
+				}
+			});
+			modal.style.display = "block";
+			
+			
+			$('#status').val($(event.target).parent().parent().children().first().text());
+			if($(event.target).parent().parent().children().first().next().text() == "APARTMENT")
+				$('#type').val("apartment");
+			else 
+				$('#type').val("room");
+			$('#location').val($(event.target).parent().parent().children().first().next().next().text()); //nema nista pa nema sta da ispise
+			$('#number-od-rooms').val($(event.target).parent().parent().children().first().next().next().next().text());
+			$('#number-od-guests').val($(event.target).parent().parent().children().first().next().next().next().next().text());
+			$('#price-per-night').val($(event.target).parent().parent().children().first().next().next().next().next().next().text());
+			
+			$('#add-apartment').text("EDIT APARTMENT");
 		}
 	})
 })
