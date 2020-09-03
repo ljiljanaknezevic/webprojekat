@@ -156,7 +156,7 @@ public class UserService {
 	}
 	
 
-	@GET
+	/*@GET
 	@Path("/allUsers")
 	@Produces(MediaType.APPLICATION_JSON)
 //	@Consumes(MediaType.APPLICATION_JSON)
@@ -180,7 +180,20 @@ public class UserService {
 			return null;
 		}
 
+	}*/
+	
+	@GET
+	@Path("/allUsers")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllUsers() {
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		if(dao.getAll() != null)
+			return Response.ok(dao.getAll()).status(200).build();
+		else 
+			return Response.status(400).build();
 	}
+	
+	
 	@POST
 	@Path("/userEdit")
 	@Consumes(MediaType.APPLICATION_JSON)

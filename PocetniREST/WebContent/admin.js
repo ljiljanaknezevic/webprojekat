@@ -61,6 +61,21 @@ function drawAmenitiesInApartment(data){
 	}
 	$('#amenitiesTableApartment').html(temp);
 }
+
+function drawUsers(data){
+	let temp='';
+	
+	for (i in data){
+		temp+=`<tr><td class = "nameUser">` + data[i].username + `</td>
+		<td >`+data[i].name+`</td>
+		<td>`+data[i].surname+`</td>
+		<td class = "nameGender">`+data[i].gender+`</td>
+		<td class = "nameRole">`+data[i].role+`</td>
+		</tr>`;
+	}
+	$('#usersTable').html(temp);
+}
+
 $(document).ready(function(){
 
     $('ul.dropdown-menu li').click(function(e) 
@@ -79,9 +94,13 @@ $(document).ready(function(){
     // users tab
 $('#users').click(function(e)
 {
+	$('#content-users').attr('hidden', false);
+	$('#dugmad').attr('hidden', true);
+	$('#content-apartmant').attr('hidden', true);
 	
-	$.get({
+	/*$.ajax({
 		url:"ProjectRents/allUsers",
+		type:"GET",
 		success:function(users){
 			$('#search').attr('hidden', false);
 			$('#allUsers').attr('hidden', false);
@@ -94,9 +113,46 @@ $('#users').click(function(e)
 		},
 		error:function(message){
 			console.log('Error')
-			}
+		}
+	});*/
+	
+	$.ajax({
+		url:"ProjectRents/allUsers",
+		type:"GET",
+		success:function(users){
+			if(users!=null)
+				drawUsers(users);
+		},
+		error:function(message){
+			console.log('Error loading users.')
+		}
 	});
-});
+
+	// mica pretraga
+	$("#content").on('change paste keyup','[name=filterRest]',function (event) {
+        var n=$("#filterUsername").val();
+        var g=$("#filterGender").val();
+        var r=$("#filterRole").val();
+        if ($("#filterUsername").val()==""){
+        	var username=$("#content td.nameUser").parent();
+        }else{
+        	var username=$("#content td.nameUser:contains('" + n + "')").parent()
+        }
+        if ($("#filterGender").val()==""){
+        	var gender=$("#content td.nameUser").parent();
+        }else{
+        	var gender=$("#content td.nameGender:contains('" + g + "')").parent()
+        }
+        if ($("#filterRole").val()=="Search by role"){
+        	var role=$("#content td.nameUser").parent();
+        }else{
+        	var role=$("#content td.nameRole:contains('" + r + "')").parent()
+        }
+        username.filter(gender).filter(role).show();
+        $("#content td.nameUser").parent().not(username.filter(gender).filter(role)).hide();
+    });
+
+//LJILJA PRETRAGA
 $('#search').submit((event)=>{
 	event.preventDefault();
 	
@@ -108,8 +164,9 @@ $('#search').submit((event)=>{
 	name=$('#searchName').val();
 	surname=$('#searchSurname').val();
 	
-	$.post({
+	$.ajax({
 		url:'ProjectRents/searchUsername',
+		type : "POST",
 		data:JSON.stringify({
 			username:username,
 			name:name,
@@ -126,7 +183,8 @@ $('#search').submit((event)=>{
 			}
 		}
 		});
-	});
+});
+});
 
 
 	//AMENITIES TAB
@@ -209,8 +267,9 @@ $('#search').submit((event)=>{
 					amenitie.name =$('#amenities-name-edit').val();
 					amenitie.id = $('#amenities-id-edit').val();
 					if(ameniti.name != ""){
-						$.post({
+						$.ajax({
 							url:'ProjectRents/editAmenities',
+							type: "POST",
 							contentType:'application/json',
 							data: JSON.stringify(amenitie),
 							success: function(data){
@@ -233,8 +292,9 @@ $('#search').submit((event)=>{
 				})
 			}else if( $(event.target).attr("id")=="delete-amenitie"){
 				var id =$(event.target).parent().parent().children().first().text();
-				$.post({
+				$.ajax({
 					url:"ProjectRents/deleteAmenities"+id,
+					type :"POST",
 					contentType:'multipart/form-data',
 					success:function(data){
 						drawAmenities(data);
@@ -262,8 +322,9 @@ $('#search').submit((event)=>{
 				}
 				else
 				{
-					$.post({
+					$.ajax({
 						url:"ProjectRents/addAmenities",
+						type: "POST",
 						contentType: 'application/json',
 						data:JSON.stringify(amenitie),
 						success:function(data){
@@ -427,6 +488,7 @@ $('#search').submit((event)=>{
 			$('#add-apartment').text("EDIT APARTMENT");
 		}
 	})
+
 });
 
 
