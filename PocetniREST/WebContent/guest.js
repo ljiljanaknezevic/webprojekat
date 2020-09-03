@@ -26,7 +26,6 @@ $(document).ready(function(){
 		contentType : 'application/json',
 		success : function(data){
 			drawApartments(data)
-			console.log("Uspesno")
 		}
 		
 	})
@@ -41,14 +40,49 @@ $(document).ready(function(){
 			modal.style.display = "none";
 		}
 	}
-	
-	
-		$('#make-reservation').click(function(){
-		modal.style.display = "block";
-		$('#nights-of-stay').val("");
-		$('#message-for-host').val(""); 
-		$('#start-date').val("");
+	$('#apartmentsTable').on('click','button',function(event){
+		if($(event.target).attr("id")=="make-reservation"){
+			modal.style.display="block";
+			$('#nights-of-stay').val("");
+			$('#message-for-host').val(""); 
+			$('#start-date').val("");
+			var trid=$(event.target).closest('tr').attr('id');
+			
+			$('#make-reservation2').click(function(){
+				
+				var reservation=new Object();
+				
+				reservation.arrivalDate=$('#start-date').val();
+				reservation.numberOfStay=$('#nights-of-stay').val();
+				reservation.message=$('#message-for-host').val();
+				reservation.apartmentId=trid;
+				reservation.guest=username;
+				reservation.status=0;
+				reservation.totalPrice=0;
+				reservation.reservationId='none';
+				
+				
+				console.log(trid);
+				
+				$.post({
+					url:'ProjectRents/makeReservation',
+					data:JSON.stringify(reservation),
+					contentType:'application/json',
+					success: function(data){
+						modal.style.display="none";
+						alert('Successfully made reservation!')
+					},
+					error:function(){
+						modal.style.display="block";
+						console.log("Error with making reservation");
+					}
+				})
+				
+				
+			})
+		}
 	})
+
 	
 	$.get({
 		url: 'ProjectRents/currentUser',

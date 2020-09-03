@@ -1,11 +1,13 @@
 package beans;
 
 import java.util.Date;
+import java.util.UUID;
 
 import beans.enums.ReservationStatus;
 
 public class Reservation {
-	private String apartmentId; //apartmant koji je rezervisan
+	private UUID reservationId;
+	private UUID apartmentId; //apartmant koji je rezervisan
 	private Date arrivalDate;
 	private int numberOfStay;
 	private double totalPrice;
@@ -13,10 +15,33 @@ public class Reservation {
 	private Guest guest;
 	private ReservationStatus status;
 	
-	public String getApartmentId() {
+	
+	
+	public Reservation() {
+		super();
+	}
+	public Reservation(UUID reservationId, UUID apartmentId, Date arrivalDate, int numberOfStay, double totalPrice,
+			String message, Guest guest, ReservationStatus status) {
+		super();
+		this.reservationId = reservationId;
+		this.apartmentId = apartmentId;
+		this.arrivalDate = arrivalDate;
+		this.numberOfStay = numberOfStay;
+		this.totalPrice = totalPrice;
+		this.message = message;
+		this.guest = guest;
+		this.status = status;
+	}
+	public UUID getReservationId() {
+		return reservationId;
+	}
+	public void setReservationId(UUID reservationId) {
+		this.reservationId = reservationId;
+	}
+	public UUID getApartmentId() {
 		return apartmentId;
 	}
-	public void setApartmentId(String apartmentId) {
+	public void setApartmentId(UUID apartmentId) {
 		this.apartmentId = apartmentId;
 	}
 	public Date getArrivalDate() {
