@@ -23,6 +23,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" rel="stylesheet"/>
 
 	 <script src="admin.js"></script>
+	 <script src="sortByPrice.js"></script>
 	<script src="registration.js"></script>
 </head>
 
@@ -150,7 +151,6 @@
 
   </div>
 </nav>
-		<div id ="content">     
       <!-- this is for #amenities content -->
       	<br><br>
       	   	<div id="dugmad" style="text-align: center" hidden="true">
@@ -195,7 +195,7 @@
 	                	<th>Location</th>
 	                	<th>Number of rooms</th>
 	                	<th>Number of guests</th>
-	                	<th>Price</th>
+	                	<th name="sort">Price<span name="arrow" class="glyphicon glyphicon-arrow-down"/></th>
 	                	<th></th>
 	                  	<th></th>
 	               	 	</tr>
@@ -299,66 +299,23 @@
       </div>
 			
 			</div>
-	
 
-			
-			
-			
-      <form id="search" hidden="true">
-    	<table>
-    		<tr><td>Search by username</td><td><input type="text" id="searchUsername"></td>
-    		<tr><td>Search by name</td><td><input type="text" id="searchName"></td>
-    		<tr><td>Search by surname</td><td><input type="text" id="searchSurname"></td>
-    		<td><input type="submit" id="submitSearch" value="search"></td></tr>
-    	</table>
-	</form>
-
-	
-<div id="searchResults" hidden="true">
-<form id="searchTable" >
-	<table border="1" id="tableSearch">
-	<thead>
-	<tr>
-		<th>Username</th>
-          <th>Name</th>
-           <th>Surname</th>
-          <th>Gender</th>
-          <th>Role</th> 
-	</tr>
-	</thead>
-	
-	<tbody id="tbSearch">
-      </tbody>
-	</table>
-</form>
-</div>
-<form class="form-signin" id="allUsers" hidden="true">       
-      <h2 class="form-signin-heading">All users</h2>
-      <table border="1" id="allusers">
-      <thead>
-        <tr bgcolor="lightgrey">
-          <th>Username</th>
-          <th>Name</th>
-           <th>Surname</th>
-          <th>Gender</th>
-          <th>Role</th>            
-        </tr>
-      </thead>
-      <tbody id="tbodyAll">
-      </tbody>
-    </table>
-    </form>
+    
+    
       <!-- RESERVATIONS -->	
       <div id = "allReservations" hidden = "true">
 		<div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
         <table class="table  table-bordered" >
               <thead class="success">
+               <tr class="success">
+	                  <th colspan="9" style="text-align: center;">ALL RESERVATIONS</th>
+	                </tr>
 			     <tr class = "success">
 			     <th>Reservation id</th>
 		         <th>Apartment id</th>
 		          <th>Arrivale date</th>
 		          <th>Nights of stay</th>
-		           <th>Total price</th>
+	              <th name="sort">Total price<span name="arrow" class="glyphicon glyphicon-arrow-down"/></th>
 		          <th>Message for host</th>
 		          <th>Status</th>       
 		          <th></th>     
@@ -369,8 +326,7 @@
             </table>
     		</div> 
     		</div>
-    
-	<p id="success"></p>
+
 
     
       <!-- modals for amenities -->
