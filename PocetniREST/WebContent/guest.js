@@ -78,17 +78,13 @@ $(document).ready(function(){
 		})
 	})
 	
-<<<<<<< HEAD
-	$('#tbodyMyReservations').on('click','button',function(event){
-=======
 	$('a[href="#apartments"]').click(function(){
 		$('#content').attr('hidden',false);
 		$('#myReservations').attr('hidden',true);
 		$('.profileLook').attr('hidden', true);
 	})
 	
-	$('#tbodyReservations').on('click','button',function(event){
->>>>>>> 120765b206760fb0538f4bd06f6d1466bcfb7a72
+	$('#tbodyMyReservations').on('click','button',function(event){
 		if($(event.target).attr('id')=="cancel-reservation"){
 			var trid = $(event.target).closest('tr').attr('id');
 				$.ajax({
