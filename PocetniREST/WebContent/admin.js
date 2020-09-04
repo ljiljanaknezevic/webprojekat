@@ -75,7 +75,13 @@ function drawUsers(data){
 	}
 	$('#usersTable').html(temp);
 }
-
+var id2='';
+var username2 = '';
+var name = 'none';
+var surname = 'none';
+var gender = 'none';
+var password ='none';
+var role = 'none';
 $(document).ready(function(){
 
     $('ul.dropdown-menu li').click(function(e) 
@@ -97,7 +103,7 @@ $('#users').click(function(e)
 	$('#content-users').attr('hidden', false);
 	$('#dugmad').attr('hidden', true);
 	$('#content-apartmant').attr('hidden', true);
-	
+	$('.profileLook').attr('hidden', true);
 	/*$.ajax({
 		url:"ProjectRents/allUsers",
 		type:"GET",
@@ -134,6 +140,7 @@ $('#users').click(function(e)
         var g=$("#filterGender").val();
         var r=$("#filterRole").val();
         if ($("#filterUsername").val()==""){
+        	
         	var username=$("#content td.nameUser").parent();
         }else{
         	var username=$("#content td.nameUser:contains('" + n + "')").parent()
@@ -146,6 +153,7 @@ $('#users').click(function(e)
         if ($("#filterRole").val()=="Search by role"){
         	var role=$("#content td.nameUser").parent();
         }else{
+        	
         	var role=$("#content td.nameRole:contains('" + r + "')").parent()
         }
         username.filter(gender).filter(role).show();
@@ -244,6 +252,9 @@ $('#search').submit((event)=>{
 	$('a[href="#amenities"]').click(function(){
 		$('#dugmad').attr('hidden', false);
 		$('#content-apartmant').attr('hidden', true);
+		$('.profileLook').attr('hidden', true);
+		$('#content-users').attr('hidden', true);
+
 		var ameniti = new Object();
 		$.ajax({
 			url:'ProjectRents/getAllAmenities',
@@ -355,6 +366,9 @@ $('#search').submit((event)=>{
 		
 		$('#content-apartmant').attr('hidden', false);
 		$('#dugmad').attr('hidden', true);
+		$('.profileLook').attr('hidden', true);
+		$('#content-users').attr('hidden', true);
+
 	})
 		//DELETE AND EDTI APARTMENT
 	$('#apartmentsTable').on('click','button',function(event){
@@ -488,7 +502,110 @@ $('#search').submit((event)=>{
 			$('#add-apartment').text("EDIT APARTMENT");
 		}
 	})
+	
+	//EDIT PROFILE
+	$('a[href="#profile"]').click(function(){
+		$('#content-apartmant').attr('hidden', true);
+		$('#dugmad').attr('hidden', true);
+		$('.profileLook').attr('hidden', false);
+		$('#content-users').attr('hidden', true);
+		
 
+    	$.ajax({
+    		url: 'ProjectRents/currentUser',
+    		type : "GET",
+    		success: function(user) {
+    			 name = user.name;
+    			 surname = user.surname;
+    			 password = user.password;
+    			 role = user.role;
+    			 if(user.gender == 'MALE')
+    				 gender = 'male';
+    			 else gender = 'female';
+    			 $('#username').val(user.username);
+    		    	$('#name').val(user.name);
+    		    	$('#surname').val(user.surname);
+    		    	$('#gender').val(gender);
+    			
+    		},
+    		error:function(message){
+    			console.log('Error')
+    		}
+    	});
+	})
+	  $('#submit-edit').click(function(){
+    	event.preventDefault();
+    	let username=$('#username').val()
+		let name=$('#name').val()
+		let surname=$('#surname').val()
+		let gen=$('#gender').val()
+		
+		let gender
+		if(gen=='male')
+			gender=0;
+		else
+			gender=1;		
+    	$.ajax({
+    		type :"POST",
+    		url :"ProjectRents/userEdit",
+    		data :JSON.stringify({
+    			username:username,
+				password:password,
+				name:name,
+				surname:surname,
+				gender:gender, 
+				role :role
+    			}),
+    		contentType : "application/json",
+    		success : function(data){
+    			console.log(' *********** EDITED *************')
+    			alert('successfully edited profile.')
+    		}
+    	})
+    })
+    
+    
+     $('form#form-change-password').submit(function(){
+    	event.preventDefault();
+    	let oldpassword=$('#old-password').val()
+    	let newpassword=$('#new-password').val()
+		let confirmpassword=$('#confirm-new-password').val()
+	
+    	var checkOldPass = true;
+    	console.log(password)
+    	if(oldpassword != password){
+    		$('#error-old').text('password isnt correct for your username.try again.');
+			$('#error-old').show();
+			$('#error-old').delay(2000).fadeOut('slow');
+			checkOldPass = false
+			//console.log('password isnt correct for your username.try again.oldpassword != password')
+    	}
+    	
+    	if(checkOldPass){
+    		if(newpassword != confirmpassword){
+    		$('#error-confirm').text('confirm password doesnt match new password.try again');
+			$('#error-confirm').show();
+			$('#error-confirm').delay(4000).fadeOut('slow');
+    		console.log('confirm password doesnt match new password.try again.newpassword != confirmpassword')
+    		}
+	    	else {
+	    		password = newpassword;
+	    		$.ajax({
+		    		type :"POST",
+		    		url :"ProjectRents/userEditPassword",
+		    		data :JSON.stringify({
+		    			username:username,
+		    			password: password
+		    			}),
+		    		contentType : "application/json",
+		    		success : function(data){
+		    			alert('successfully edited profile password.')
+		    		}
+		    	})	    		
+	    	}
+    	}
+    	
+    })
 });
 
 

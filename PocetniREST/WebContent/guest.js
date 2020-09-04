@@ -40,10 +40,14 @@ var role = 'none';
 $(document).ready(function(){
 	
 	$('#content').attr('hidden',false);
+	$('#myReservations').attr('hidden',true);
+	$('.profileLook').attr('hidden', true);
 	
 	$('#myreservations').click(function(e){
 		$('#myReservations').attr('hidden',false);
 		$('#content').attr('hidden',true);
+		$('.profileLook').attr('hidden', true);
+
 		$('#myreservationsTable tbody').html('');
 		$.ajax({
 			url:"ProjectRents/guestsReservations",
@@ -122,26 +126,6 @@ $(document).ready(function(){
 		}
 	})
 
-	
-	$.get({
-		url: 'ProjectRents/currentUser',
-		success: function(user) {
-			console.log(user);
-			 username = user.username;
-			 name = user.name;
-			 surname = user.surname;
-			 password = user.password;
-			 role = user.role;
-			 if(user.gender == 'MALE')
-				 gender = 'male';
-			 else gender = 'female';
-			
-		},
-		error:function(message){
-			console.log('Error')
-			}
-	});
-	
     $('ul.dropdown-menu li').click(function(e) 
     { 
     	if($(this).attr('id') == 'logout'){
@@ -156,12 +140,33 @@ $(document).ready(function(){
     });
     
     $('a[href="#profile"]').click(function(){
-    	$('.welcome').attr('hidden', true);
+    	$('#content').attr('hidden',true);
     	$('.profileLook').attr('hidden', false);
-    	$('#username').val(username);
-    	$('#name').val(name);
-    	$('#surname').val(surname);
-    	$('#gender').val(gender);
+		$('#myReservations').attr('hidden',true);
+
+    	$.ajax({
+    		url: 'ProjectRents/currentUser',
+    		type : "GET",
+    		success: function(user) {
+    			 name = user.name;
+    			 surname = user.surname;
+    			 password = user.password;
+    			 role = user.role;
+    			 if(user.gender == 'MALE')
+    				 gender = 'male';
+    			 else gender = 'female';
+    			 $('#userr').text(user.username);
+    			 $('#username').val(user.username);
+    		    	$('#name').val(user.name);
+    		    	$('#surname').val(user.surname);
+    		    	$('#gender').val(gender);
+    			
+    		},
+    		error:function(message){
+    			console.log('Error')
+    		}
+    	});
+    	
     })
 
 
@@ -197,6 +202,9 @@ $(document).ready(function(){
     })
     
     //change password
+    $('#change-password').click(function(event){
+    	console.log('promena taba')
+    })
      $('form#form-change-password').submit(function(){
     	event.preventDefault();
     	let oldpassword=$('#old-password').val()
@@ -204,6 +212,7 @@ $(document).ready(function(){
 		let confirmpassword=$('#confirm-new-password').val()
 	
     	var checkOldPass = true;
+    	console.log(password)
     	if(oldpassword != password){
     		$('#error-old').text('password isnt correct for your username.try again.');
 			$('#error-old').show();
@@ -230,8 +239,7 @@ $(document).ready(function(){
 		    			}),
 		    		contentType : "application/json",
 		    		success : function(data){
-		    			console.log(' *********** EDITED *************')
-		    			alert('successfully edited profile.')
+		    			alert('successfully edited profile password.')
 		    		}
 		    	})	    		
 	    	}

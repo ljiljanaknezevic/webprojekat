@@ -163,8 +163,18 @@ function someFunc(event){
 }
 
 }
+
+var id='';
+var username = '';
+var name = 'none';
+var surname = 'none';
+var gender = 'none';
+var password ='none';
+var role = 'none';
 $(document).ready(function(){
 	
+	$('#content').attr('hidden', false);
+	$('#content-profile').attr('hidden', true);
 	$.ajax({
 		url:"ProjectRents/currentUser",
 		type : "GET",
@@ -362,60 +372,117 @@ $(document).ready(function(){
  	 readURL(this);	
 	});	
 
-	//DELETE AND EDTI APARTMENT
-	
-	
-//	$('#apartmentsTable','#apartmentsTable-passive').on('click','button',function(event){
-//		if( $(event.target).attr("id")=="edit-apartment"){
-//			checkIdListEdit=[];
-//			$('#tr-status').attr('hidden', false);	
-//			 trid = $(event.target).closest('tr').attr('id'); // table row ID
-//			var dates, checkIn, checkOut, amenities;
-//			//AMENITIIIIES
-//			$.ajax({
-//				url:'ProjectRents/getAllAmenities',
-//				type : "GET",
-//				contentType:'application/json',
-//				success:function(data){
-//					drawAmenities(data);
-//				}
-//			})
-//			$.ajax({
-//				url:"ProjectRents/getApartmentById" + trid,
-//				type : "GET",
-//				contentType:'application/json',
-//				success:function(apartment){
-//					 checkIn = apartment.checkIn;
-//						console.log(checkIn)
-//
-//					 checkOut = apartment.checkOut;
-//					var hostUsername = apartment.hostUsername;
-//					 dates = apartment.dates;
-//					var images = apartment.images;
-//					 amenities = apartment.amenities;
-//					 for (i = 0; i < amenities.length; i++) {
-//						 $('#'+amenities[i]).prop('checked', true);
-//					}
-//					$('#datepicker').datepicker('setDate', dates);
-//					 $('#Dates').val(dates);
-//					$('#check-in').val(checkIn);
-//					$('#check-out').val(checkOut);
-//				}
-//			});
-//			modal.style.display = "block";
-//			
-//			
-//			$('#status').val($(event.target).parent().parent().children().first().text());
-//			if($(event.target).parent().parent().children().first().next().text() == "APARTMENT")
-//				$('#type').val("apartment");
-//			else 
-//				$('#type').val("room");
-//			$('#location').val($(event.target).parent().parent().children().first().next().next().text()); //nema nista pa nema sta da ispise
-//			$('#number-od-rooms').val($(event.target).parent().parent().children().first().next().next().next().text());
-//			$('#number-od-guests').val($(event.target).parent().parent().children().first().next().next().next().next().text());
-//			$('#price-per-night').val($(event.target).parent().parent().children().first().next().next().next().next().next().text());
-//			
-//			$('#add-apartment').text("EDIT APARTMENT");
-//		}
-//	})
+	  $('a[href="#apartments"]').click(function(){
+			$('#content').attr('hidden', false);
+			$('.profileLook').attr('hidden', true);
+	  })
+	//////////////////// profile
+
+
+	  $('a[href="#profile"]').click(function(){
+			$('#content').attr('hidden', true);
+			$('.profileLook').attr('hidden', false);
+	    	$.ajax({
+	    		url: 'ProjectRents/currentUser',
+	    		type : "GET",
+	    		success: function(user) {
+	    			 name = user.name;
+	    			 surname = user.surname;
+	    			 password = user.password;
+	    			 role = user.role;
+	    			 if(user.gender == 'MALE')
+	    				 gender = 'male';
+	    			 else gender = 'female';
+	    			 $('#userr').text(user.username);
+	    			 $('#username').val(user.username);
+	    		    	$('#name').val(user.name);
+	    		    	$('#surname').val(user.surname);
+	    		    	$('#gender').val(gender);
+	    			
+	    		},
+	    		error:function(message){
+	    			console.log('Error')
+	    		}
+	    	});
+	    	
+	    })
+
+
+	    $('#submit-edit').click(function(){
+	    	event.preventDefault();
+	    	let username=$('#username').val()
+			let name=$('#name').val()
+			let surname=$('#surname').val()
+			let gen=$('#gender').val()
+			
+			let gender
+			if(gen=='male')
+				gender=0;
+			else
+				gender=1;		
+	    	$.ajax({
+	    		type :"POST",
+	    		url :"ProjectRents/userEdit",
+	    		data :JSON.stringify({
+	    			username:username,
+					password:password,
+					name:name,
+					surname:surname,
+					gender:gender, 
+					role :role
+	    			}),
+	    		contentType : "application/json",
+	    		success : function(data){
+	    			console.log(' *********** EDITED *************')
+	    			alert('successfully edited profile.')
+	    		}
+	    	})
+	    })
+	    
+	    //change password
+	    $('#change-password').click(function(event){
+	    	console.log('promena taba')
+	    })
+	     $('form#form-change-password').submit(function(){
+	    	event.preventDefault();
+	    	let oldpassword=$('#old-password').val()
+	    	let newpassword=$('#new-password').val()
+			let confirmpassword=$('#confirm-new-password').val()
+		
+	    	var checkOldPass = true;
+	    	console.log(password)
+	    	if(oldpassword != password){
+	    		$('#error-old').text('password isnt correct for your username.try again.');
+				$('#error-old').show();
+				$('#error-old').delay(2000).fadeOut('slow');
+				checkOldPass = false
+				//console.log('password isnt correct for your username.try again.oldpassword != password')
+	    	}
+	    	
+	    	if(checkOldPass){
+	    		if(newpassword != confirmpassword){
+	    		$('#error-confirm').text('confirm password doesnt match new password.try again');
+				$('#error-confirm').show();
+				$('#error-confirm').delay(4000).fadeOut('slow');
+	    		console.log('confirm password doesnt match new password.try again.newpassword != confirmpassword')
+	    		}
+		    	else {
+		    		password = newpassword;
+		    		$.ajax({
+			    		type :"POST",
+			    		url :"ProjectRents/userEditPassword",
+			    		data :JSON.stringify({
+			    			username:username,
+			    			password: password
+			    			}),
+			    		contentType : "application/json",
+			    		success : function(data){
+			    			alert('successfully edited profile password.')
+			    		}
+			    	})	    		
+		    	}
+	    	}
+	    	
+	    })
+
 })
