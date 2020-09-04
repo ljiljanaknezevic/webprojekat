@@ -59,15 +59,15 @@ public class ReservationService {
 	@Path("/makeReservation")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response makeReservation(Reservation r) {
+	public Response makeReservation(Reservation r,@Context HttpServletRequest request) {
 		ReservationDAO dao=(ReservationDAO) ctx.getAttribute("reservationDAO");
 		ApartmentDAO daoA=(ApartmentDAO) ctx.getAttribute("apartmentDAO");
 		
 		Apartment ap=daoA.findApartment(r.getApartmentId());
-		
+		User u=(User)request.getSession().getAttribute("user");
 		String contextPath=ctx.getRealPath("");
 		r.setReservationId(UUID.randomUUID());
-		
+		r.setGuest(u.getUsername());
 		double price;
 		int numNights=r.getNumberOfStay();
 		double nightPrice=ap.getPrice();

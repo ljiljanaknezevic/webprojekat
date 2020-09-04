@@ -48,11 +48,13 @@ function drawApartments(data){
 
 var id='';
 var username = '';
+var usernameGuest = '';
 var name = 'none';
 var surname = 'none';
 var gender = 'none';
 var password ='none';
 var role = 'none';
+var trid = '';
 $(document).ready(function(){
 	
 	$('#content').attr('hidden',false);
@@ -64,12 +66,11 @@ $(document).ready(function(){
 		$('#content').attr('hidden',true);
 		$('.profileLook').attr('hidden', true);
 
-		$('#myreservationsTable tbody').html('');
+		//$('#tbodyMyReservations tbody').html('');
 		$.ajax({
 			url:"ProjectRents/guestsReservations",
 			type : "GET",
 			success:function(myreservations){
-				
 				drawMyReservations(myreservations);
 			},
 			error:function(message){
@@ -125,17 +126,16 @@ $(document).ready(function(){
 			$('#nights-of-stay').val("");
 			$('#message-for-host').val(""); 
 			$('#start-date').val("");
-			var trid=$(event.target).closest('tr').attr('id');
-			
-			$('#make-reservation2').click(function(){
-				
+			 trid=$(event.target).closest('tr').attr('id');
+		}
+	})
+	$('#make-reservation2').click(function(){
 				var reservation=new Object();
-				
 				reservation.arrivalDate=$('#start-date').val();
 				reservation.numberOfStay=$('#nights-of-stay').val();
 				reservation.message=$('#message-for-host').val();
 				reservation.apartmentId=trid;
-				reservation.guest=username;
+				//reservation.guest=username;
 				reservation.status=0;
 				reservation.totalPrice=0;
 				reservation.reservationId=id;
@@ -160,9 +160,6 @@ $(document).ready(function(){
 				
 				
 			})
-		}
-	})
-
     $('ul.dropdown-menu li').click(function(e) 
     { 
     	if($(this).attr('id') == 'logout'){
