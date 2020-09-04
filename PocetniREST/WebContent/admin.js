@@ -100,8 +100,11 @@ var gender = 'none';
 var password ='none';
 var role = 'none';
 $(document).ready(function(){
-	$('#content').attr('hidden',false);
-	
+	$('#content-users').attr('hidden', true);
+	$('#dugmad').attr('hidden', true);
+	$('#content-apartmant').attr('hidden', false);
+	$('.profileLook').attr('hidden', true);
+	$('#allReservations').attr('hidden',true);
     $('ul.dropdown-menu li').click(function(e) 
     { 
     	if($(this).attr('id') == 'logout'){
@@ -119,8 +122,11 @@ $(document).ready(function(){
 
 //	RESERVATION TAB
     	$('a[href="#reservationsClick"]').click(function(e){
-		$('#allReservations').attr('hidden',false);
-		$('#content').attr('hidden',true);
+    		$('#content-users').attr('hidden', true);
+    		$('#dugmad').attr('hidden', true);
+    		$('#content-apartmant').attr('hidden', true);
+    		$('.profileLook').attr('hidden', true);
+    		$('#allReservations').attr('hidden',false);
 		$.ajax({
 			url:"ProjectRents/allReservations",
 			type : "GET",
@@ -143,6 +149,7 @@ $('#users').click(function(e)
 	$('#dugmad').attr('hidden', true);
 	$('#content-apartmant').attr('hidden', true);
 	$('.profileLook').attr('hidden', true);
+	$('#allReservations').attr('hidden',true);
 	/*$.ajax({
 		url:"ProjectRents/allUsers",
 		type:"GET",
@@ -295,7 +302,7 @@ $('#search').submit((event)=>{
 		$('#content-apartmant').attr('hidden', true);
 		$('.profileLook').attr('hidden', true);
 		$('#content-users').attr('hidden', true);
-
+		$('#allReservations').attr('hidden',true);
 		var ameniti = new Object();
 		$.ajax({
 			url:'ProjectRents/getAllAmenities',
@@ -409,6 +416,7 @@ $('#search').submit((event)=>{
 		$('#dugmad').attr('hidden', true);
 		$('.profileLook').attr('hidden', true);
 		$('#content-users').attr('hidden', true);
+		$('#allReservations').attr('hidden',true);
 
 	})
 		//DELETE AND EDTI APARTMENT
@@ -550,7 +558,7 @@ $('#search').submit((event)=>{
 		$('#dugmad').attr('hidden', true);
 		$('.profileLook').attr('hidden', false);
 		$('#content-users').attr('hidden', true);
-		
+		$('#allReservations').attr('hidden',true);
 
     	$.ajax({
     		url: 'ProjectRents/currentUser',
