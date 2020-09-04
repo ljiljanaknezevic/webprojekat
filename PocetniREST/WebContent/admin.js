@@ -19,6 +19,23 @@ function addUsersTr(user){
 	
 	$('#tbodyAll').append(tr);
 }
+function drawAllReservations(data){
+	let temp='';
+	for (i in data){
+
+			temp+=`<tr id="`+data[i].reservationId+`">
+			<td>`+data[i].reservationId+`</td>
+			<td>`+data[i].apartmentId+`</td>
+			<td>`+data[i].arrivalDate+`</td>
+			<td>`+data[i].numberOfStay+`</td>
+			<td>`+data[i].totalPrice+`</td>
+			<td>`+data[i].message+`</td>
+			<td>`+data[i].status+`</td>
+			</tr>`;
+		}
+		$('#tbodyAllReservations').html(temp);
+}
+
 function addSearchTable(user)
 {
 	let tr = $('<tr></tr>');
@@ -83,7 +100,8 @@ var gender = 'none';
 var password ='none';
 var role = 'none';
 $(document).ready(function(){
-
+	$('#content').attr('hidden',false);
+	
     $('ul.dropdown-menu li').click(function(e) 
     { 
     	if($(this).attr('id') == 'logout'){
@@ -96,7 +114,28 @@ $(document).ready(function(){
     		})
     	}
     });
-    
+
+
+
+//	RESERVATION TAB
+    	$('a[href="#reservationsClick"]').click(function(e){
+		$('#allReservations').attr('hidden',false);
+		$('#content').attr('hidden',true);
+		$.ajax({
+			url:"ProjectRents/allReservations",
+			type : "GET",
+			success:function(reservations){
+				drawAllReservations(reservations);
+			},
+			error:function(message){
+			console.log('Error with reservations')
+			}
+		})
+	})
+	
+	
+	
+	
     // users tab
 $('#users').click(function(e)
 {
@@ -159,6 +198,8 @@ $('#users').click(function(e)
         username.filter(gender).filter(role).show();
         $("#content td.nameUser").parent().not(username.filter(gender).filter(role)).hide();
     });
+
+
 
 //LJILJA PRETRAGA
 $('#search').submit((event)=>{

@@ -91,4 +91,12 @@ public void addToMap(Reservation r) {
 		}
 		return reservation;
 	}
+
+	public ArrayList<Reservation> getAllReservations() {
+		ArrayList<Reservation> res = new ArrayList<Reservation>();
+		for(Reservation r:reservations.values()) {
+				res.add(r);
+		}
+		return res;
+	}
 }
