@@ -1,4 +1,6 @@
 var userLogged = 'none';
+
+
 $(document).ready(function(){
 	function currentUser(){
 		
@@ -10,13 +12,6 @@ $(document).ready(function(){
 					console.log("NO ONE IS LOGGED");
 					currentUserLogged = null;
 				}else{
-					/*if(user.role == "ADMIN"){
-						userLogged = 'ADMIN';
-					}else if (user.role == "HOST"){
-						userLogged = 'HOST';
-					}else if (user.role == "GUEST"){
-						userLogged = 'GUEST';
-					}*/
 					userLogged = user.role;
 					currentUserLogged = user;
 				}
@@ -32,9 +27,10 @@ $(document).ready(function(){
 			}	
 		})
 	}
+	$('#content-login').attr("hidden", false);
+	$('#content').attr("hidden", true);
 	$('form#login').submit(function(event){
 		event.preventDefault();
-	//	currentUser();
 		
 		var user = new Object();
 		user.username=$('#username').val()
@@ -47,21 +43,7 @@ $(document).ready(function(){
 			contentType : 'application/json',
 			success : function(temp){
 				currentUser();
-				//console.log(temp.role)
 				alert('Succesfully loged in.');
-			
-				//console.log(temp.role)
-				/*alert('Succesfully loged in.');
-				if(temp != null){
-				if(temp.role == 'ADMIN'){
-					window.location="./admin.html";
-				}else if(temp.role== 'HOST'){
-					window.location="./host.html";
-				}else if(temp.role== 'GUEST'){
-					window.location="./guest.html";
-				}
-				}else
-					window.location="./home.html";*/
 			},
 			error: function(message) {
 				$('#error').text(message.responseText);
@@ -70,7 +52,20 @@ $(document).ready(function(){
 			}
 		})
 	})
-	
+//	$('a[href="#apartments"]').click(function(){
+//		$('form#login').attr("hidden", true);
+//		$('#content').attr("hidden", false);
+//		
+//		$.ajax({
+//			url:'ProjectRents/allActiveApartments',
+//			type : "GET",
+//			contentType : 'application/json',
+//			success : function(data){
+//				drawApartments(data)
+//			}
+//			
+//		})
+//	})
 })
 
 

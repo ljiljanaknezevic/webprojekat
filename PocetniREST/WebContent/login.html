@@ -16,6 +16,7 @@
    <link href="css/look.css" rel="stylesheet" id="look-css">
    
    <script src="login.js"></script>
+   <script src="apartmentsActive.js"></script>
    
 </head>
 
@@ -50,19 +51,47 @@
 
   </div>
 </nav>
-	<div class="container-fluid text-center">    
-      <form class="form-signin" id="login">       
+	<div class="container-fluid text-center" hidden = "false" id = "content-login">    
+      <form class="form-signin" id="login" >       
       <h2 class="form-signin-heading">Welcome</h2>
       <input type="text" class="form-control" id="username" placeholder="Username" required  oninvalid="this.setCustomValidity('Username is required.')" oninput="setCustomValidity('')"/>
       <input type="password" class="form-control" id="password" placeholder="Password" required oninvalid="this.setCustomValidity('Password is required.')" oninput="setCustomValidity('')"/>      
       <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button> 
-       <p>Nemate nalog? <a href="./registrationPage.html">Registrujte se</a></p> 
+       <p>Don't have account? <a href="./registration.html">Register now</a></p> 
     </form>
     
     <p class= "error-message" id="error"></p>
 	<p id="success"></p>
 
     </div>
+    
+     <div id ="content" hidden="true">     
+      <!-- this is for #apartments content -->
+      	<br><br>
+      	   	<div  style="text-align: center">
+			<br><br><br>
+			 <div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+	        <table class="table  table-bordered" >
+	              <thead class="success">
+	                <tr class="success">
+	                  <th colspan="9" style="text-align: center;">APARTMENTS</th>
+	                </tr>
+	                	<tr class="success">
+	                	<th>Status</th>
+	                	<th>Apartment Type</th>
+	                	<th>Location</th>
+	                	<th>Number of rooms</th>
+	                	<th>Number of guests</th>
+	                	<th>Price</th>
+	                	<th>Comments</th>
+	               	 	</tr>
+	                </thead>
+	                <tbody id="apartmentsTable">
+	                </tbody>
+	            </table>
+     		</div> 
+			</div>
+			</div>
 
 
 </body>

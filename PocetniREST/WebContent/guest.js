@@ -78,7 +78,17 @@ $(document).ready(function(){
 		})
 	})
 	
+<<<<<<< HEAD
 	$('#tbodyMyReservations').on('click','button',function(event){
+=======
+	$('a[href="#apartments"]').click(function(){
+		$('#content').attr('hidden',false);
+		$('#myReservations').attr('hidden',true);
+		$('.profileLook').attr('hidden', true);
+	})
+	
+	$('#tbodyReservations').on('click','button',function(event){
+>>>>>>> 120765b206760fb0538f4bd06f6d1466bcfb7a72
 		if($(event.target).attr('id')=="cancel-reservation"){
 			var trid = $(event.target).closest('tr').attr('id');
 				$.ajax({
@@ -93,8 +103,9 @@ $(document).ready(function(){
 		}
 	})
 	
-	$.get({
+	$.ajax({
 		url:'ProjectRents/allActiveApartments',
+		type : "GET",
 		contentType : 'application/json',
 		success : function(data){
 			drawApartments(data)
@@ -230,10 +241,6 @@ $(document).ready(function(){
     	})
     })
     
-    //change password
-    $('#change-password').click(function(event){
-    	console.log('promena taba')
-    })
      $('form#form-change-password').submit(function(){
     	event.preventDefault();
     	let oldpassword=$('#old-password').val()

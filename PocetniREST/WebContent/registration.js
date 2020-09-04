@@ -1,4 +1,6 @@
 var userLogged = 'none';
+
+
 $(document).ready(function() {
 		function currentUser(){
 		
@@ -20,7 +22,6 @@ $(document).ready(function() {
 					userLogged = user.role;
 					currentUserLogged = user;
 				}
-				console.log("********************* ",userLogged)
 				 if(userLogged == 'ADMIN'){
 						window.location="./admin.html";
 					}else if(userLogged== 'HOST'){
@@ -32,7 +33,9 @@ $(document).ready(function() {
 			}	
 		})
 	}
-	
+
+		$('#content-registration').attr("hidden", false);
+		$('#content').attr("hidden", true);
 	$('form#registration').submit(function(event){
 		event.preventDefault()
 		console.log('saljemo rest')
@@ -84,8 +87,7 @@ $(document).ready(function() {
 				}
 			})
         }
-		
-		
 	})
+	
 	
 })
