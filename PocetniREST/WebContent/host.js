@@ -45,6 +45,12 @@ function readURL(input) {
     return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
 }*/
 
+function toDate(dateStr) {
+  var parts = dateStr.split("-")
+  return new Date(parts[2], parts[1] - 1, parts[0])
+}
+
+
 function drawAmenities(data){
 			let temp='';
 			checkIdList= [];
@@ -58,6 +64,24 @@ function drawAmenities(data){
 function drawReservations(data){
 	let temp='';
 	for (i in data){
+		
+		var currentDate=new Date();
+		//var pom=new Date();
+		var pom=toDate(data[i].arrivalDate);
+		var endDate=new Date;
+		endDate.setDate(pom.getDate()+data[i].numberOfStay);
+		
+		var formattedDate = new Date(endDate);
+		var d = formattedDate.getDate();
+		var m =  formattedDate.getMonth();
+		m += 1;  // JavaScript months are 0-11
+		var y = formattedDate.getFullYear();
+		
+		var endDateString=y + "-" + m + "-" + d;
+		
+		console.log(endDateString);
+		console.log(data[i].arrivalDate)
+		
 		if(data[i].status=='CREATED'){
 			temp+=`<tr id="`+data[i].reservationId+`">
 			<td>`+data[i].apartmentId+`</td>
@@ -66,10 +90,11 @@ function drawReservations(data){
 			<td>`+data[i].totalPrice+`</td>
 			<td>`+data[i].message+`</td>
 			<td>`+data[i].status+`</td>
-			<td><button  id="accept-reservation" class="btn btn-primary">Cancel reservation</button></td>
+			<td><button  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
+			<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
 			</tr>`;
 		}
-		else if(data[i].status=='CREATED' || data[i].status=='ACCEPTED'){
+		else if(data[i].status=='ACCEPTED'){
 				temp+=`<tr id="`+data[i].reservationId+`">
 			<td>`+data[i].apartmentId+`</td>
 			<td>`+data[i].arrivalDate+`</td>
@@ -77,10 +102,25 @@ function drawReservations(data){
 			<td>`+data[i].totalPrice+`</td>
 			<td>`+data[i].message+`</td>
 			<td>`+data[i].status+`</td>
-			<td><button  id="reject-reservation" class="btn btn-primary">Cancel reservation</button></td>
+			<td></td>
+			<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
 			</tr>`;
 		}
 		//TODO:USLOV ZA ISTEK DATUMA NOCENJA
+	else if(endDate<currentDate){
+		console.log("Istekla je rezervacija");
+		temp+=`<tr id="`+data[i].reservationId+`">
+			<td>`+data[i].apartmentId+`</td>
+			<td>`+data[i].arrivalDate+`</td>
+			<td>`+data[i].numberOfStay+`</td>
+			<td>`+data[i].totalPrice+`</td>
+			<td>`+data[i].message+`</td>
+			<td>`+data[i].status+`</td>
+			<td><button  id="end-reservation" class="btn btn-primary">End reservation</button></td>
+			<td></td>
+			</tr>`;
+		
+	}
 	else
 	{
 		temp+=`<tr id="`+data[i].reservationId+`">
@@ -90,6 +130,8 @@ function drawReservations(data){
 			<td>`+data[i].totalPrice+`</td>
 			<td>`+data[i].message+`</td>
 			<td>`+data[i].status+`</td>
+			<td></td>
+			<td></td>
 			</tr>`;
 	}
 				
@@ -239,7 +281,6 @@ $(document).ready(function(){
 	
 	//RESERVATION TAB
 	$('a[href="#reservationsClick"]').click(function(e){
-		console.log("USAO JE U CLICK");
 		$('#myReservationsTable').attr('hidden',false);
 		$('#content').attr('hidden',true);
 		
@@ -247,6 +288,7 @@ $(document).ready(function(){
 			url:"ProjectRents/hostsReservations",
 			type : "GET",
 			success:function(reservations){
+				console.log('Crta');
 				drawReservations(reservations);
 			},
 			error:function(message){
@@ -265,7 +307,7 @@ $(document).ready(function(){
 				type : "POST",
 				contentType:'multipart/form-data',
 				success:function(data){
-					drawMyReservations(data);
+					drawReservations(data);
 					alert("Successfully accepted. ");
 				}
 			})
@@ -280,7 +322,7 @@ $(document).ready(function(){
 				type : "POST",
 				contentType:'multipart/form-data',
 				success:function(data){
-					drawMyReservations(data);
+					drawReservations(data);
 					alert("Successfully rejected. ");
 				}
 			})
