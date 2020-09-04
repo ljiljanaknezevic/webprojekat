@@ -217,6 +217,7 @@ $(document).ready(function(){
 	
 	$('#content').attr('hidden', false);
 	$('#content-profile').attr('hidden', true);
+	$('#myReservationsTable').attr('hidden',true);
 	$.ajax({
 		url:"ProjectRents/currentUser",
 		type : "GET",
@@ -239,8 +240,9 @@ $(document).ready(function(){
 	//RESERVATION TAB
 	$('a[href="#reservationsClick"]').click(function(e){
 		console.log("USAO JE U CLICK");
-		$('#myReservations').attr('hidden',false);
+		$('#myReservationsTable').attr('hidden',false);
 		$('#content').attr('hidden',true);
+		
 		$.ajax({
 			url:"ProjectRents/hostsReservations",
 			type : "GET",

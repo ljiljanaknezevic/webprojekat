@@ -135,14 +135,14 @@ public class ReservationService {
 	@Path("/hostsReservations")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getHostsReservations(@Context HttpServletRequest request) {
+		System.out.println("Usao je u resevation service");
 		User u = (User)request.getSession().getAttribute("user");
 		ReservationDAO daoR = (ReservationDAO) ctx.getAttribute("reservationDAO");
 		ApartmentDAO dao = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
+		ArrayList<Apartment> hostsA=dao.getHostsApartments(u.getUsername());
+		return Response.ok(daoR.getReservationsForHost(hostsA)).build();
+	
 		
-		//TODO:Uzimam id od apartmana iz rezervacija,proveravam njegovog hosta,ako je kao ulogovani stavljam ga u listu
-		//ovo se radi u service!
-		
-		return Response.ok(	dao.getHostsApartments(u.getUsername())	).build();
 	}
 	
 }
