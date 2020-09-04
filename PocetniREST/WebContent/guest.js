@@ -27,7 +27,7 @@ function drawMyReservations(data){
 				
 	}
 	
-	$('#tbodyReservations').html(temp);
+	$('#tbodyMyReservations').html(temp);
 }
 
 function drawApartments(data){
@@ -42,7 +42,7 @@ function drawApartments(data){
 			<td>`+data[i].price+`</td>
 			<td><button id="make-reservation" class="btn btn-primary">Make reservation</button></td></tr>`;
 	}
-	$('#apartmentsTable').html(temp);
+	$('#apartmentsTableBody').html(temp);
 }
 
 
@@ -78,7 +78,7 @@ $(document).ready(function(){
 		})
 	})
 	
-	$('#tbodyReservations').on('click','button',function(event){
+	$('#tbodyMyReservations').on('click','button',function(event){
 		if($(event.target).attr('id')=="cancel-reservation"){
 			var trid = $(event.target).closest('tr').attr('id');
 				$.ajax({
@@ -112,7 +112,7 @@ $(document).ready(function(){
 			modal.style.display = "none";
 		}
 	}
-	$('#apartmentsTable').on('click','button',function(event){
+	$('#apartmentsTableBody').on('click','button',function(event){
 		if($(event.target).attr("id")=="make-reservation"){
 			modal.style.display="block";
 			$('#nights-of-stay').val("");
