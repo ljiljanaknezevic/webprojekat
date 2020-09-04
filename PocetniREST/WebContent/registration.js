@@ -1,4 +1,19 @@
 var userLogged = 'none';
+function drawApartments(data){
+	let temp='';
+	for (i in data){
+		temp+=`<tr id="`+data[i].id+`">
+			<td>`+data[i].status+`</td>
+			<td>`+data[i].type+`</td>
+			<td>`+data[i].location+`</td>
+			<td>`+data[i].numberOfRooms+`</td>
+			<td>`+data[i].numberOfGuest+`</td>
+			<td>`+data[i].price+`</td>
+			<td><button id="view-comment" class="btn btn-primary">View comments</button></td></tr>`;
+	}
+	$('#apartmentsTable').html(temp);
+}
+
 $(document).ready(function() {
 		function currentUser(){
 		
@@ -20,7 +35,6 @@ $(document).ready(function() {
 					userLogged = user.role;
 					currentUserLogged = user;
 				}
-				console.log("********************* ",userLogged)
 				 if(userLogged == 'ADMIN'){
 						window.location="./admin.html";
 					}else if(userLogged== 'HOST'){
@@ -32,7 +46,9 @@ $(document).ready(function() {
 			}	
 		})
 	}
-	
+
+		$('#content-registration').attr("hidden", false);
+		$('#content').attr("hidden", true);
 	$('form#registration').submit(function(event){
 		event.preventDefault()
 		console.log('saljemo rest')
@@ -84,8 +100,21 @@ $(document).ready(function() {
 				}
 			})
         }
-		
-		
 	})
+	
+		$('a[href="#apartments"]').click(function(){
+			$('#content-registration').attr("hidden", true);
+			$('#content').attr("hidden", false);
+			
+			$.ajax({
+				url:'ProjectRents/allActiveApartments',
+				type : "GET",
+				contentType : 'application/json',
+				success : function(data){
+					drawApartments(data)
+				}
+				
+			})
+		})
 	
 })
