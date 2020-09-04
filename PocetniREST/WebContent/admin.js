@@ -58,8 +58,8 @@ function drawApartments(data){
 	for (i in data){
 		temp+=`<tr id="`+data[i].id+`">
 			<td>`+data[i].hostUsername+`</td>
-			<td>`+data[i].status+`</td>
-			<td>`+data[i].type+`</td>
+			<td  class = "nameStatus">`+data[i].status+`</td>
+			<td  class = "nameType">`+data[i].type+`</td>
 			<td>`+data[i].location+`</td>
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
@@ -181,30 +181,31 @@ $('#users').click(function(e)
 	});
 
 	// mica pretraga
-	$("#content").on('change paste keyup','[name=filterRest]',function (event) {
+	$("#content-users").on('change paste keyup','[name=filterRest]',function (event) {
         var n=$("#filterUsername").val();
         var g=$("#filterGender").val();
         var r=$("#filterRole").val();
         if ($("#filterUsername").val()==""){
         	
-        	var username=$("#content td.nameUser").parent();
+        	var username=$("#content-users td.nameUser").parent();
         }else{
-        	var username=$("#content td.nameUser:contains('" + n + "')").parent()
+        	var username=$("#content-users td.nameUser:contains('" + n + "')").parent()
         }
-        if ($("#filterGender").val()==""){
-        	var gender=$("#content td.nameUser").parent();
-        }else{
-        	var gender=$("#content td.nameGender:contains('" + g + "')").parent()
+        if ($("#filterGender").val()=="Search by gender"){
+        	var gender=$("#content-users td.nameUser").parent();
+        }else{      
+        	var gender=$("#content-users td.nameGender:contains('" + g + "')").parent()
         }
         if ($("#filterRole").val()=="Search by role"){
-        	var role=$("#content td.nameUser").parent();
+        	var role=$("#content-users td.nameUser").parent();
         }else{
         	
-        	var role=$("#content td.nameRole:contains('" + r + "')").parent()
+        	var role=$("#content-users td.nameRole:contains('" + r + "')").parent()
         }
         username.filter(gender).filter(role).show();
-        $("#content td.nameUser").parent().not(username.filter(gender).filter(role)).hide();
+        $("#content-users td.nameUser").parent().not(username.filter(gender).filter(role)).hide();
     });
+
 
 
 
@@ -242,7 +243,26 @@ $('#search').submit((event)=>{
 });
 });
 
-
+    	//micas filters apartmants
+    	$("#content-apartmant").on('change paste keyup','[name=filterRestApartment]',function (event) {
+            var n=$("#filterType").val();
+            var g=$("#filterStatus").val();
+          console.log(n)
+          console.log("*****************")
+            if ($("#filterStatus").val()=="Filter by status"){
+            	var status=$("#content-apartmant td.nameStatus").parent();
+            }else{      
+            	var status=$("#content-apartmant td.nameStatus:contains('" + g + "')").parent()
+            }
+            if ($("#filterType").val()=="Filter by type"){
+            	var type=$("#content-apartmant td.nameStatus").parent();
+            }else{
+            	
+            	var type=$("#content-apartmant td.nameType:contains('" + n + "')").parent()
+            }
+            status.filter(type).show();
+            $("#content-apartmant td.nameStatus").parent().not(status.filter(type)).hide();
+        });
 	//AMENITIES TAB
 
 	// amenities 

@@ -120,8 +120,21 @@
 		    	class="btn btn-default btn-sm">
 		       		Add apartment
 		    	</button>
-			
-			<br><br><br>
+				</div>
+			<br>
+				 <div style="width: 80%;height: 30px; margin: 0 auto;" >
+		    					<select style="height: 30px;"  id="filterType" >
+						              <option value = "Filter by type">Filter by type</option>
+						              <option value="ROOM">ROOM</option>
+						              <option value="APARTMENT">APARTMENT</option>
+						      </select>
+				    	<select style="height: 30px;" name="filterRestApartment" id="filterStatus">
+				              <option value = "Filter by status">Filter by status</option>
+				              <option value="ACTIV">ACTIV</option>
+				              <option value="PASSIVE">PASSIVE</option>
+				      </select>
+		    </div>
+			<br>
 			 <div style="width: 80%;max-height: 300px;overflow: auto; margin: 0 auto; ">
 	        <table class="table  table-bordered" onclick="someFunc(event)">
 	              <thead class="success">
@@ -143,7 +156,7 @@
 	                </tbody>
 	            </table>
      		</div> 
-			</div>
+		
 			
     	<br><br><br>
 			 <div style="width: 80%;max-height: 300px;overflow: auto; margin: 0 auto; ">

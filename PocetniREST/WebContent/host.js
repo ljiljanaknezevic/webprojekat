@@ -104,8 +104,8 @@ function drawApartments(data){
 	for (i in data){
 		if(data[i].status == "ACTIV")
 		temp+=`<tr id="`+data[i].id+`">
-			<td>`+data[i].status+`</td>
-			<td>`+data[i].type+`</td>
+			<td class = "tdCol">`+data[i].status+`</td>
+			<td class="tdCol">`+data[i].type+`</td>
 			<td>`+data[i].location+`</td>
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>

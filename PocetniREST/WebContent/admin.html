@@ -181,8 +181,21 @@
 			
 		<div id ="content-apartmant" hidden = "true">     
       <!-- this is for #apartments content -->
-			<br>
+			 <div style="width: 80%;height: 30px; margin: 0 auto;" >
+		    <select style="height: 30px;" name="filterRestApartment" id="filterType" >
+						              <option >Filter by type</option>
+						              <option value="ROOM">ROOM</option>
+						              <option value="APARTMENT">APARTMENT</option>
+						      </select>
+				    	<select style="height: 30px;" name="filterRestApartment" id="filterStatus">
+				              <option>Filter by status</option>
+				              <option value="ACTIV">ACTIV</option>
+				              <option value="PASSIVE">PASSIVE</option>
+				      </select>
+		    </div>
+		    <br>
 			 <div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+			
 	        <table class="table  table-bordered" >
 	              <thead class="success">
 	                <tr class="success">
@@ -211,7 +224,12 @@
       <!-- this is for #apartments content -->
         <div style="width: 80%;height: 30px; margin: 0 auto;" id="pretragaRestDiv">
       <input type="text" name="filterRest" id="filterUsername" placeholder="Search by username">
-      <input type="text" name="filterRest" id="filterGender" placeholder="Search by gender">
+<!--       <input type="text" name="filterRest" id="filterGender" placeholder="Search by gender"> -->
+		<select style="height: 30px;" name="filterRest" id="filterGender" >
+		              <option>Search by gender</option>
+		              <option value="FEMALE">FEMALE</option>
+		              <option value="MALE">MALE</option>
+		      </select>
    <!--    <input type="text" name="filterRest" id="filterRole" placeholder="Search by role"> -->
     	<select style="height: 30px;" name="filterRest" id="filterRole">
               <option>Search by role</option>
