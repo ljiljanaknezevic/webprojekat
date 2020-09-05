@@ -198,6 +198,7 @@
      		</div> 
      		</div>
    	<!-- MODAL FOR RESERVATIONS -->
+   	
    	  <div id="myModal" class="modal">
   		<div class="modal-content" style="text-align: center;" >
     	 
@@ -227,6 +228,41 @@
        <br>
   	  </div> 
    	</div>
+   	
+   	
+   		<!-- MODAL FOR LEAVING COMMENT -->
+   	
+   	<div id="modal2" class="modal">
+
+  		<!-- Modal content -->
+  		<div class="modal-content" style="text-align: center;" >
+    	 
+    	 <table width="500" align="center">
+    	  <tr>
+          <th height="50">Your comment:</th>
+          <th height="50"><input type ="text" id = "comment-left" required></th>
+        </tr>
+          <tr>
+          <th height="50" >Rate apartment:</th>
+          <th height="50"  >
+			<select name="rate" id="rate" class="form-control" required 
+				 oninvalid="this.setCustomValidity('Type is required.')" oninput="setCustomValidity('')">
+      			<option value="EXCELLENT">EXCELLENT</option>
+      			<option value="GOOD">GOOD</option>
+      			<option value="SATISFYING">SATISFYING</option>
+      			<option value="BAD">BAD</option>
+      			<option value="HORRIBLE">HORRIBLE</option>
+     		 </select>
+		  </th>
+        </tr>
+       <span class="close">&times;</span>
+        </table>
+       <br>
+       <button id="send-comment" class="btn btn-primary">Send comment</button>
+       <br>
+  	  </div> 
+   	</div>
+   	
    	
    	
    	
@@ -286,9 +322,6 @@
         <div class="clearfix"></div>
 
       </div>
-
-     
-
 </div>
    
 </body>

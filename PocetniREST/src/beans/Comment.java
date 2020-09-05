@@ -1,21 +1,24 @@
 package beans;
+import java.util.UUID;
+
 import beans.enums.Grade;
 
 public class Comment {
-	private Guest guest;
-	private Apartment apartment;
+	private String guest; //guests username
+	private UUID apartment; //apartment id
 	private String text;
 	private Grade grade;
-	public Guest getGuest() {
+	
+	public String getGuest() {
 		return guest;
 	}
-	public void setGuest(Guest guest) {
+	public void setGuest(String guest) {
 		this.guest = guest;
 	}
-	public Apartment getApartment() {
+	public UUID getApartment() {
 		return apartment;
 	}
-	public void setApartment(Apartment apartment) {
+	public void setApartment(UUID apartment) {
 		this.apartment = apartment;
 	}
 	public String getText() {

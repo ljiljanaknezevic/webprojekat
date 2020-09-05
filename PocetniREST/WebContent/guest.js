@@ -10,6 +10,19 @@ function drawMyReservations(data){
 			<td>`+data[i].message+`</td>
 			<td>`+data[i].status+`</td>
 			<td><button  id="cancel-reservation" class="btn btn-primary">Cancel reservation</button></td>
+			<td><button disabled  id="comment" class="btn btn-primary">Leave a comment</button></td>
+			</tr>`;
+		}
+			if(data[i].status=='REJECTED' || data[i].status=='COMPLETED'){
+			temp+=`<tr id="`+data[i].reservationId+`">
+			<td>`+data[i].apartmentId+`</td>
+			<td>`+data[i].arrivalDate+`</td>
+			<td>`+data[i].numberOfStay+`</td>
+			<td>`+data[i].totalPrice+`</td>
+			<td>`+data[i].message+`</td>
+			<td>`+data[i].status+`</td>
+			<td><button disabled  id="cancel-reservation" class="btn btn-primary">Cancel reservation</button></td>
+			<td><button  id="comment" class="btn btn-primary">Leave a comment</button></td>
 			</tr>`;
 		}
 	else
@@ -22,6 +35,7 @@ function drawMyReservations(data){
 			<td>`+data[i].message+`</td>
 			<td>`+data[i].status+`</td>
 			<td><button disabled  id="cancel-reservation" class="btn btn-primary">Cancel reservation</button></td>
+			<td><button disabled  id="comment" class="btn btn-primary">Leave a comment</button></td>
 			</tr>`;
 	}
 				
@@ -56,6 +70,30 @@ var password ='none';
 var role = 'none';
 var trid = '';
 $(document).ready(function(){
+		//MODAL
+	var modal = document.getElementById('myModal');
+	var modal2=document.getElementById('modal-comment');
+	var span = document.getElementsByClassName("close")[0];
+	var span2=document.getElementsByClassName("close")[1];
+	span.onclick = function() {
+		modal.style.display = "none";
+	}
+	window.onclick = function(event) {
+		if (event.target == modal) {
+			modal.style.display = "none";
+		}
+	}
+
+	span2.onclick=function(){
+		modal.style.display="none";
+		modal2.style.display="none";
+	}
+	
+	window.onclick = function(event) {
+	    if (event.target == modal2) {
+	        modal2.style.display = "none";
+	    }
+	}
 	
 	$('#content').attr('hidden',false);
 	$('#myReservations').attr('hidden',true);
@@ -98,7 +136,38 @@ $(document).ready(function(){
 				}
 			})
 		}
+			else if($(event.target).attr('id')=="comment"){
+				modal2.style.display="block";
+				$('#comment-left').val("");
+				var trid2 = $(event.target).closest('tr').attr('id');
+		}
 	})
+	
+//SENDING COMMENT	
+	$('#send-comment').click(function(){
+				var comment=new Object();
+				comment.text=$('#comment-left').val();
+				comment.grade=$('#rate').val();	
+				comment.guest='';
+				comment.apartment=trid2;
+				
+				$.ajax({
+					url:"ProjectRents/leaveComment",
+					type : "POST",
+					data:JSON.stringify(comment),
+					contentType:'application/json',
+					success: function(data){
+						modal.style.display="none";
+						alert('Successfully sent comment!')
+					},
+					error:function(){
+						modal2.style.display="block";
+						alert("Error with sending comment");
+					}
+				})
+				
+				
+			})
 	
 	$.ajax({
 		url:'ProjectRents/allActiveApartments',
@@ -109,17 +178,9 @@ $(document).ready(function(){
 		}
 		
 	})
-	//MODAL
-	var modal = document.getElementById('myModal');
-	var span = document.getElementsByClassName("close")[0];
-	span.onclick = function() {
-		modal.style.display = "none";
-	}
-	window.onclick = function(event) {
-		if (event.target == modal) {
-			modal.style.display = "none";
-		}
-	}
+	
+
+	//RESERVATION
 	$('#apartmentsTableBody').on('click','button',function(event){
 		if($(event.target).attr("id")=="make-reservation"){
 			modal.style.display="block";

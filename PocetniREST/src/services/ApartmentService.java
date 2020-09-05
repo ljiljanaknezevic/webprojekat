@@ -26,6 +26,7 @@ import javax.ws.rs.core.Response;
 import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import beans.Apartment;
+import beans.Comment;
 import beans.User;
 import dao.ApartmentDAO;
 
@@ -127,6 +128,25 @@ public class ApartmentService {
 		Apartment a = dao.findApartment(id);
 		String contextPath = ctx.getRealPath("");
 		a.setDeleted(true);
+		dao.saveApartments(contextPath);
+		return Response.ok(dao.getAllApartments()).build();
+	}
+	
+	@POST
+	@Path("/leaveComment")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response leaveComment(Comment c,@Context HttpServletRequest request) {
+		System.out.println("USAO JE U APARTMENT SERVICE");
+		ApartmentDAO dao = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
+		User u=(User)request.getSession().getAttribute("user");
+		c.setGuest(u.getUsername());
+		
+		//PRONADJEM APARTMAN SA DATIM ID,I SMESTIM MU KOMENTAR U NJEGOV NIZ KOMENTARA
+		Apartment a = dao.findApartment(c.getApartment());
+		a.addComment(c);
+		
+		String contextPath = ctx.getRealPath("");
 		dao.saveApartments(contextPath);
 		return Response.ok(dao.getAllApartments()).build();
 	}

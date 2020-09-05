@@ -189,5 +189,10 @@ public class Apartment {
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
 	}
+	public void addComment(Comment c) {
+		this.comments.add(c);
+		System.out.println(comments);
+		
+	}
 	
 }
