@@ -144,6 +144,11 @@ public class ApartmentService {
 		
 		//PRONADJEM APARTMAN SA DATIM ID,I SMESTIM MU KOMENTAR U NJEGOV NIZ KOMENTARA
 		Apartment a = dao.findApartment(c.getApartment());
+		System.out.println(c.getText());
+		System.out.println(c.getApartment() + "~~~~~~~~~");
+		System.out.println(c.getGrade());
+		System.out.println(c.getGuest());
+		
 		a.addComment(c);
 		
 		String contextPath = ctx.getRealPath("");

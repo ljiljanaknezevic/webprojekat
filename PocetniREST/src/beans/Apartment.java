@@ -20,7 +20,7 @@ public class Apartment {
 	private ArrayList<String> availables; //dostupni datumi za izdavanje ...
 	//private Host host;  //da li umesto citave klase host da cuvamo samo username hosta
 	private String hostUsername;
-	private ArrayList<Comment> comments;
+	private ArrayList<Comment> comments = new ArrayList<Comment>();
 	private ArrayList<String> images ;
 	private double price;
 	private String checkIn = "14:00";
@@ -190,9 +190,7 @@ public class Apartment {
 		this.isDeleted = isDeleted;
 	}
 	public void addComment(Comment c) {
-		this.comments.add(c);
-		System.out.println(comments);
-		
+		comments.add(c);
 	}
 	
 }

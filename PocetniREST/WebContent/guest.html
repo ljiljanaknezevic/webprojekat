@@ -18,7 +18,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" rel="stylesheet"/>
 	<script src="guest.js"></script>
 	<script src="sortByPrice.js"></script>
-	<!--<script src="host.js"></script>-->  
+		<script src="filtersApartmentRezervations.js"></script>
 	
 	<link href="css/look.css" rel="stylesheet" id="look-css">
 </head>
@@ -148,8 +148,16 @@
  <div id ="content" hidden="false">     
       <!-- this is for #apartments content -->
       	<br><br>
+			<br><br>
+				 <div style="width: 80%;height: 30px; margin: 0 auto;" >
+		    					<select style="height: 30px;"  id="filterType" >
+						              <option value = "Filter by type">Filter by type</option>
+						              <option value="ROOM">ROOM</option>
+						              <option value="APARTMENT">APARTMENT</option>
+						      </select>
+			    </div>
+			<br>
       	   	<div  style="text-align: center">
-			<br><br><br>
 			 <div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
 	        <table class="table  table-bordered" >
 	              <thead class="success">
@@ -168,7 +176,7 @@
 	                  	<th></th>
 	               	 	</tr>
 	                </thead>
-	                <tbody id="apartmentsTableBody">
+	                <tbody id="apartmentsTable">
 	                </tbody>
 	            </table>
      		</div> 

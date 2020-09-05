@@ -51,7 +51,7 @@ public class ReservationService {
 		System.out.println("USAO JE U SERVICE");
 		User u=(User)request.getSession().getAttribute("user");
 		ReservationDAO dao=(ReservationDAO) ctx.getAttribute("reservationDAO");
-		return  Response.ok(dao.getGuestsReservations(u.getUsername())	).build();
+		return  Response.ok(dao.getGuestsReservations(u.getUsername())).build();
 	}
 	
 	

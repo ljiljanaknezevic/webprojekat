@@ -111,10 +111,16 @@ public class ApartmentDAO {
 		}
 		return apart;
 	}
-	
-	
 
 	public Apartment findApartment(UUID id) {
 		return apartments.get(id);
+	}
+	
+	public Apartment getApartmentById(UUID id) {
+		for (Apartment a : apartments.values()) {
+			if(a.getId().equals(id)) 
+				return a;
+		}
+		return null;
 	}
 }

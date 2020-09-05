@@ -49,14 +49,14 @@ function drawApartments(data){
 	for (i in data){
 		temp+=`<tr id="`+data[i].id+`">
 			<td>`+data[i].status+`</td>
-			<td>`+data[i].type+`</td>
+			<td class= "tdCol">`+data[i].type+`</td>
 			<td>`+data[i].location+`</td>
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
 			<td><button id="make-reservation" class="btn btn-primary">Make reservation</button></td></tr>`;
 	}
-	$('#apartmentsTableBody').html(temp);
+	$('#apartmentsTable').html(temp);
 }
 
 
@@ -69,10 +69,11 @@ var gender = 'none';
 var password ='none';
 var role = 'none';
 var trid = '';
+var trid2 = '';
 $(document).ready(function(){
 		//MODAL
 	var modal = document.getElementById('myModal');
-	var modal2=document.getElementById('modal-comment');
+	var modal2=document.getElementById('modal2');
 	var span = document.getElementsByClassName("close")[0];
 	var span2=document.getElementsByClassName("close")[1];
 	span.onclick = function() {
@@ -139,7 +140,7 @@ $(document).ready(function(){
 			else if($(event.target).attr('id')=="comment"){
 				modal2.style.display="block";
 				$('#comment-left').val("");
-				var trid2 = $(event.target).closest('tr').attr('id');
+				 trid2 = $(event.target).parent().parent().children().first().text();
 		}
 	})
 	
@@ -149,8 +150,9 @@ $(document).ready(function(){
 				comment.text=$('#comment-left').val();
 				comment.grade=$('#rate').val();	
 				comment.guest='';
+				 console.log(trid2)
+
 				comment.apartment=trid2;
-				
 				$.ajax({
 					url:"ProjectRents/leaveComment",
 					type : "POST",
@@ -181,7 +183,7 @@ $(document).ready(function(){
 	
 
 	//RESERVATION
-	$('#apartmentsTableBody').on('click','button',function(event){
+	$('#apartmentsTable').on('click','button',function(event){
 		if($(event.target).attr("id")=="make-reservation"){
 			modal.style.display="block";
 			$('#nights-of-stay').val("");
@@ -190,7 +192,7 @@ $(document).ready(function(){
 			 trid=$(event.target).closest('tr').attr('id');
 		}
 	})
-	$('#make-reservation2').click(function(){
+	$('#make-reservation2').click(function(){s
 				var reservation=new Object();
 				reservation.arrivalDate=$('#start-date').val();
 				reservation.numberOfStay=$('#nights-of-stay').val();
