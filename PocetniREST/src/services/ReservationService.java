@@ -23,6 +23,7 @@ import beans.User;
 import beans.enums.ReservationStatus;
 import dao.ApartmentDAO;
 import dao.ReservationDAO;
+import dao.UserDAO;
 
 @Path("")
 public class ReservationService {
@@ -144,4 +145,32 @@ public class ReservationService {
 		
 	}
 	
+	@GET
+	@Path("/allUsersForHost")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAllUsersForHost(@Context HttpServletRequest request) {
+		ArrayList<String> guestUsernameList = new ArrayList<String>(); 
+		User host=(User)request.getSession().getAttribute("user");
+		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
+		ApartmentDAO apartDao = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
+		ReservationDAO resDao = (ReservationDAO) ctx.getAttribute("reservationDAO");
+		//vraca listu aparmtna od hosta
+		ArrayList<Apartment> hostsApartmentsList = apartDao.getAllApartmentsByHostUsername(host.getUsername());
+		for(Apartment a : hostsApartmentsList) {
+			if(!resDao.getGuestById(a.getId()).isEmpty()) {
+				ArrayList<String> guestUsername =  resDao.getGuestById(a.getId());
+
+				for(String guest : guestUsername) {
+					if(!guestUsernameList.contains(guest))
+						guestUsernameList.add(guest);
+				}
+			}
+		}
+		
+		userDao.getUsersForHost(guestUsernameList);
+		for(User u :userDao.getUsersForHost(guestUsernameList)) {
+			System.out.println(u.getUsername() + " : konacnla lista za slanje na crtanje");
+		}
+		return Response.ok(userDao.getUsersForHost(guestUsernameList)).status(200).build();
+	}
 }

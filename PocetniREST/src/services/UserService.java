@@ -18,9 +18,12 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import beans.Apartment;
 import beans.User;
 import beans.enums.Gender;
 import beans.enums.Role;
+import dao.ApartmentDAO;
+import dao.ReservationDAO;
 import dao.SearchUsers;
 import dao.UserDAO;
 
@@ -232,35 +235,13 @@ public class UserService {
 		return Response.status(400).build();
 
 	}
-	@POST
-	@Path("/searchUsername")
-	@Produces(MediaType.APPLICATION_JSON)
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response searchByUsername(SearchUsers parm,@Context HttpServletRequest request) {
-	UserDAO dao=(UserDAO) ctx.getAttribute("userDAO");
-	List<User> retval=new ArrayList<User>();
-	if(parm!=null && dao!=null)
-	{
-		for(User u:dao.getAll())
-		{
-			if(!u.getUsername().toLowerCase().trim().contains(parm.getUsername().trim()) && !parm.getUsername().trim().isEmpty()) {
-				continue;
-			}
-		/*	if(!u.getName().toLowerCase().trim().contains(parm.getName().trim()) && !parm.getName().trim().isEmpty()) {
-				continue;
-			}
-			if(!u.getSurname().toLowerCase().trim().contains(parm.getSurname().trim()) && !parm.getSurname().trim().isEmpty()) {
-				continue;
-			}*/
-			
-			retval.add(u);
-		}
-		return Response.ok(retval).status(200).build();
-	}else {
-		return Response.status(400).build();
-	}
 	
-	
-}
+
+
 }
 	
+
+/*if(dao.getAll() != null)
+			return Response.ok(dao.getAll()).status(200).build();
+		else 
+			return Response.status(400).build();*/

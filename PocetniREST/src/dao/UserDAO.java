@@ -155,7 +155,7 @@ public class UserDAO {
 		list.addAll(users.values());
 		return list;
 
-}
+	}
 	
 	public User editUser(User user, String contextPath) {
 		System.out.println(user.getName());
@@ -198,6 +198,15 @@ public class UserDAO {
 	//	list.addAll(users.values());
 		return list;
 		
+	}
+	
+	public ArrayList<User> getUsersForHost(ArrayList<String> allUsernames) {
+		ArrayList<User> list = new ArrayList<>();
+		for(String username : allUsernames ) {
+			list.add(users.get(username));
+		}
+		return list;
+
 	}
 
 }

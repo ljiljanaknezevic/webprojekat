@@ -114,4 +114,15 @@ public void addToMap(Reservation r) {
 		
 		return list;
 	}
+	
+	public ArrayList<String> getGuestById(UUID id) {
+		 ArrayList<String> list = new ArrayList<String>();
+		 System.out.println(reservations.size());
+		for(Reservation r:reservations.values()){
+			if(r.getApartmentId().equals(id)) {
+				list.add(r.getGuest());
+			}
+		}
+		return list;
+	}
 }

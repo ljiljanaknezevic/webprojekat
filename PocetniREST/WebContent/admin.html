@@ -23,6 +23,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" rel="stylesheet"/>
 
 	 <script src="admin.js"></script>
+	 <script src="searchUsers.js"></script>
 	 <script src="sortByPrice.js"></script>
 	<script src="registration.js"></script>
 </head>
@@ -222,23 +223,27 @@
 			 
 			 	   <div id ="content-users" hidden = "true">     
       <!-- this is for #apartments content -->
-        <div style="width: 80%;height: 30px; margin: 0 auto;" id="pretragaRestDiv">
-      <input type="text" name="filterRest" id="filterUsername" placeholder="Search by username">
-<!--       <input type="text" name="filterRest" id="filterGender" placeholder="Search by gender"> -->
-		<select style="height: 30px;" name="filterRest" id="filterGender" >
-		              <option>Search by gender</option>
-		              <option value="FEMALE">FEMALE</option>
-		              <option value="MALE">MALE</option>
-		      </select>
-   <!--    <input type="text" name="filterRest" id="filterRole" placeholder="Search by role"> -->
-    	<select style="height: 30px;" name="filterRest" id="filterRole">
-              <option>Search by role</option>
-              <option value="GUEST">GUEST</option>
-              <option value="HOST">HOST</option>
-              <option value="ADMIN">ADMIN</option>
-      </select>
-    </div>
-			<br>
+        <div style="width: 80%;height: 30px; margin: 0 auto;" id="searchDiv">
+        <input type="text"  id="searchByUsername" placeholder="Search by username">
+      <input type="text"  id="searchByGender" placeholder="Search by gender">
+      <input type="text" id="searchByRole" placeholder="Search by role">
+        </div>
+      <br>
+<!--         <div style="width: 80%;height: 30px; margin: 0 auto;" id="pretragaRestDiv"> -->
+      
+<!-- 		<select style="height: 30px;" name="filterRest" id="filterGender" > -->
+<!-- 		              <option>Search by gender</option> -->
+<!-- 		              <option value="FEMALE">FEMALE</option> -->
+<!-- 		              <option value="MALE">MALE</option> -->
+<!-- 		      </select> -->
+<!--     	<select style="height: 30px;" name="filterRest" id="filterRole"> -->
+<!--               <option>Search by role</option> -->
+<!--               <option value="GUEST">GUEST</option> -->
+<!--               <option value="HOST">HOST</option> -->
+<!--               <option value="ADMIN">ADMIN</option> -->
+<!--       </select> -->
+<!--     </div> -->
+<!-- 			<br> -->
 			 <div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
 	        <table class="table  table-bordered" >
 	              <thead class="success">

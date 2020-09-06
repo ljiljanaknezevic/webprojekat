@@ -25,7 +25,7 @@ function drawMyReservations(data){
 			<td><button  id="comment" class="btn btn-primary">Leave a comment</button></td>
 			</tr>`;
 		}
-	else
+	/*else
 	{
 		temp+=`<tr id="`+data[i].reservationId+`">
 			<td>`+data[i].apartmentId+`</td>
@@ -37,7 +37,7 @@ function drawMyReservations(data){
 			<td><button disabled  id="cancel-reservation" class="btn btn-primary">Cancel reservation</button></td>
 			<td><button disabled  id="comment" class="btn btn-primary">Leave a comment</button></td>
 			</tr>`;
-	}
+	}*/
 				
 	}
 	
@@ -192,7 +192,7 @@ $(document).ready(function(){
 			 trid=$(event.target).closest('tr').attr('id');
 		}
 	})
-	$('#make-reservation2').click(function(){s
+	$('#make-reservation2').click(function(){
 				var reservation=new Object();
 				reservation.arrivalDate=$('#start-date').val();
 				reservation.numberOfStay=$('#nights-of-stay').val();

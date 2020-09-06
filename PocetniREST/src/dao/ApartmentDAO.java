@@ -123,4 +123,12 @@ public class ApartmentDAO {
 		}
 		return null;
 	}
+	public ArrayList<Apartment> getAllApartmentsByHostUsername(String username) {
+		ArrayList<Apartment> listApartment= new ArrayList<Apartment>();
+		for (Apartment a : apartments.values()) {
+			if(a.getHostUsername().equals(username)) 
+				listApartment.add(a);
+		}
+		return listApartment;
+	}
 }

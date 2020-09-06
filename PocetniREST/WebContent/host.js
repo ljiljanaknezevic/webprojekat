@@ -170,6 +170,19 @@ function drawApartments(data){
 	$('#apartmentsTable-passive').html(tempPassive);
 }
 
+function drawUsers(data){
+	let temp='';
+	
+	for (i in data){
+		temp+=`<tr><td class = "nameUser">` + data[i].username + `</td>
+		<td >`+data[i].name+`</td>
+		<td>`+data[i].surname+`</td>
+		<td class = "nameGender">`+data[i].gender+`</td>
+		<td class = "nameRole">`+data[i].role+`</td>
+		</tr>`;
+	}
+	$('#usersTable').html(temp);
+}
 var modal='';
 function someFunc(event){
 	if( $(event.target).attr("id")=="delete-apartment"){
@@ -258,7 +271,8 @@ var role = 'none';
 $(document).ready(function(){
 	
 	$('#content').attr('hidden', false);
-	$('#content-profile').attr('hidden', true);
+	$('.profileLook').attr('hidden', true);
+	$('#content-users').attr('hidden',true);
 	$('#myReservationsTable').attr('hidden',true);
 	$.ajax({
 		url:"ProjectRents/currentUser",
@@ -279,11 +293,29 @@ $(document).ready(function(){
 	})
 	
 	
+	    //USERS THAT HAVE RESEVATIONS AT OUR HOST
+	      $('a[href="#users"]').click(function(){
+			$('#content').attr('hidden', true);
+			$('.profileLook').attr('hidden', true);
+			$('#myReservationsTable').attr('hidden',true);
+			$('#content-users').attr('hidden',false);
+			
+			$.ajax({
+				url:"ProjectRents/allUsersForHost",
+				type : "GET",
+				success : function(data){
+					drawUsers(data);
+				}
+			})
+	      });
+	    
 	//RESERVATION TAB
 	$('a[href="#reservationsClick"]').click(function(e){
-		$('#myReservationsTable').attr('hidden',false);
 		$('#content').attr('hidden',true);
-		
+		$('#content-users').attr('hidden',true);
+		$('#myReservationsTable').attr('hidden',false);
+		$('.profileLook').attr('hidden', true);
+
 		$.ajax({
 			url:"ProjectRents/hostsReservations",
 			type : "GET",
@@ -510,8 +542,10 @@ $(document).ready(function(){
 	});	
 
 	  $('a[href="#apartments"]').click(function(){
+		  $('#content-users').attr('hidden', true);
 			$('#content').attr('hidden', false);
 			$('.profileLook').attr('hidden', true);
+			$('#myReservationsTable').attr('hidden',true);
 	  })
 	//////////////////// profile
 
@@ -519,6 +553,8 @@ $(document).ready(function(){
 	  $('a[href="#profile"]').click(function(){
 			$('#content').attr('hidden', true);
 			$('.profileLook').attr('hidden', false);
+			$('#myReservationsTable').attr('hidden',true);
+			$('#content-users').attr('hidden',true);
 	    	$.ajax({
 	    		url: 'ProjectRents/currentUser',
 	    		type : "GET",
@@ -544,7 +580,8 @@ $(document).ready(function(){
 	    	
 	    })
 
-
+	    
+	    //PROOOOFIIIL
 	    $('#submit-edit').click(function(){
 	    	event.preventDefault();
 	    	let username=$('#username').val()

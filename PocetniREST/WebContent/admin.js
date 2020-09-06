@@ -36,22 +36,6 @@ function drawAllReservations(data){
 		$('#tbodyAllReservations').html(temp);
 }
 
-function addSearchTable(user)
-{
-	let tr = $('<tr></tr>');
-	let tdUsername = $('<td>' + user.username + '</td>');
-	let tdName = $('<td>' + user.name+ '</td>');
-	
-	let tdSurname = $('<td>' + user.surname + '</td>');
-	
-	let tdGender = $('<td>' + user.gender + '</td>');
-	let tdRole = $('<td>' + user.role+ '</td>');
-	tr.append(tdUsername).append(tdName).append(tdSurname).append(tdGender).append(tdRole);
-	
-	
-	$('#tbSearch').append(tr);
-}
-
 
 function drawApartments(data){
 	let temp='';
@@ -142,106 +126,74 @@ $(document).ready(function(){
 	
 	
 	
-    // users tab
-$('#users').click(function(e)
-{
-	$('#content-users').attr('hidden', false);
-	$('#dugmad').attr('hidden', true);
-	$('#content-apartmant').attr('hidden', true);
-	$('.profileLook').attr('hidden', true);
-	$('#allReservations').attr('hidden',true);
-	/*$.ajax({
-		url:"ProjectRents/allUsers",
-		type:"GET",
-		success:function(users){
-			$('#search').attr('hidden', false);
-			$('#allUsers').attr('hidden', false);
-			$('#allUsers tbody').html('');
-			if(users!=null){
-				for(let user of users){
-					addUsersTr(user);
-				}
+	    // users tab
+	$('#users').click(function(e)
+	{
+		$('#content-users').attr('hidden', false);
+		$('#dugmad').attr('hidden', true);
+		$('#content-apartmant').attr('hidden', true);
+		$('.profileLook').attr('hidden', true);
+		$('#allReservations').attr('hidden',true);
+
+		$.ajax({
+			url:"ProjectRents/allUsers",
+			type:"GET",
+			success:function(users){
+				if(users!=null)
+					drawUsers(users);
+			},
+			error:function(message){
+				console.log('Error loading users.')
 			}
-		},
-		error:function(message){
-			console.log('Error')
-		}
-	});*/
-	
-	$.ajax({
-		url:"ProjectRents/allUsers",
-		type:"GET",
-		success:function(users){
-			if(users!=null)
-				drawUsers(users);
-		},
-		error:function(message){
-			console.log('Error loading users.')
-		}
-	});
-
-	// mica pretraga
-	$("#content-users").on('change paste keyup','[name=filterRest]',function (event) {
-        var n=$("#filterUsername").val();
-        var g=$("#filterGender").val();
-        var r=$("#filterRole").val();
-        if ($("#filterUsername").val()==""){
-        	
-        	var username=$("#content-users td.nameUser").parent();
-        }else{
-        	var username=$("#content-users td.nameUser:contains('" + n + "')").parent()
-        }
-        if ($("#filterGender").val()=="Search by gender"){
-        	var gender=$("#content-users td.nameUser").parent();
-        }else{      
-        	var gender=$("#content-users td.nameGender:contains('" + g + "')").parent()
-        }
-        if ($("#filterRole").val()=="Search by role"){
-        	var role=$("#content-users td.nameUser").parent();
-        }else{
-        	
-        	var role=$("#content-users td.nameRole:contains('" + r + "')").parent()
-        }
-        username.filter(gender).filter(role).show();
-        $("#content-users td.nameUser").parent().not(username.filter(gender).filter(role)).hide();
-    });
-
-
-
-
-//LJILJA PRETRAGA
-$('#search').submit((event)=>{
-	event.preventDefault();
-	
-	let username;
-	let name;
-	let surname;
-	
-	username=$('#searchUsername').val();
-	name=$('#searchName').val();
-	surname=$('#searchSurname').val();
-	
-	$.ajax({
-		url:'ProjectRents/searchUsername',
-		type : "POST",
-		data:JSON.stringify({
-			username:username,
-			name:name,
-			surname:surname
-		}),
-		contentType:'application/json',
-		success:function(users){
-			$('#searchResults').attr('hidden',false);
-			$('#searchTable tbody').html('');
-			$('#allUsers').attr('hidden', true);
-			for (let user of users)
-			{
-				addSearchTable(user);
-			}
-		}
 		});
-});
-});
+	
+		// mica pretraga
+		$("#content-users").on('change paste keyup','[name=filterRest]',function (event) {
+	//		var n=$("#filterUsername").val();
+	//		var g=$("#filterGender").val();
+	//		var r=$("#filterRole").val();
+	//		if ($("#filterUsername").val()==""){
+	//			
+	//			var username=$("#content-users td.nameUser").parent();
+	//		}else{
+	//			var username=$("#content-users td.nameUser:contains('" + n + "')").parent()
+	//		}
+	//		if ($("#filterGender").val()=="Filter by gender"){
+	//			var gender=$("#content-users td.nameUser").parent();
+	//		}else{      
+	//			var gender=$("#content-users td.nameGender:contains('" + g + "')").parent()
+	//		}
+	//		if ($("#filterRole").val()=="Filter by role"){
+	//			var role=$("#content-users td.nameUser").parent();
+	//		}else{
+	//			
+	//			var role=$("#content-users td.nameRole:contains('" + r + "')").parent()
+	//		}
+	//		username.filter(gender).filter(role).show();
+	//		$("#content-users td.nameUser").parent().not(username.filter(gender).filter(role)).hide();
+	        var g=$("#filterGender").val();
+	        var r=$("#filterRole").val();
+	        	
+	       
+	        if ($("#filterGender").val()=="Search by gender"){
+	        	var gender=$("#content-users td.nameGender").parent();
+	        }else{      
+	        	var gender=$("#content-users td.nameGender:contains('" + g + "')").parent()
+	        }
+	        if ($("#filterRole").val()=="Search by role"){
+	        	var role=$("#content-users td.nameGender").parent();
+	        }else{
+	        	
+	        	var role=$("#content-users td.nameRole:contains('" + r + "')").parent()
+	        }
+	        
+	       gender.filter(role).show();
+	        $("#content-users td.nameUser").parent().not(gender.filter(role)).hide();
+	        
+	    });
+	
+		
+	});
 
     	//micas filters apartmants
     	$("#content-apartmant").on('change paste keyup','[name=filterRestApartment]',function (event) {
