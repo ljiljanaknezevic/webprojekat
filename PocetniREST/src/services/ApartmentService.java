@@ -97,6 +97,27 @@ public class ApartmentService {
 		return Response.ok(dao.getHostsApartments(ap.getHostUsername())).build();
 	}
 	@POST
+	@Path("/hostChangeViewOfComment{id}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response hostChangeViewOfComment(@PathParam("id") UUID id,@Context HttpServletRequest request) {
+		ApartmentDAO dao = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
+		User u=(User)request.getSession().getAttribute("user");
+
+		Apartment a = dao.findApartmentByCommentId(id);
+		for(Comment c:a.getComments()) {
+			if(c.getCommentId().equals(id)) {
+				if(c.isHostApproved())
+					c.setHostApproved(false);
+				else
+					c.setHostApproved(true);
+			}
+		}
+		String contextPath = ctx.getRealPath("");
+		dao.saveApartments(contextPath);
+		return Response.ok(dao.findApartment(a.getId())).build();
+	}
+	@POST
 	@Path("/editApartment")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)

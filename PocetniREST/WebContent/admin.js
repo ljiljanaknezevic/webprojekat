@@ -63,7 +63,7 @@ function drawApartments(data){
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
-			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td></tr>
+			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
 			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
 			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td></tr>`;
 	}
@@ -110,6 +110,7 @@ $(document).ready(function(){
 	var span = document.getElementsByClassName("close")[0];
 	var span1 = document.getElementsByClassName("close")[1];
 	var span2 = document.getElementsByClassName("close")[2];
+	var span3 = document.getElementsByClassName("close")[3];
 	//var span3=document.getElementByClassName("close")[3];
 
 	// When the user clicks on <span> (x), close the modal
@@ -126,9 +127,9 @@ $(document).ready(function(){
 		modal2.style.display = "none";
 	}
 	
-/*	span3.onclick = function() {
+	span3.onclick = function() {
 		modal3.style.display = "none";
-	}*/
+	}
 	// When the user clicks anywhere outside of the modal, close it
 	window.onclick = function(event) {
 		if (event.target == modal) {

@@ -49,7 +49,24 @@ function toDate(dateStr) {
   var parts = dateStr.split("-")
   return new Date(parts[2], parts[1] - 1, parts[0])
 }
-
+function drawComments(data){
+	let temp='';
+	for (i in data.comments){
+			temp+=`<tr id="`+data.comments[i].commentId+`">
+			<td>`+data.comments[i].guest+`</td>
+			<td>`+data.comments[i].text+`</td>
+			<td>`+data.comments[i].grade+`</td>`
+			if(data.comments[i].hostApproved == false)
+			temp +=	`<td><button id = "comment-show" type="button" class="btn btn-danger btn-sm">
+	           Guests can't see comment</button></td>`;
+			else
+			temp +=	`<td><button id = "comment-show" type="button" class="btn btn-success btn-sm">
+			           Guests see comment</button></td>`;	
+			
+			temp += `<td hidden = "true">`+data.comments[i].apartment+`</td></tr>`;
+		}
+		$('#tbodyComments').html(temp);
+}
 
 function drawAmenities(data){
 			let temp='';
@@ -152,6 +169,7 @@ function drawApartments(data){
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
+			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
 			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
 			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td></tr>`;
 		else{
@@ -162,6 +180,7 @@ function drawApartments(data){
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
+			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
 			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
 			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td></tr>`;
 		}
@@ -293,6 +312,8 @@ $(document).ready(function(){
 	})
 	
 	
+	
+	
 	    //USERS THAT HAVE RESEVATIONS AT OUR HOST
 	      $('a[href="#users"]').click(function(){
 			$('#content').attr('hidden', true);
@@ -376,17 +397,77 @@ $(document).ready(function(){
     });
 	
 	//apartments modal
-	 modal = document.getElementById('myModal');
-	var span = document.getElementsByClassName("close")[0];
-	span.onclick = function() {
-		modal.style.display = "none";
+	modal = document.getElementById('myModal');
+	modal1 = document.getElementById('modal3');
+	 var span = document.getElementsByClassName("close")[0];
+	 span.onclick = function() {
+		 modal.style.display = "none";
+	 }
+	 window.onclick = function(event) {
+		 if (event.target == modal) {
+			 modal.style.display = "none";
+		 }
+	 }
+	var span1 = document.getElementsByClassName("close")[1];
+	span1.onclick = function() {
+		modal1.style.display = "none";
 	}
 	window.onclick = function(event) {
 		if (event.target == modal) {
-			modal.style.display = "none";
+			modal1.style.display = "none";
 		}
 	}
 	
+	//VIEW COMMENTS
+	$('#apartmentsTable').on('click','button',function(event){
+		trid=$(event.target).closest('tr').attr('id');
+		if( $(event.target).attr("id")=="comments-apartment"){
+			
+			$.ajax({
+				url:"ProjectRents/getApartmentById" + trid,
+				type : "GET",
+				contentType:'multipart/form-data',
+				success:function(data){
+					drawComments(data);
+					modal3.style.display="block";
+				}
+			})
+		}
+	})
+	$('#apartmentsTable-passive').on('click','button',function(event){
+		trid=$(event.target).closest('tr').attr('id');
+		if( $(event.target).attr("id")=="comments-apartment"){
+			
+			$.ajax({
+				url:"ProjectRents/getApartmentById" + trid,
+				type : "GET",
+				contentType:'multipart/form-data',
+				success:function(data){
+					drawComments(data);
+					modal3.style.display="block";
+				}
+			})
+		}
+	})
+	//commnets on this click change showing on guests show
+	//menjamo status kod komenata isHostApproved
+	$('#tbodyComments').on('click','button',function(event){
+		commentId=$(event.target).closest('tr').attr('id');
+		appartmentId = $(event.target).parent().parent().children().first().next().next().next().next().text();
+		$.ajax({
+			url:"ProjectRents/hostChangeViewOfComment"+ commentId,
+			type : "POST",
+			contentType:'multipart/form-data',
+			success :function(data){
+				drawComments(data);
+				alert('izenjeno')
+			}, 
+			error: function(){
+				console.log('smt went wrong')
+			}
+			
+		})
+	})
 	$('#addApartment').click(function(){
 		checkList=[];
 		$('#datepicker').datepicker('setDate', null);

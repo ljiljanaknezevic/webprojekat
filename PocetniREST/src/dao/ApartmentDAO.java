@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Amenities;
 import beans.Apartment;
+import beans.Comment;
 import beans.enums.ApartmentStatus;
 
 public class ApartmentDAO {
@@ -120,6 +121,18 @@ public class ApartmentDAO {
 		for (Apartment a : apartments.values()) {
 			if(a.getId().equals(id)) 
 				return a;
+		}
+		return null;
+	}
+	public Apartment findApartmentByCommentId(UUID id) {
+		for (Apartment a : apartments.values()) {
+			if(a.isDeleted() == false) {
+			for(Comment c:a.getComments()) {
+				if(c.getCommentId().equals(id)) {
+					return a;
+				}
+			}
+			}
 		}
 		return null;
 	}
