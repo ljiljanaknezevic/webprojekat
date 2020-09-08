@@ -159,7 +159,7 @@ $(document).ready(function(){
 					data:JSON.stringify(comment),
 					contentType:'application/json',
 					success: function(data){
-						modal.style.display="none";
+						modal2.style.display="none";
 						alert('Successfully sent comment!')
 					},
 					error:function(){
@@ -212,8 +212,9 @@ $(document).ready(function(){
 					data:JSON.stringify(reservation),
 					contentType:'application/json',
 					success: function(data){
-						modal.style.display="none";
 						alert('Successfully made reservation!')
+						modal.style.display="none";
+						
 					},
 					error:function(){
 						modal.style.display="block";

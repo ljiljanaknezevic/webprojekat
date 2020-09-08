@@ -137,7 +137,8 @@ public class ApartmentService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response leaveComment(Comment c,@Context HttpServletRequest request) {
-		System.out.println("USAO JE U APARTMENT SERVICE");
+		ArrayList<Comment> newComment=new ArrayList<Comment>();
+		newComment.add(c);
 		ApartmentDAO dao = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
 		User u=(User)request.getSession().getAttribute("user");
 		c.setGuest(u.getUsername());
@@ -149,7 +150,15 @@ public class ApartmentService {
 		System.out.println(c.getGrade());
 		System.out.println(c.getGuest());
 		
-		a.addComment(c);
+		if(a.getComments()==null) {
+			System.out.println("NUll je i dodajemo komentar");
+			a.setComments(newComment);
+		}
+		else {
+			System.out.println("Ima komentara i dodajemo novi kom");
+			a.addComment(c);
+		}
+		
 		
 		String contextPath = ctx.getRealPath("");
 		dao.saveApartments(contextPath);
