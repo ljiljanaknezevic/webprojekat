@@ -25,7 +25,7 @@ function drawMyReservations(data){
 			<td><button  id="comment" class="btn btn-primary">Leave a comment</button></td>
 			</tr>`;
 		}
-	/*else
+	if(data[i].status=='CANCELED')
 	{
 		temp+=`<tr id="`+data[i].reservationId+`">
 			<td>`+data[i].apartmentId+`</td>
@@ -37,7 +37,7 @@ function drawMyReservations(data){
 			<td><button disabled  id="cancel-reservation" class="btn btn-primary">Cancel reservation</button></td>
 			<td><button disabled  id="comment" class="btn btn-primary">Leave a comment</button></td>
 			</tr>`;
-	}*/
+	}
 				
 	}
 	

@@ -79,6 +79,7 @@ function drawAmenities(data){
 }
 
 function drawReservations(data){
+	
 	let temp='';
 	for (i in data){
 		
@@ -98,6 +99,7 @@ function drawReservations(data){
 		
 		console.log(endDateString);
 		console.log(data[i].arrivalDate)
+		if(endDate<currentDate){
 		
 		if(data[i].status=='CREATED'){
 			temp+=`<tr id="`+data[i].reservationId+`">
@@ -109,9 +111,10 @@ function drawReservations(data){
 			<td>`+data[i].status+`</td>
 			<td><button  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
 			<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
+			<td><button   id="end-reservation" class="btn btn-primary">End reservation</button></td>
 			</tr>`;
 		}
-		else if(data[i].status=='ACCEPTED'){
+		 else if(data[i].status=='ACCEPTED'){
 				temp+=`<tr id="`+data[i].reservationId+`">
 			<td>`+data[i].apartmentId+`</td>
 			<td>`+data[i].arrivalDate+`</td>
@@ -119,45 +122,82 @@ function drawReservations(data){
 			<td>`+data[i].totalPrice+`</td>
 			<td>`+data[i].message+`</td>
 			<td>`+data[i].status+`</td>
-			<td></td>
+			<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
 			<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
+			<td><button   id="end-reservation" class="btn btn-primary">End reservation</button></td>
 			</tr>`;
 		}
 		//TODO:USLOV ZA ISTEK DATUMA NOCENJA
-	else if(endDate<currentDate){
-		console.log("Istekla je rezervacija");
-		temp+=`<tr id="`+data[i].reservationId+`">
+		 else{
+			console.log("Istekla je rezervacija");
+			temp+=`<tr id="`+data[i].reservationId+`">
 			<td>`+data[i].apartmentId+`</td>
 			<td>`+data[i].arrivalDate+`</td>
 			<td>`+data[i].numberOfStay+`</td>
 			<td>`+data[i].totalPrice+`</td>
 			<td>`+data[i].message+`</td>
 			<td>`+data[i].status+`</td>
+			<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
+			<td><button disabled  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
 			<td><button  id="end-reservation" class="btn btn-primary">End reservation</button></td>
-			<td></td>
 			</tr>`;
 		
-	}
-	else
-	{
-		temp+=`<tr id="`+data[i].reservationId+`">
+		}
+		}
+		else{
+			if(data[i].status=='CREATED'){
+			temp+=`<tr id="`+data[i].reservationId+`">
 			<td>`+data[i].apartmentId+`</td>
 			<td>`+data[i].arrivalDate+`</td>
 			<td>`+data[i].numberOfStay+`</td>
 			<td>`+data[i].totalPrice+`</td>
 			<td>`+data[i].message+`</td>
 			<td>`+data[i].status+`</td>
-			<td></td>
-			<td></td>
+			<td><button  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
+			<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
+			<td><button disabled  id="end-reservation" class="btn btn-primary">End reservation</button></td>
 			</tr>`;
+		}
+		else  if(data[i].status=='ACCEPTED'){
+				temp+=`<tr id="`+data[i].reservationId+`">
+			<td>`+data[i].apartmentId+`</td>
+			<td>`+data[i].arrivalDate+`</td>
+			<td>`+data[i].numberOfStay+`</td>
+			<td>`+data[i].totalPrice+`</td>
+			<td>`+data[i].message+`</td>
+			<td>`+data[i].status+`</td>
+			<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
+			<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
+			<td><button disabled  id="end-reservation" class="btn btn-primary">End reservation</button></td>
+			</tr>`;
+		}
+		//TODO:USLOV ZA ISTEK DATUMA NOCENJA
+		 else{
+			console.log("Istekla je rezervacija");
+			temp+=`<tr id="`+data[i].reservationId+`">
+			<td>`+data[i].apartmentId+`</td>
+			<td>`+data[i].arrivalDate+`</td>
+			<td>`+data[i].numberOfStay+`</td>
+			<td>`+data[i].totalPrice+`</td>
+			<td>`+data[i].message+`</td>
+			<td>`+data[i].status+`</td>
+			<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
+			<td><button disabled  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
+			<td><button  id="end-reservation" class="btn btn-primary">End reservation</button></td>
+			</tr>`;
+		
+		}
+
+		}			
 	}
-				
-	}
+	
 	
 	$('#tbodyReservations').html(temp);
 }
 
 function drawApartments(data){
+	
+	
 	let temp='';
 	let tempPassive='';
 	for (i in data){
@@ -360,6 +400,7 @@ $(document).ready(function(){
 				type : "POST",
 				contentType:'multipart/form-data',
 				success:function(data){
+					$('#tbodyReservations').html('');
 					drawReservations(data);
 					alert("Successfully accepted. ");
 				}
