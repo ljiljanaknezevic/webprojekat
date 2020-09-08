@@ -37,17 +37,14 @@ function drawAllReservations(data){
 }
 //data-apartment
 function drawComments(data){
-	console.log("usao je u crtanje");
-	console.log(data);
 	let temp='';
 	for (i in data.comments){
-		console.log(data.comments[i].guest)
 			temp+=`<tr>
 			<td>`+data.comments[i].guest+`</td>
 			<td>`+data.comments[i].text+`</td>
 			<td>`+data.comments[i].grade+`</td>
 			</tr>`;
-		}
+	}
 		$('#tbodyComments').html(temp);
 }
 
@@ -442,11 +439,6 @@ $(document).ready(function(){
 				}
 			})
 			
-			
-			
-			
-		
-		
 		}
 	})
 	

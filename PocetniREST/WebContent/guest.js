@@ -54,12 +54,28 @@ function drawApartments(data){
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
-			<td><button id="make-reservation" class="btn btn-primary">Make reservation</button></td></tr>`;
+			<td><button id="make-reservation" class="btn btn-primary">Make reservation</button></td>
+			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
+			</tr>`;
 	}
 	$('#apartmentsTable').html(temp);
 }
 
-
+function drawComments(data){
+	console.log("usao je u crtanje");
+	console.log(data);
+	let temp='';
+	for (i in data.comments){
+		if(data.comments[i].hostApproved == true){
+			temp+=`<tr>
+			<td>`+data.comments[i].guest+`</td>
+			<td>`+data.comments[i].text+`</td>
+			<td>`+data.comments[i].grade+`</td>
+			</tr>`;
+		}
+		}
+		$('#tbodyComments').html(temp);
+}
 var id='';
 var username = '';
 var usernameGuest = '';
@@ -74,8 +90,11 @@ $(document).ready(function(){
 		//MODAL
 	var modal = document.getElementById('myModal');
 	var modal2=document.getElementById('modal2');
+	var modal3=document.getElementById('modal3');
+	
 	var span = document.getElementsByClassName("close")[0];
 	var span2=document.getElementsByClassName("close")[1];
+	var span3=document.getElementsByClassName("close")[2];
 	span.onclick = function() {
 		modal.style.display = "none";
 	}
@@ -91,8 +110,17 @@ $(document).ready(function(){
 	}
 	
 	window.onclick = function(event) {
+		if (event.target == modal2) {
+			modal2.style.display = "none";
+		}
+	}
+	span3.onclick=function(){
+		modal3.style.display="none";
+	}
+	
+	window.onclick = function(event) {
 	    if (event.target == modal2) {
-	        modal2.style.display = "none";
+	        modal3.style.display = "none";
 	    }
 	}
 	
@@ -100,6 +128,25 @@ $(document).ready(function(){
 	$('#myReservations').attr('hidden',true);
 	$('.profileLook').attr('hidden', true);
 	
+	
+	//comments 
+	//VIEW COMMENTS
+	$('#apartmentsTable').on('click','button',function(event){
+	trid=$(event.target).closest('tr').attr('id');
+	if( $(event.target).attr("id")=="comments-apartment"){
+		
+			$.ajax({
+			url:"ProjectRents/getApartmentById" + trid,
+			type : "GET",
+			contentType:'multipart/form-data',
+			success:function(data){
+				drawComments(data);
+				modal3.style.display="block";
+			}
+		})
+		
+	}
+})
 	$('#myreservations').click(function(e){
 		$('#myReservations').attr('hidden',false);
 		$('#content').attr('hidden',true);
