@@ -87,13 +87,14 @@ public class ReservationService {
 	@Path("/cancelReservation{id}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response cancelReservation(@PathParam("id") UUID id) {
+	public Response cancelReservation(@PathParam("id") UUID id,@Context HttpServletRequest request) {
 		ReservationDAO dao=(ReservationDAO) ctx.getAttribute("reservationDAO");
+		User u = (User)request.getSession().getAttribute("user");
 		Reservation r=dao.findReservation(id);
 		String contextPath=ctx.getRealPath("");
 		r.setStatus(ReservationStatus.CANCELED);
 		dao.saveReservations(contextPath);
-		return Response.ok(dao.getAllReservations()).build();
+		return Response.ok(dao.getGuestsReservations(u.getUsername())).build();
 	}
 	
 	
@@ -101,26 +102,48 @@ public class ReservationService {
 	@Path("/acceptReservation{id}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response acceptReservation(@PathParam("id") UUID id) {
+	public Response acceptReservation(@PathParam("id") UUID id,@Context HttpServletRequest request) {
+		ApartmentDAO daoA = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
+		User u = (User)request.getSession().getAttribute("user");
+		ArrayList<Apartment> hostsA=daoA.getHostsApartments(u.getUsername());
 		ReservationDAO dao=(ReservationDAO) ctx.getAttribute("reservationDAO");
 		Reservation r=dao.findReservation(id);
 		String contextPath=ctx.getRealPath("");
 		r.setStatus(ReservationStatus.ACCEPTED);
 		dao.saveReservations(contextPath);
-		return Response.ok(dao.getAllReservations()).build();
+		return Response.ok(dao.getReservationsForHost(hostsA)).build();
+	}
+	
+	@POST
+	@Path("/endReservation{id}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response endReservation(@PathParam("id") UUID id,@Context HttpServletRequest request) {
+		ApartmentDAO daoA = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
+		User u = (User)request.getSession().getAttribute("user");
+		ArrayList<Apartment> hostsA=daoA.getHostsApartments(u.getUsername());
+		ReservationDAO dao=(ReservationDAO) ctx.getAttribute("reservationDAO");
+		Reservation r=dao.findReservation(id);
+		String contextPath=ctx.getRealPath("");
+		r.setStatus(ReservationStatus.COMPLETED);
+		dao.saveReservations(contextPath);
+		return Response.ok(dao.getReservationsForHost(hostsA)).build();
 	}
 	
 	@POST
 	@Path("/rejectReservation{id}")
 	@Consumes(MediaType.MULTIPART_FORM_DATA)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response rejectReservation(@PathParam("id") UUID id) {
+	public Response rejectReservation(@PathParam("id") UUID id,@Context HttpServletRequest request) {
+		ApartmentDAO daoA = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
+		User u = (User)request.getSession().getAttribute("user");
+		ArrayList<Apartment> hostsA=daoA.getHostsApartments(u.getUsername());
 		ReservationDAO dao=(ReservationDAO) ctx.getAttribute("reservationDAO");
 		Reservation r=dao.findReservation(id);
 		String contextPath=ctx.getRealPath("");
 		r.setStatus(ReservationStatus.REJECTED);
 		dao.saveReservations(contextPath);
-		return Response.ok(dao.getAllReservations()).build();
+		return Response.ok(dao.getReservationsForHost(hostsA)).build();
 	}
 	
 	@GET

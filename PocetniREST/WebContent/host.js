@@ -81,25 +81,20 @@ function drawAmenities(data){
 function drawReservations(data){
 	
 	let temp='';
+	$('#tbodyReservations').html('');
 	for (i in data){
 		
 		var currentDate=new Date();
-		//var pom=new Date();
-		var pom=toDate(data[i].arrivalDate);
-		var endDate=new Date;
-		endDate.setDate(pom.getDate()+data[i].numberOfStay);
+	
 		
-		var formattedDate = new Date(endDate);
-		var d = formattedDate.getDate();
-		var m =  formattedDate.getMonth();
-		m += 1;  // JavaScript months are 0-11
-		var y = formattedDate.getFullYear();
+		var arr = data[i].arrivalDate.split('-');
 		
-		var endDateString=y + "-" + m + "-" + d;
 		
-		console.log(endDateString);
-		console.log(data[i].arrivalDate)
-		if(endDate<currentDate){
+		var pom=new Date(arr[0],arr[1]-1,arr[2]);
+		
+		pom.setDate(pom.getDate()+data[i].numberOfStay);
+		
+		if(pom<currentDate){
 		
 		if(data[i].status=='CREATED'){
 			temp+=`<tr id="`+data[i].reservationId+`">
@@ -127,9 +122,9 @@ function drawReservations(data){
 			<td><button   id="end-reservation" class="btn btn-primary">End reservation</button></td>
 			</tr>`;
 		}
-		//TODO:USLOV ZA ISTEK DATUMA NOCENJA
+		
 		 else{
-			console.log("Istekla je rezervacija");
+			
 			temp+=`<tr id="`+data[i].reservationId+`">
 			<td>`+data[i].apartmentId+`</td>
 			<td>`+data[i].arrivalDate+`</td>
@@ -171,7 +166,7 @@ function drawReservations(data){
 			<td><button disabled  id="end-reservation" class="btn btn-primary">End reservation</button></td>
 			</tr>`;
 		}
-		//TODO:USLOV ZA ISTEK DATUMA NOCENJA
+		
 		 else{
 			console.log("Istekla je rezervacija");
 			temp+=`<tr id="`+data[i].reservationId+`">
@@ -350,10 +345,7 @@ $(document).ready(function(){
 			drawApartments(data)
 		}
 	})
-	
-	
-	
-	
+
 	    //USERS THAT HAVE RESEVATIONS AT OUR HOST
 	      $('a[href="#users"]').click(function(){
 			$('#content').attr('hidden', true);
@@ -400,9 +392,23 @@ $(document).ready(function(){
 				type : "POST",
 				contentType:'multipart/form-data',
 				success:function(data){
-					$('#tbodyReservations').html('');
 					drawReservations(data);
 					alert("Successfully accepted. ");
+				}
+			})
+		}
+	})
+	
+			$('#tbodyReservations').on('click','button',function(event){
+		if($(event.target).attr('id')=="end-reservation"){
+			var trid = $(event.target).closest('tr').attr('id');
+				$.ajax({
+				url:"ProjectRents/endReservation"+trid,
+				type : "POST",
+				contentType:'multipart/form-data',
+				success:function(data){
+					drawReservations(data);
+					alert("Successfully ended.");
 				}
 			})
 		}
@@ -416,6 +422,8 @@ $(document).ready(function(){
 				type : "POST",
 				contentType:'multipart/form-data',
 				success:function(data){
+				//	console.log(data);
+					//$('#tbodyReservations').html('');
 					drawReservations(data);
 					alert("Successfully rejected. ");
 				}

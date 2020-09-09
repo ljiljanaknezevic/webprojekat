@@ -183,7 +183,7 @@ public class ApartmentService {
 		
 		String contextPath = ctx.getRealPath("");
 		dao.saveApartments(contextPath);
-		return Response.ok(dao.getAllApartments()).build();
+		return Response.ok(dao.getAllActiveApartments()).build();
 	}
 	
 }
