@@ -86,6 +86,7 @@ var password ='none';
 var role = 'none';
 var trid = '';
 var trid2 = '';
+var availabledates='';
 $(document).ready(function(){
 		//MODAL
 	var modal = document.getElementById('myModal');
@@ -129,6 +130,7 @@ $(document).ready(function(){
 	$('.profileLook').attr('hidden', true);
 	
 	
+	
 	//comments 
 	//VIEW COMMENTS
 	$('#apartmentsTable').on('click','button',function(event){
@@ -144,6 +146,7 @@ $(document).ready(function(){
 				modal3.style.display="block";
 			}
 		})
+		
 		
 	}
 })
@@ -163,6 +166,7 @@ $(document).ready(function(){
 			console.log('Error with my reservations')
 			}
 		})
+		
 	})
 	
 	$('a[href="#apartments"]').click(function(){
@@ -172,6 +176,8 @@ $(document).ready(function(){
 	})
 	
 	$('#tbodyMyReservations').on('click','button',function(event){
+		
+		//CANCEL RESERVATION
 		if($(event.target).attr('id')=="cancel-reservation"){
 			var trid = $(event.target).closest('tr').attr('id');
 				$.ajax({
@@ -227,15 +233,45 @@ $(document).ready(function(){
 		}
 		
 	})
-	
 
 	//RESERVATION
 	$('#apartmentsTable').on('click','button',function(event){
+			//AVAILABLE DATES FO RESERVATION	
 		if($(event.target).attr("id")=="make-reservation"){
+			var trid3 = $(event.target).closest('tr').attr('id');
+			
+				$.ajax({
+				url:"ProjectRents/getApartmentById" + trid3,
+				type : "GET",
+				contentType:'application/json',
+				success:function(apartment){
+					 availabledates = apartment.dates;
+					
+				}
+			});
+			//AVAILABLES ILI DATES?
+			//VEROVATNO KAD SE KREIRA APARTMAN POSTAVITI AVAILABELS NA DATES NAKON TOGA U AVAILABLES IDU DOSTUPNI DANI
 			modal.style.display="block";
+ 			// $deliveryDatepicker = $('.delivery-datepicker');
+	
+			function availableS(date) {
+ 			 dmy =date.getDate() + "/"+(date.getMonth() + 1)+"/" + date.getFullYear();
+
+  				if ($.inArray(dmy, availabledates) != -1) {
+    				return true;
+ 				 } else {
+    				return false;
+ 				 }
+				}
+				
+				$("#start-date").datepicker({
+ 				 beforeShowDay: function(dt){
+					return [availableS(dt),""];
+			}	});
+			
+			
 			$('#nights-of-stay').val("");
 			$('#message-for-host').val(""); 
-			$('#start-date').val("");
 			 trid=$(event.target).closest('tr').attr('id');
 		}
 	})
@@ -252,6 +288,7 @@ $(document).ready(function(){
 				
 				
 				console.log(trid);
+				console.log(availabledates);
 				
 				$.ajax({
 					url:'ProjectRents/makeReservation',

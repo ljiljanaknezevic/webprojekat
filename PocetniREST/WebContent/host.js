@@ -445,6 +445,7 @@ $(document).ready(function(){
     	}
     });
 	
+	
 	//apartments modal
 	modal = document.getElementById('myModal');
 	modal1 = document.getElementById('modal3');

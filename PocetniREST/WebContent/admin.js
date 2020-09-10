@@ -378,7 +378,7 @@ $(document).ready(function(){
 				amenitie.name = $('#amenities-name').val();
 				if($('#amenities-name').val() == "")
 				{
-					$('#error-amenities').text('You didnt entered nothing. Try again.');
+					$('#error-amenities').text('You didnt entered anything. Try again.');
 					$('#error-amenities').show();
 					$('#error-amenities').delay(4000).fadeOut('slow');
 					return;
@@ -524,6 +524,7 @@ $(document).ready(function(){
 	
 	$('#apartmentsTable').on('click','button',function(event){
 		if( $(event.target).attr("id")=="edit-apartment"){
+			
 			checkIdListEdit=[];
 			trid = $(event.target).closest('tr').attr('id'); // table row ID
 			var dates, checkIn, checkOut, amenities;
