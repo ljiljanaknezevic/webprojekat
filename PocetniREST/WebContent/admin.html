@@ -25,7 +25,7 @@
 	 <script src="admin.js"></script>
 	 <script src="searchUsers.js"></script>
 	 <script src="sortByPrice.js"></script>
-	<script src="registration.js"></script>
+	<!--<script src="registration.js"></script>  -->
 </head>
 
 <style>
@@ -129,7 +129,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
          <li><a href="#reservationsClick">RESERVATIONS</a></li>
-        <li><a href="./registration.html">REGISTER NEW HOST</a></li>
+        <li><a href="#registerNewHost">REGISTER NEW HOST</a></li>
         
         <!-- admins roles -->
         <li id="#amenities"><a href="#amenities">AMENITIES</a></li>
@@ -324,7 +324,26 @@
 			
 			</div>
 
+    <!-- REGISTRATION HOST -->
+    <div class="container-fluid text-center" id = "content-hregistration" hidden="true">    
+      <form class="form-signin" id="registrationHost">  
+       <h2 class="form-signin-heading">Registration</h2>
+      <input type="text" class="form-control" id="husername" placeholder="Username" required  oninvalid="this.setCustomValidity('Username is required.')" oninput="setCustomValidity('')"/>
+       <input type="text" class="form-control" id="hname" placeholder="Name" required  oninvalid="this.setCustomValidity('Name is required.')" oninput="setCustomValidity('')"/>
+      <input type="text" class="form-control" id="hsurname" placeholder="Surname" required  oninvalid="this.setCustomValidity('Surname is required.')" oninput="setCustomValidity('')"/>      
+      <select name="gender" id="hgender" class="form-control" required  oninvalid="this.setCustomValidity('Username is required.')" oninput="setCustomValidity('')">
+      	<option value="male" selected>Male</option>
+      	<option value="female">Female</option>
+      </select>
+      <input type="password" class="form-control" id="hpassword" placeholder="Password" required  oninvalid="this.setCustomValidity('Password is required.')" oninput="setCustomValidity('')"/>    
+     <input type="password" class="form-control" id="hpassControl" placeholder="Confirm password" required  oninvalid="this.setCustomValidity('Confirm password is required.')" oninput="setCustomValidity('')"/>      
+    	<p id="herror" class = "herror-message"></p>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button> 
+    </form>
     
+	<p id="success"></p>
+
+    </div> 
     
       <!-- RESERVATIONS -->	
       <div id = "allReservations" hidden = "true">

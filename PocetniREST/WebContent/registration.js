@@ -29,7 +29,7 @@ $(document).ready(function() {
 					}else if(userLogged== 'GUEST'){
 						window.location="./guest.html";
 					}else
-						console.log('neceeee')
+						console.log('error')
 			}	
 		})
 	}
@@ -58,7 +58,7 @@ $(document).ready(function() {
 		var temp = JSON.stringify(user);
 		
 		 if(password != passwordControl){
-       		$('#error').text('Password doesnt match. Try again.').show();
+       		$('#error').text('Passwords don\'t match. Try again.').show();
        		$('#error').delay(4000).fadeOut('slow');
         }else{
 			$.ajax({

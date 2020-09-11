@@ -76,6 +76,9 @@ function drawComments(data){
 		}
 		$('#tbodyComments').html(temp);
 }
+
+
+
 var id='';
 var username = '';
 var usernameGuest = '';
@@ -87,6 +90,7 @@ var role = 'none';
 var trid = '';
 var trid2 = '';
 var availabledates='';
+var arrivale='';
 $(document).ready(function(){
 		//MODAL
 	var modal = document.getElementById('myModal');
@@ -247,14 +251,18 @@ $(document).ready(function(){
 				success:function(apartment){
 					 availabledates = apartment.dates;
 					
+					arrivale=availabledates[0];
+					
+			  for(var i = 0; i < availabledates.length; i++) {
+   			$('#dropdown select').append('<option value='+i+'>'+availabledates[i]+'</option>');
+			}
 				}
 			});
-			//AVAILABLES ILI DATES?
-			//VEROVATNO KAD SE KREIRA APARTMAN POSTAVITI AVAILABELS NA DATES NAKON TOGA U AVAILABLES IDU DOSTUPNI DANI
+			
 			modal.style.display="block";
- 			// $deliveryDatepicker = $('.delivery-datepicker');
-	
-			function availableS(date) {
+ 			
+
+		/*	function availableS(date) {
  			 dmy =date.getDate() + "/"+(date.getMonth() + 1)+"/" + date.getFullYear();
 
   				if ($.inArray(dmy, availabledates) != -1) {
@@ -267,17 +275,27 @@ $(document).ready(function(){
 				$("#start-date").datepicker({
  				 beforeShowDay: function(dt){
 					return [availableS(dt),""];
-			}	});
+			}	});*/
 			
-			
+			$('#dropdown select').empty();
 			$('#nights-of-stay').val("");
 			$('#message-for-host').val(""); 
 			 trid=$(event.target).closest('tr').attr('id');
 		}
 	})
+	
+	
+	
+		
+	$('#start-date').on('change',function(){
+		arrivale=$('#start-date option:selected').text();
+		console.log(arrivale);
+	});
+	
 	$('#make-reservation2').click(function(){
 				var reservation=new Object();
-				reservation.arrivalDate=$('#start-date').val();
+				//reservation.arrivalDate=$('#start-date').val();
+				reservation.arrivalDate=arrivale;
 				reservation.numberOfStay=$('#nights-of-stay').val();
 				reservation.message=$('#message-for-host').val();
 				reservation.apartmentId=trid;
@@ -286,6 +304,30 @@ $(document).ready(function(){
 				reservation.totalPrice=0;
 				reservation.reservationId=id;
 				
+	
+				
+				console.log(reservation.arrivalDate);
+				var arr = reservation.arrivalDate.split('/');
+		
+				var pom=new Date(arr[2],arr[1]-1,arr[0]);
+				console.log(pom);
+				
+				//PROVERA DA LI SU DATUMI DOSTUPNI
+				var i=1;
+				for(i;i<reservation.numberOfStay;i++){
+					pom.setDate(pom.getDate()+1);
+					console.log(pom);
+					
+					dmy =pom.getDate().toString() + "/"+(pom.getMonth() + 1)+"/" + pom.getFullYear();
+					if($.inArray(dmy, availabledates) != -1){
+						
+						console.log(' U DOSTUPNIM DATUMIMA')
+					}
+					else{
+						console.log(dmy);
+						console.log('NIJE u DOSTPUNIM DATUMIMA');
+					}
+				}
 				
 				console.log(trid);
 				console.log(availabledates);

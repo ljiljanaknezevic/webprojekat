@@ -159,6 +159,7 @@ $(document).ready(function(){
 	$('#content-apartmant').attr('hidden', false);
 	$('.profileLook').attr('hidden', true);
 	$('#allReservations').attr('hidden',true);
+	$('#content-hregistration').attr('hidden',true);
     $('ul.dropdown-menu li').click(function(e) 
     { 
     	if($(this).attr('id') == 'logout'){
@@ -181,6 +182,7 @@ $(document).ready(function(){
     		$('#content-apartmant').attr('hidden', true);
     		$('.profileLook').attr('hidden', true);
     		$('#allReservations').attr('hidden',false);
+			$('#content-hregistration').attr('hidden',true);
 		$.ajax({
 			url:"ProjectRents/allReservations",
 			type : "GET",
@@ -204,6 +206,7 @@ $(document).ready(function(){
 		$('#content-apartmant').attr('hidden', true);
 		$('.profileLook').attr('hidden', true);
 		$('#allReservations').attr('hidden',true);
+		$('#content-hregistration').attr('hidden',true);
 
 		$.ajax({
 			url:"ProjectRents/allUsers",
@@ -307,6 +310,7 @@ $(document).ready(function(){
 		$('.profileLook').attr('hidden', true);
 		$('#content-users').attr('hidden', true);
 		$('#allReservations').attr('hidden',true);
+		$('#content-hregistration').attr('hidden',true);
 		var ameniti = new Object();
 		$.ajax({
 			url:'ProjectRents/getAllAmenities',
@@ -421,6 +425,7 @@ $(document).ready(function(){
 		$('.profileLook').attr('hidden', true);
 		$('#content-users').attr('hidden', true);
 		$('#allReservations').attr('hidden',true);
+		$('#content-hregistration').attr('hidden',true);
 
 	})
 	
@@ -577,6 +582,69 @@ $(document).ready(function(){
 		
 		
 	})
+	//REGISTER NEW HOST
+	
+	$('a[href="#registerNewHost"]').click(function(){
+		$('#content-apartmant').attr('hidden', true);
+		$('#dugmad').attr('hidden', true);
+		$('.profileLook').attr('hidden', true);
+		$('#content-users').attr('hidden', true);
+		$('#allReservations').attr('hidden',true);
+		$('#content-hregistration').attr('hidden',false);
+		
+		$('form#registrationHost').submit(function(event){
+		event.preventDefault()
+		console.log('saljemo rest')
+		let username=$('#husername').val()
+		let name=$('#hname').val()
+		let surname=$('#hsurname').val()
+		let gen=$('#hgender').val()
+		let gender
+		if(gen=='male')
+			gender=0;
+		else
+			gender=1;		
+		
+		let password=$('#hpassword').val()
+		let passwordControl=$('#hpassControl').val()	
+		
+		var user = new Object();
+		user.username=username
+		user.password=password
+		var temp = JSON.stringify(user);
+		
+		 if(password != passwordControl){
+       		$('#herror').text('Passwords don\'t match. Try again.').show();
+       		$('#herror').delay(4000).fadeOut('slow');
+        }else{
+			$.ajax({
+				type:"POST",
+				url:"ProjectRents/registration",
+				data:JSON.stringify({
+					username:username,
+					password:password,
+					name:name,
+					surname:surname,
+					gender:gender
+				}),
+				contentType:"application/json",
+				success:function(data){	
+					alert('New host successfully registerd.');
+					window.location="./admin.html";
+					//currentUser();
+				},
+				error:function(message){
+				//	if(message.responseText=='the passwords didn\'t match!'){
+					$('#herror').text(message.responseText);
+					$('#herror').show();
+					$('#herror').delay(4000).fadeOut('slow');
+			//	}
+					
+				}
+			})
+        }
+	})
+	})
 	
 	//EDIT PROFILE
 	$('a[href="#profile"]').click(function(){
@@ -585,6 +653,7 @@ $(document).ready(function(){
 		$('.profileLook').attr('hidden', false);
 		$('#content-users').attr('hidden', true);
 		$('#allReservations').attr('hidden',true);
+		$('#content-hregistration').attr('hidden',true);
 
     	$.ajax({
     		url: 'ProjectRents/currentUser',
