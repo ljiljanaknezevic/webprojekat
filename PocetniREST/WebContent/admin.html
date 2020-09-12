@@ -23,6 +23,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" rel="stylesheet"/>
 
 	 <script src="admin.js"></script>
+	 <script src="searchApartmentMix.js"></script>
 	 <script src="searchUsers.js"></script>
 	 <script src="sortByPrice.js"></script>
 	<!--<script src="registration.js"></script>  -->
@@ -70,6 +71,7 @@
 .clearfix {
   overflow: auto;
 }
+
 
 /* The Modal (background) */
 .modal {
@@ -182,31 +184,73 @@
 			
 		<div id ="content-apartmant" hidden = "true">     
       <!-- this is for #apartments content -->
-			 <div style="width: 80%;height: 30px; margin: 0 auto;" >
-		    <select style="height: 30px;" name="filterRestApartment" id="filterType" >
+			 <div style="width: 80%;height: 50px; margin: 0 auto;" >
+			 	<select style="height: 30px;float:left;margin-right: 10px;" name="filterRestApartment" id="filterStatus">
+				              <option>Filter by status</option>
+				              <option value="ACTIV">ACTIV</option>
+				              <option value="PASSIVE">PASSIVE</option>
+		 	</select>
+		    <select style="height: 30px;float:left;margin-right: 10px;" name="filterRestApartment" id="filterType" >
 						              <option >Filter by type</option>
 						              <option value="ROOM">ROOM</option>
 						              <option value="APARTMENT">APARTMENT</option>
 						      </select>
-				    	<select style="height: 30px;" name="filterRestApartment" id="filterStatus">
-				              <option>Filter by status</option>
-				              <option value="ACTIV">ACTIV</option>
-				              <option value="PASSIVE">PASSIVE</option>
-				      </select>
+						     
+		
+			 	<select style="height: 30px;float:left;margin-right: 10px;" name="filterRestApartment" id="filterAmeniti"> <option >Filter by amenitie</option></select>
+		 	
+<!-- 		 2 NACIN ZA FILTER AMENITIES PO POTREBI DEKOMENTARISATI -->
+<!-- 				<div id = "filterByAmenities"  style="height: 30px;float:left;margin-right: 10px;width: 50%;" > -->
+<!-- 			 		<b style="margin-right: 10px;float:left;margin-right: 10px;">Filter by amenities :</b>		 -->
+<!-- 			 		<div id = "amenitiesCheckBox"  style="height: 70px;float:left;overflow-y: scroll;overflow-x: hidden;width: 50%;border-style: solid; border-width: 1px; "> </div> -->
+<!-- 			 	</div>   -->
+			 	
 		    </div>
-		    <br>
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+		    
+		     <div style="width: 80%;height: 30px; margin: 0 auto;" id="searchDiv">
+		    		        <p style ="float:left;margin-right: 5px;"> Price from:</p>
+		      <input type="number" style="width: 5%;float:left;" name="filterSearch" id="filterPriceFrom" >
+		        <p style ="float:left;margin-right: 5px;"">to:</p>
+		      <input type="number" style="width: 5%;float:left;margin-right: 7px;"  name="filterSearch" id="filterPriceTo">
+		         <p style ="float:left;margin-right: 5px;">Rooms from:</p>
+		      <input type="number" style="width: 5%;float:left;margin-right: 7px;"  name="filterSearch" id="filterRoomFrom" >
+		        <p style ="float:left;margin-right: 7px;">to:</p>
+		      <input type="number" style="width: 5%;float:left;margin-right: 7px;"  name="filterSearch" id="filterRoomTo">
+		        <p style ="float:left;margin-right: 5px;">Date from:</p>
+		      <div class="input-group date form-group" id="datepicker2" style="height: 30px;float:left;width : 12%;margin-right: 7px;"
+		     style = "background:transparent;text:transparent"/>
+ 			   	<input type="text" class="form-control" id="filterDateFrom"   name="filterSearch"  placeholder="Select day" required style = "background:transparent;text:transparent;"/>
+ 			   	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar" style = "background:transparent;"/></i><span class="count"></span></span>
+				</div>
+		        <p style ="float:left;margin-right:7px;"">to:</p>
+		      <div class="input-group date form-group" id="datepicker3" style="height: 30px;float:left;margin-right: 7px;width : 12%;"
+		       >
+ 			   	<input type="text" class="form-control"  id="filterDateTo" name="filterSearch" placeholder="Select day" required />
+ 			   	<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i><span class="count"></span></span>
+				</div>
+				<br></br>
+				  <input type="number" style="width: 15%;float:left;margin-right: 7px;margin-bottom:15px;"  name="filterSearch" id="searchByGuests" placeholder="Search number of guests" > 
+		      <input type="text" style="width: 15%;float:left;margin-right: 7px;margin-bottom:15px;" name="filterSearch" id="searchByLocation" placeholder="Search country or city" > 
+        </div>
 			 <div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
 			
 	        <table class="table  table-bordered" >
 	              <thead class="success">
 	                <tr class="success">
-	                  <th colspan="10" style="text-align: center;">APARTMENTS</th>
+	                  <th colspan="11" style="text-align: center;">APARTMENTS</th>
 	                </tr>
 	                	<tr class="success">
 	                	<th>Host username</th>
 	                	<th>Status</th>
 	                	<th>Apartment Type</th>
 	                	<th>Location</th>
+	                	<th>Amenities</th>
 	                	<th>Number of rooms</th>
 	                	<th>Number of guests</th>
 	                	<th name="sort">Price<span name="arrow" class="glyphicon glyphicon-arrow-down"/></th>

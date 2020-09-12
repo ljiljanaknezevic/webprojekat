@@ -72,7 +72,7 @@ function drawAmenities(data){
 			let temp='';
 			checkIdList= [];
 			for (i in data){
-				checkIdList.push(data[i].id);
+				checkIdList.push(data[i]);
 				temp+=`<tr><td><input  id="`+data[i].id+`" type="checkbox"/></td><td>`+data[i].name+`</td></tr>`;
 			}
 			$('#amenitiesTable').html(temp);
@@ -289,7 +289,7 @@ function someFunc(event){
 			var images = apartment.images;
 			 amenities = apartment.amenities;
 			 for (i = 0; i < amenities.length; i++) {
-				 $('#'+amenities[i]).prop('checked', true);
+				 $('#'+amenities[i].id).prop('checked', true);
 			}
 			$('#datepicker').datepicker('setDate', dates);
 			 $('#Dates').val(dates);
@@ -575,7 +575,7 @@ $(document).ready(function(){
 			apartment.checkOut = $('#check-out').val();
 		
 		for (i = 0; i < checkIdList.length; i++) {
-			 if ($('#'+checkIdList[i]).is(':checked')) {
+			 if ($('#'+checkIdList[i].id).is(':checked')) {
 					checkList.push(checkIdList[i]);
 			}
 		}
@@ -629,7 +629,7 @@ $(document).ready(function(){
 				apartment.checkOut = $('#check-out').val();
 			
 			for (i = 0; i < checkIdList.length; i++) {
-				 if ($('#'+checkIdList[i]).is(':checked')) {
+				 if ($('#'+checkIdList[i].id).is(':checked')) {
 					 checkIdListEdit.push(checkIdList[i]);
 				}
 			}

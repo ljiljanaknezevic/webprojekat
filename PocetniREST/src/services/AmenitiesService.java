@@ -19,6 +19,7 @@ import javax.ws.rs.core.Response;
 
 import beans.Amenities;
 import dao.AmenitiesDAO;
+import dao.ApartmentDAO;
 
 @Path("")
 public class AmenitiesService {
@@ -96,5 +97,13 @@ public class AmenitiesService {
 		ameniti.setDeleted(true);
 		dao.saveAmenities(contextPath);
 		return Response.ok(dao.getAllAmenities()).build();
+	}
+	
+	@GET
+	@Path("/gelAmenitiById{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getAmenitiById(@PathParam("id") UUID id) {
+		AmenitiesDAO dao=(AmenitiesDAO) ctx.getAttribute("amenitiesDAO");
+		return Response.ok(dao.findAmenitie(id)).build();
 	}
 }

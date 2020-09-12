@@ -5,6 +5,8 @@ var username = '';
 var id = '';
 var trid = '';
 
+
+var listOfAmenities = [];
 function addUsersTr(user){
 	let tr = $('<tr></tr>');
 	let tdUsername = $('<td>' + user.username + '</td>');
@@ -47,22 +49,40 @@ function drawComments(data){
 	}
 		$('#tbodyComments').html(temp);
 }
-
-
+var t;
+function drawFilterAmenities(data){
+	console.log("draw for filter amenities")
+	 t = '';	
+	for(am in data){
+		listOfAmenities.push(data[am].name);
+		//t += (`<input type = "checkbox" id = "${data[am].id}" name ="amenities-box" value = "${data[am].name}">${data[am].name}</input><br>`);
+	}
+	//$('#amenitiesCheckBox').html(t);
+}
 function drawApartments(data){
 	let temp='';
 	for (i in data){
+		var list = [];
+		for(x in data[i].amenities){
+			list.push(data[i].amenities[x].name)
+		}
+		var partsOfStr = list.join(',').replace(/,/g ,'<br>').split();
+		 dates = data[i].dates.join(',').replace(/,/g ,'<br>').split();
+		//list.replace( ", ",/<br>\u21b5/g)
 		temp+=`<tr id="`+data[i].id+`">
 			<td>`+data[i].hostUsername+`</td>
 			<td  class = "nameStatus">`+data[i].status+`</td>
 			<td  class = "nameType">`+data[i].type+`</td>
 			<td>`+data[i].location+`</td>
-			<td>`+data[i].numberOfRooms+`</td>
-			<td>`+data[i].numberOfGuest+`</td>
-			<td>`+data[i].price+`</td>
+			<td class = "nameAmenitie">`+partsOfStr+`</td>
+			<td class = "nameRooms">`+data[i].numberOfRooms+`</td>
+			<td class = "nameGuests">`+data[i].numberOfGuest+`</td>
+			<td class = "namePrice">`+data[i].price+`</td>
 			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
 			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
-			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td></tr>`;
+			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td>
+			<td class = "nameDate" name = "nameDate">`+data[i].dates+`</td>
+			</tr>`;
 	}
 	$('#apartmentsTable').html(temp);
 }
@@ -70,7 +90,7 @@ function drawAmenitiesInApartment(data){
 	let temp='';
 	checkIdList= [];
 	for (i in data){
-		checkIdList.push(data[i].id);
+		checkIdList.push(data[i]);
 		temp+=`<tr><td><input  id="`+data[i].id+`" type="checkbox"/></td><td>`+data[i].name+`</td></tr>`;
 	}
 	$('#amenitiesTableApartment').html(temp);
@@ -96,6 +116,8 @@ var surname = 'none';
 var gender = 'none';
 var password ='none';
 var role = 'none';
+
+
 $(document).ready(function(){
 		// amenities 
 	var modal = document.getElementById('myModal');
@@ -221,6 +243,7 @@ $(document).ready(function(){
 		});
 	
 		// mica pretraga
+		
 		$("#content-users").on('change paste keyup','[name=filterRest]',function (event) {
 	//		var n=$("#filterUsername").val();
 	//		var g=$("#filterGender").val();
@@ -268,25 +291,56 @@ $(document).ready(function(){
 		
 	});
 
+    	//////////////////////////////////////
     	//micas filters apartmants
+    	//FILTER FOR AMENITIES
+    	
+    	//2.nacin sa opcijom za selektovanje
+    	window.onload = function () {
+        		var select = document.getElementById("filterAmeniti");
+        		console.log(listOfAmenities)
+        		for(i = 1; i<listOfAmenities.length; i++) {
+        		    select.options[select.options.length] = new Option(listOfAmenities[i], listOfAmenities[i]);
+        		}
+    	};
+    
+    	//1.nacin sa checkBox-om
+    	$("#filterByAmenities").click(function(){
+    		var areChecked = false;
+    		$('input[name = "amenities-box"]:checked').each(function(){
+    			$("#apartmentsTable td.nameAmenitie:not(:contains('" + $(this).val()+"'))").parent().hide();
+    			$("#apartmentsTable td.nameAmenitie:contains('"+ $(this).val()+"')").parent().show();
+    			areChecked = true;
+    		})
+    		if(!areChecked)
+    			$("#apartmentsTable td.nameAmenitie:contains('"+ $(this).val()+"')").parent().show();
+    			
+    	})
+    	
     	$("#content-apartmant").on('change paste keyup','[name=filterRestApartment]',function (event) {
             var n=$("#filterType").val();
             var g=$("#filterStatus").val();
-          console.log(n)
-          console.log("*****************")
+            var a = $("#filterAmeniti").val();
+            
             if ($("#filterStatus").val()=="Filter by status"){
             	var status=$("#content-apartmant td.nameStatus").parent();
             }else{      
             	var status=$("#content-apartmant td.nameStatus:contains('" + g + "')").parent()
             }
+            
             if ($("#filterType").val()=="Filter by type"){
             	var type=$("#content-apartmant td.nameStatus").parent();
             }else{
             	
             	var type=$("#content-apartmant td.nameType:contains('" + n + "')").parent()
             }
-            status.filter(type).show();
-            $("#content-apartmant td.nameStatus").parent().not(status.filter(type)).hide();
+            if ($("#filterAmeniti").val()=="Filter by amenitie"){
+            	var amenitie=$("#content-apartmant td.nameStatus").parent();
+            }else{
+            	var amenitie=$("#content-apartmant td.nameAmenitie:contains('" + a + "')").parent()
+            }
+            status.filter(type).filter(amenitie).show();
+            $("#content-apartmant td.nameStatus").parent().not(status.filter(type).filter(amenitie)).hide();
         });
 	//AMENITIES TAB
 
@@ -294,7 +348,6 @@ $(document).ready(function(){
 	function drawAmenities(data){
 		let temp='';
 		for (i in data){
-			console.log(data[i].name)
 			temp+=`<tr id="`+data[i].id+`"><td>`+data[i].id
 			+`</td><td>`+data[i].name+`</td>
 			<td><button id="edit-amenities" class="btn btn-primary">Edit</button></td>
@@ -318,6 +371,7 @@ $(document).ready(function(){
 			contentType:'application/json',
 			success:function(data){
 				drawAmenities(data);
+				drawFilterAmenities(data);
 			}
 		})
 		$('#amenitiesTable').on('click','button',function(event){
@@ -418,6 +472,14 @@ $(document).ready(function(){
 				drawApartments(data)
 			}
 	})
+		$.ajax({
+			url:'ProjectRents/getAllAmenities',
+			type :"GET",
+			contentType:'application/json',
+			success:function(data){
+				drawFilterAmenities(data);
+			}
+		})
 	$('a[href="#apartments"]').click(function(){
 		
 		$('#content-apartmant').attr('hidden', false);
@@ -495,7 +557,7 @@ $(document).ready(function(){
 			apartment.checkOut = $('#check-out').val();
 		
 		for (i = 0; i < checkIdList.length; i++) {
-			 if ($('#'+checkIdList[i]).is(':checked')) {
+			 if ($('#'+checkIdList[i].id).is(':checked')) {
 				 checkIdListEdit.push(checkIdList[i]);
 			}
 		}
@@ -526,7 +588,28 @@ $(document).ready(function(){
         // `e` here contains the extra attributes
         $(this).find('.input-group-addon .count').text(' ' + e.dates.length);
     });
-	
+	$('#datepicker2').datepicker({
+        startDate: new Date(),
+        multidate: false,
+        format: "mm/dd/yyyy",
+        daysOfWeekHighlighted: "5,6",
+        datesDisabled: ['31/08/2017'],
+        language: 'en'
+    }).on('changeDate', function(e) {
+        // `e` here contains the extra attributes
+        $(this).find('.input-group-addon .count').text(' ' + e.dates.length);
+    });
+	$('#datepicker3').datepicker({
+        startDate: new Date(),
+        multidate: false,
+        format:"mm/dd/yyyy",
+        daysOfWeekHighlighted: "5,6",
+        datesDisabled: ['31/08/2017'],
+        language: 'en'
+    }).on('changeDate', function(e) {
+        // `e` here contains the extra attributes
+        $(this).find('.input-group-addon .count').text(' ' + e.dates.length);
+    });
 	$('#apartmentsTable').on('click','button',function(event){
 		if( $(event.target).attr("id")=="edit-apartment"){
 			
@@ -555,7 +638,7 @@ $(document).ready(function(){
 					var images = apartment.images;
 					 amenities = apartment.amenities;
 					 for (i = 0; i < amenities.length; i++) {
-						 $('#'+amenities[i]).prop('checked', true);
+						 $('#'+amenities[i].id).prop('checked', true);
 					}
 					 $('#host').val(hostUsername);
 					$('#datepicker').datepicker('setDate', dates);

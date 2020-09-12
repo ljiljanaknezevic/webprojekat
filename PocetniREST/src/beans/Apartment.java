@@ -27,7 +27,7 @@ public class Apartment {
 	private String checkOut = "10:00";
 	private ApartmentStatus status  = ApartmentStatus.PASSIVE ;
 	//last veriosn was <AMenities>. Milica idea is to saving list of ID od amenities that want to include
-	private ArrayList<UUID> amenities;
+	private ArrayList<Amenities> amenities;
 	private ArrayList<Reservation> reservations;
 	private boolean isDeleted = false;
 	/*public Apartment(UUID id, ApartmentType type, int numberOfRooms, int numberOfGuest, Location location,
@@ -55,7 +55,7 @@ public class Apartment {
 	public Apartment(UUID id, ApartmentType type, int numberOfRooms, int numberOfGuest, /*Location location,*/
 			ArrayList<String> dates, String hostUsername,
 			/*ArrayList<String> images,*/ double price, String checkIn, String checkOut, ApartmentStatus status,
-			ArrayList<UUID> amenities, boolean isDeleted) {
+			ArrayList<Amenities> amenities, boolean isDeleted) {
 		super();
 		this.id = id;
 		this.type = type;
@@ -162,10 +162,10 @@ public class Apartment {
 	public void setStatus(ApartmentStatus status) {
 		this.status = status;
 	}
-	public ArrayList<UUID> getAmenities() {
+	public ArrayList<Amenities> getAmenities() {
 		return amenities;
 	}
-	public void setAmenities(ArrayList<UUID> amenities) {
+	public void setAmenities(ArrayList<Amenities> amenities) {
 		this.amenities = amenities;
 	}
 	public ArrayList<Reservation> getReservations() {
