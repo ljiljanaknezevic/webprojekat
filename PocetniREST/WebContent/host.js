@@ -87,14 +87,20 @@ function drawReservations(data){
 		var currentDate=new Date();
 	
 		
-		var arr = data[i].arrivalDate.split('-');
+		var arr = data[i].arrivalDate.split('/');
 		
 		
 		var pom=new Date(arr[0],arr[1]-1,arr[2]);
+		var j;
 		
+	//	for(j=0;j<data[i].numberOfStay;++j){
 		pom.setDate(pom.getDate()+data[i].numberOfStay);
+		console.log(pom);
+		console.log(currentDate)
+		//}
 		
 		if(pom<currentDate){
+			console.log("DATUM JE ISTEKAO");
 		
 		if(data[i].status=='CREATED'){
 			temp+=`<tr id="`+data[i].reservationId+`">
@@ -140,6 +146,8 @@ function drawReservations(data){
 		}
 		}
 		else{
+			console.log("DATUM NIJE ISTEKAO");
+			
 			if(data[i].status=='CREATED'){
 			temp+=`<tr id="`+data[i].reservationId+`">
 			<td>`+data[i].apartmentId+`</td>
@@ -168,7 +176,7 @@ function drawReservations(data){
 		}
 		
 		 else{
-			console.log("Istekla je rezervacija");
+			//console.log("Istekla je rezervacija");
 			temp+=`<tr id="`+data[i].reservationId+`">
 			<td>`+data[i].apartmentId+`</td>
 			<td>`+data[i].arrivalDate+`</td>
@@ -178,7 +186,7 @@ function drawReservations(data){
 			<td>`+data[i].status+`</td>
 			<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
 			<td><button disabled  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
-			<td><button  id="end-reservation" class="btn btn-primary">End reservation</button></td>
+			<td><button  disabled id="end-reservation" class="btn btn-primary">End reservation</button></td>
 			</tr>`;
 		
 		}
@@ -529,6 +537,14 @@ $(document).ready(function(){
 		$('#number-od-guests').val("");
 		$('#Dates').val("");
 		$('#price-per-night').val("");
+		$('#street-name').val("");
+		$('#street-number').val("");
+		$('#city').val("");
+		$('#zip-code').val("");
+		$('#location-longitude').val("");
+		$('#location-latitude').val("");
+		
+ 
 		$('#check-in').val("14:00");
 		$('#check-out').val("10:00");
 		//AMENITIIIIES
@@ -577,7 +593,9 @@ $(document).ready(function(){
 		//var base64 = getBase64Image(document.getElementById("blah"));
 		//apartment.images=base64;
 		//console.log(base64);
-
+		
+		apartment.availables=apartment.dates;
+		console.log(apartment.availables);
 		apartment.hostUsername = username;
 		if($('#check-in').val() != "")
 			apartment.checkIn = $('#check-in').val();
@@ -701,6 +719,8 @@ $(document).ready(function(){
 			//var base64 = getBase64Image(document.getElementById("blah"));
 			//apartment.images=base64;
 			//console.log(base64);
+			apartment.availables=apartment.dates;
+			console.log(apartment.availables);
 
 			apartment.hostUsername = username;
 			if($('#check-in').val() != "")
@@ -856,8 +876,14 @@ $(document).ready(function(){
 			if(gen=='male')
 				gender=0;
 			else
-				gender=1;		
-	    	$.ajax({
+				gender=1;	
+				
+		if(name=="" || surname==""){
+			$('#error').text('Surname and Name fields can not be empty!').show();
+       		$('#error').delay(4000).fadeOut('slow');
+		}	
+		else{
+			   	$.ajax({
 	    		type :"POST",
 	    		url :"ProjectRents/userEdit",
 	    		data :JSON.stringify({
@@ -874,6 +900,8 @@ $(document).ready(function(){
 	    			alert('successfully edited profile.')
 	    		}
 	    	})
+		}
+	 
 	    })
 	    
 	    //change password

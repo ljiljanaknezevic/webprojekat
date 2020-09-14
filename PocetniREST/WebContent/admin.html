@@ -330,9 +330,9 @@
 		       <p>Username</p>
 		      <input type="text" class="form-control" id="username" disabled/>
 		        <p>Name</p>
-		       <input type="text" class="form-control" id="name" />
+		       <input type="text" class="form-control" id="name" required  oninvalid="this.setCustomValidity('Name is required.')" oninput="setCustomValidity('')" />
 		        <p>Surname</p>
-		      <input type="text" class="form-control" id="surname"/>     
+		      <input type="text" class="form-control" id="surname" required  oninvalid="this.setCustomValidity('Surname is required.')" oninput="setCustomValidity('')"/>     
 		      <p>Gender</p> 
 		      <select name="gender" id="gender" class="form-control" >
 		      	<option value="male" >Male</option>
@@ -373,13 +373,17 @@
       <form class="form-signin" id="registrationHost">  
        <h2 class="form-signin-heading">Registration</h2>
       <input type="text" class="form-control" id="husername" placeholder="Username" required  oninvalid="this.setCustomValidity('Username is required.')" oninput="setCustomValidity('')"/>
+       <p id="husernamerror"></p>
        <input type="text" class="form-control" id="hname" placeholder="Name" required  oninvalid="this.setCustomValidity('Name is required.')" oninput="setCustomValidity('')"/>
+     <p id="hnamerror"></p>
       <input type="text" class="form-control" id="hsurname" placeholder="Surname" required  oninvalid="this.setCustomValidity('Surname is required.')" oninput="setCustomValidity('')"/>      
+      <p id="hsurnamerror"></p>
       <select name="gender" id="hgender" class="form-control" required  oninvalid="this.setCustomValidity('Username is required.')" oninput="setCustomValidity('')">
       	<option value="male" selected>Male</option>
       	<option value="female">Female</option>
       </select>
       <input type="password" class="form-control" id="hpassword" placeholder="Password" required  oninvalid="this.setCustomValidity('Password is required.')" oninput="setCustomValidity('')"/>    
+    <p id="hpasserror"></p>
      <input type="password" class="form-control" id="hpassControl" placeholder="Confirm password" required  oninvalid="this.setCustomValidity('Confirm password is required.')" oninput="setCustomValidity('')"/>      
     	<p id="herror" class = "herror-message"></p>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button> 

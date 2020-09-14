@@ -559,7 +559,8 @@ $(document).ready(function(){
 		//var base64 = getBase64Image(document.getElementById("blah"));
 		//apartment.images=base64;
 		//console.log(base64);
-
+		apartment.availables=apartment.dates;
+		console.log(apartment.availables);
 		apartment.hostUsername = username;
 			apartment.checkIn = $('#check-in').val();
 			apartment.checkOut = $('#check-out').val();
@@ -756,7 +757,7 @@ $(document).ready(function(){
 		user.password=password
 		var temp = JSON.stringify(user);
 		
-		if(password.length<8)
+		 if(password.length<8)
 		{
 			$('#herror').text('Password has to have 8 characters minimum!').show();
        		$('#herror').delay(4000).fadeOut('slow');
@@ -836,8 +837,14 @@ $(document).ready(function(){
 		if(gen=='male')
 			gender=0;
 		else
-			gender=1;		
-    	$.ajax({
+			gender=1;	
+			
+		if(name=="" || surname==""){
+			$('#error').text('Surname and Name fields can not be empty!').show();
+       		$('#error').delay(4000).fadeOut('slow');
+		}
+		else{
+			 	$.ajax({
     		type :"POST",
     		url :"ProjectRents/userEdit",
     		data :JSON.stringify({
@@ -854,6 +861,8 @@ $(document).ready(function(){
     			alert('successfully edited profile.')
     		}
     	})
+		}	
+   
     })
     
     
