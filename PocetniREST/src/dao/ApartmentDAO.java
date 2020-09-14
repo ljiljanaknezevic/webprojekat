@@ -58,6 +58,7 @@ public class ApartmentDAO {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			
 			
+			
 			List<Apartment> car = objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, Apartment.class)); 
 			for(Apartment u : car)
 			{

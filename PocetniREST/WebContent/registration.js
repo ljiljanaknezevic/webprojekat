@@ -56,8 +56,12 @@ $(document).ready(function() {
 		user.username=username
 		user.password=password
 		var temp = JSON.stringify(user);
-		
-		 if(password != passwordControl){
+		if(password.length<8)
+		{
+			$('#error').text('Password has to have 8 characters minimum!').show();
+       		$('#error').delay(4000).fadeOut('slow');
+		}
+		else if(password != passwordControl){
        		$('#error').text('Passwords don\'t match. Try again.').show();
        		$('#error').delay(4000).fadeOut('slow');
         }else{

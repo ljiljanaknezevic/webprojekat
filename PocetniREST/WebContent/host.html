@@ -320,36 +320,64 @@
         </tr>
         <tr>
           <th height="50">Number of rooms:</th>
-          <th height="50"><input type ="number" id = "number-od-rooms"  required></th>
+          <th height="50"><input type ="number" id = "number-od-rooms" min="1" required  oninvalid="this.setCustomValidity('Number of rooms is required.')" oninput="setCustomValidity('')"></th>
         </tr>
         <tr>
           <th height="50">Number of guests:</th>
-          <th height="50"><input type ="number" id = "number-od-guests" required></th>
+          <th height="50"><input type ="number" id = "number-od-guests" min="1" required  oninvalid="this.setCustomValidity('Number of guests is required.')" oninput="setCustomValidity('')"></th>
         </tr>
         <tr>
           <th height="50">Location :</th>
-          <th height="50"><input type ="text" id = "location-entered" required></th>
-        </tr>
+          </tr>
+          <tr>
+          <th></th>
+          <th height="50"><input type ="text" id = "street-name" required  placeholder="Street name"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')">
+          </th>
+          </tr>
+           <tr>
+          <th></th>
+          <th height="50"><input type ="text" id = "street-number" required  placeholder="Street number"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')">
+          </th>
+          </tr>
+           <tr>
+          <th></th>
+          <th height="50"><input type ="text" id = "city" required  placeholder="City"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')">
+          </th>
+          </tr>
+           <tr>
+          <th></th>
+          <th height="50"><input type ="number" id = "zip-code" required  placeholder="Zip code"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')">
+          </th>
+          </tr>
+          <tr>
+          <th height="50"></th>
+          <th height="50"><input type ="number" id = "location-longitude" required placeholder="Longitude"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')"> </th>
+          </tr>
+             <tr>
+          <th height="50"></th>
+          <th height="50"><input type ="number" id = "location-latitude" required placeholder="Latitude"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')"> </th>
+          </tr>
+
          <tr>
           <th height="50">Dates for rent :</th>
           <th height="50">
 			<div class="input-group date form-group" id="datepicker">
- 			   <input type="text" class="form-control" id="Dates" name="Dates" placeholder="Select days" required />
+ 			   <input type="text" class="form-control" id="Dates" name="Dates" placeholder="Select days" placeholder="Username" required  oninvalid="this.setCustomValidity('Date is required.')" oninput="setCustomValidity('')" />
  			   <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i><span class="count"></span></span>
 			</div>
 			</th>
         </tr>
          <tr>
           <th height="50">Price per night:</th>
-          <th height="50"><input type ="number" id = "price-per-night" required></th>
+          <th height="50"><input type ="number" id = "price-per-night" min="1" required  oninvalid="this.setCustomValidity('Price per night is required.')" oninput="setCustomValidity('')"></th>
         </tr>
          <tr>
           <th height="50">Check in time :</th>
-          <th height="50"><input type ="time" id = "check-in" required></th>
+          <th height="50"><input type ="time" id = "check-in" required value="2:00 PM" oninvalid="this.setCustomValidity('Check in time is required.')" oninput="setCustomValidity('')"></th>
         </tr>
          <tr>
           <th height="50">Check out time :</th>
-          <th height="50"><input type ="time" id = "check-out" required></th>
+          <th height="50"><input type ="time" id = "check-out" value="10:00 AM" required oninvalid="this.setCustomValidity('Check out time is required.')" oninput="setCustomValidity('')"></th>
         </tr>
         <form method="post" enctype="multipart/form-data">
 		 	<tr>

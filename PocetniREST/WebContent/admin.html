@@ -501,10 +501,37 @@
           <th height="50">Number of guests:</th>
           <th height="50"><input type ="number" id = "number-od-guests" required></th>
         </tr>
-        <tr>
+      <tr>
           <th height="50">Location :</th>
-          <th height="50"><input type ="text" id = "location-entered" required></th>
-        </tr>
+          </tr>
+          <tr>
+          <th></th>
+          <th height="50"><input type ="text" id = "street-name" required  placeholder="Street name"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')">
+          </th>
+          </tr>
+           <tr>
+          <th></th>
+          <th height="50"><input type ="text" id = "street-number" required  placeholder="Street number"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')">
+          </th>
+          </tr>
+           <tr>
+          <th></th>
+          <th height="50"><input type ="text" id = "city" required  placeholder="City"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')">
+          </th>
+          </tr>
+           <tr>
+          <th></th>
+          <th height="50"><input type ="number" id = "zip-code" required  placeholder="Zip code"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')">
+          </th>
+          </tr>
+          <tr>
+          <th height="50"></th>
+          <th height="50"><input type ="number" id = "location-longitude" required placeholder="Longitude"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')"> </th>
+          </tr>
+             <tr>
+          <th height="50"></th>
+          <th height="50"><input type ="number" id = "location-latitude" required placeholder="Latitude"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')"> </th>
+          </tr>
          <tr>
           <th height="50">Dates for rent :</th>
           <th height="50">

@@ -200,7 +200,7 @@ function drawApartments(data){
 		temp+=`<tr id="`+data[i].id+`">
 			<td class = "tdCol">`+data[i].status+`</td>
 			<td class="tdCol">`+data[i].type+`</td>
-			<td>`+data[i].location+`</td>
+			<td>`+data[i].location.address.street+" "+data[i].location.address.number+" "+data[i].location.address.city+" "+data[i].location.address.zipCode+`</td>
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
@@ -211,7 +211,7 @@ function drawApartments(data){
 			tempPassive+=`<tr id="`+data[i].id+`">
 			<td>`+data[i].status+`</td>
 			<td class = "tdCol">`+data[i].type+`</td>
-			<td>`+data[i].location+`</td>
+			<td>`+data[i].location.address.street+" "+data[i].location.address.number+" "+data[i].location.address.city+" "+data[i].location.address.zipCode+`</td>
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
@@ -529,8 +529,8 @@ $(document).ready(function(){
 		$('#number-od-guests').val("");
 		$('#Dates').val("");
 		$('#price-per-night').val("");
-		$('#check-in').val("");
-		$('#check-out').val("");
+		$('#check-in').val("14:00");
+		$('#check-out').val("10:00");
 		//AMENITIIIIES
 		$.ajax({
 			url:'ProjectRents/getAllAmenities',
@@ -546,6 +546,8 @@ $(document).ready(function(){
 	$('#add-apartment').click(function(){
 		if ($(this).text()=="ADD APARTMENT") {
 		var apartment = new Object();
+		var location=new Object();
+		var address=new Object();
 		let gen=$('#type').val()
 		let type
 		if(gen=='apartment')
@@ -556,9 +558,17 @@ $(document).ready(function(){
 		let numRooms = $('#number-od-rooms').val();apartment.numberOfRooms = numRooms;
 		let numGuest = $('#number-od-guests').val();apartment.numberOfGuest = numGuest;
 		//TODO :location
-		//let adress=$('#location-entered').val();
-		//getLocation(adress);
+		
+		
+		let street=$('#street-name').val();address.street=street;
+		let streetNum=$('#street-number').val();address.number=streetNum;
+		let city=$('#city').val();address.city=city;
+		let zipCode=$('#zip-code').val();address.zipCode=zipCode;
+		let locationLength=$('#location-longitude').val();location.locationLength=locationLength;
+		let locationWidth=$('#location-latitude').val();location.locationWidth=locationWidth;
 
+		location.address=address;
+		apartment.location=location;
 		let dani = $('#Dates').val();
 		apartment.dates= dani.split(',');
 		let price = $('#price-per-night').val();apartment.price = price;
@@ -582,7 +592,56 @@ $(document).ready(function(){
 		
 		apartment.id = id;
 		apartment.amenities = checkList;
-		$.ajax({
+		
+		
+		 if(numRooms<1){
+			$('#error-apartment').text('Number of rooms has to be higher then 0').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
+		else if(numGuest<1){
+			$('#error-apartment').text('Number of guests has to be higher then 0').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
+		else if(street=="")
+		{
+		$('#error-apartment').text('Enter street name!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(streetNum=="")
+		{
+		$('#error-apartment').text('Enter street number!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(city=="")
+		{
+		$('#error-apartment').text('Enter city!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(zipCode=="")
+		{
+		$('#error-apartment').text('Enter zip code!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(locationLength=="")
+		{
+		$('#error-apartment').text('Enter  longitude!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(locationWidth=="")
+		{
+		$('#error-apartment').text('Enter lantitude!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(jQuery.isEmptyObject(dani)){
+			$('#error-apartment').text('You have to choose at least one date for rent').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
+		else if(price<1){
+			$('#error-apartment').text('Price has to be higher then 0').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
+		else{
+			$.ajax({
 			url:"ProjectRents/addApartment",
 			type :"POST",
 			data: JSON.stringify(apartment),
@@ -591,13 +650,27 @@ $(document).ready(function(){
 				modal.style.display = "none"
 				alert('Successfully added apartment.')
 				drawApartments(data)
-			}
+			},
+				error:function(message){
+					console.log(location);
+				//	if(message.responseText=='the passwords didn\'t match!'){
+					$('#error-apartment').text(message.responseText);
+					$('#error-apartment').show();
+					$('#error-apartment').delay(4000).fadeOut('slow');
+			//	}
+					
+				}
 		})
+			
+		}
+
 		}
 		else{
 			//EDIT APARTMENT CLICK
 
 			let apartment = new Object();
+			var location=new Object();
+			var address=new Object();
 			let gen=$('#type').val()
 			let type
 			if(gen=='apartment')
@@ -609,9 +682,16 @@ $(document).ready(function(){
 			console.log(apartment.type)
 			let numRooms = $('#number-od-rooms').val();	apartment.numberOfRooms = numRooms;
 			let numGuest = $('#number-od-guests').val();apartment.numberOfGuest = numGuest;
-			//TODO :location
-			//let adress=$('#location-entered').val();
-			//getLocation(adress);
+			
+			let street=$('#street-name').val();address.street=street;
+			let streetNum=$('#street-number').val();address.number=streetNum;
+			let city=$('#city').val();address.city=city;
+			let zipCode=$('#zip-code').val();address.zipCode=zipCode;
+			let locationLength=$('#location-longitude').val();location.locationLength=locationLength;
+			let locationWidth=$('#location-latitude').val();location.locationWidth=locationWidth;
+
+		location.address=address;
+		apartment.location=location;
 
 			let dani = $('#Dates').val();
 			apartment.dates= dani.split(',');
@@ -636,6 +716,56 @@ $(document).ready(function(){
 			apartment.id = trid;
 			apartment.amenities = checkIdListEdit;
 			apartment.status = $('#status').val();
+			
+	 if(numRooms<1){
+			$('#error-apartment').text('Number of rooms has to be higher then 0').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
+		else if(numGuest<1){
+			$('#error-apartment').text('Number of guests has to be higher then 0').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
+		else if(street=="")
+		{
+		$('#error-apartment').text('Enter street name!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(streetNum=="")
+		{
+		$('#error-apartment').text('Enter street number!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(city=="")
+		{
+		$('#error-apartment').text('Enter city!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(zipCode=="")
+		{
+		$('#error-apartment').text('Enter zip code!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(locationLength=="")
+		{
+		$('#error-apartment').text('Enter  longitude!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(locationWidth=="")
+		{
+		$('#error-apartment').text('Enter lantitude!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(jQuery.isEmptyObject(dani)){
+			$('#error-apartment').text('You have to choose at least one date for rent').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
+		else if(price<1){
+			$('#error-apartment').text('Price has to be higher then 0').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
+		
+		else{
+					
 			$.ajax({
 				url:"ProjectRents/editApartment",
 				type :"POST",
@@ -653,6 +783,8 @@ $(document).ready(function(){
 					drawApartments(hostsLists)
 				}
 			})
+		}
+	
 		}
 	})
 	 

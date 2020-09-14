@@ -50,7 +50,7 @@ function drawApartments(data){
 		temp+=`<tr id="`+data[i].id+`">
 			<td>`+data[i].status+`</td>
 			<td class= "tdCol">`+data[i].type+`</td>
-			<td>`+data[i].location+`</td>
+			<td>`+data[i].location.address.street+" "+data[i].location.address.number+" "+data[i].location.address.city+" "+data[i].location.address.zipCode+`</td>
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>

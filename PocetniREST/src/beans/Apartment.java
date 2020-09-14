@@ -52,7 +52,7 @@ public class Apartment {
 		this.amenities = amenities;
 		this.reservations = reservations;
 	}*/
-	public Apartment(UUID id, ApartmentType type, int numberOfRooms, int numberOfGuest, /*Location location,*/
+	public Apartment(UUID id, ApartmentType type, int numberOfRooms, int numberOfGuest, Location location,
 			ArrayList<String> dates, String hostUsername,
 			/*ArrayList<String> images,*/ double price, String checkIn, String checkOut, ApartmentStatus status,
 			ArrayList<Amenities> amenities, boolean isDeleted) {
@@ -63,7 +63,7 @@ public class Apartment {
 		this.numberOfGuest = numberOfGuest;
 		this.isDeleted = isDeleted;
 		////////////////////
-		this.location = new Location();
+		this.location = location;
 		this.dates = dates;
 		this.hostUsername = hostUsername;
 		///////////////////////////
