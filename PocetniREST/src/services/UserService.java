@@ -42,7 +42,12 @@ public class UserService {
 		if(ctx.getAttribute("userDAO") == null) {
 			String contextPath = ctx.getRealPath("");
 			ctx.setAttribute("userDAO", new UserDAO(contextPath));
+			
 		}
+		//ctx.getAtributes(admins)-lista administratora
+		//if ctx.getAt==null{
+		
+		//}
 	}
 
 	
@@ -52,7 +57,6 @@ public class UserService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response login(User user, @Context HttpServletRequest request) {
 		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
-		
 		for(User u:userDao.getUsersLogin()) {
 			if(user.getUsername().equals(u.getUsername()) && user.getPassword().equals(u.getPassword()))
 			{
@@ -64,6 +68,10 @@ public class UserService {
 		
 		
 	/*	String message = userDao.findUser(user.getUsername(), user.getPassword());
+=======
+	
+		String message = userDao.findUser(user.getUsername(), user.getPassword());
+>>>>>>> c296265519a7800ee0ebfb590499521bd6f9a26d
 		if(message.equals("bas taj postoji u bazi")) {
 			User userr = userDao.findByUsername(user.getUsername());
 			request.getSession().setAttribute("user", userr);
@@ -128,7 +136,7 @@ public class UserService {
 			boolean loggedUser=dao.find(user.getUsername());
 
 			
-			if(loggedUser==true) {
+			if(loggedUser) {
 				
 				return Response.status(400).entity("Username alerady exists").build();
 			}
@@ -169,32 +177,6 @@ public class UserService {
 		return Response.status(200).build();
 	}
 	
-
-	/*@GET
-	@Path("/allUsers")
-	@Produces(MediaType.APPLICATION_JSON)
-//	@Consumes(MediaType.APPLICATION_JSON)
-	public List<User> getAllUsers(@Context HttpServletRequest request){
-		//System.out.println("USAO JE U METODU");
-		User user = (User) request.getSession().getAttribute("user");
-		//System.out.println(user.getRole());
-		UserDAO kdao = (UserDAO) ctx.getAttribute("userDAO");
-		//System.out.println("******************************");
-		if(user.getRole().toString().equals("GUEST")) {
-			System.out.println("ADMIN JE");
-			return kdao.getAll();
-		}
-		else if(user.getRole()==Role.HOST)
-		  {
-			System.out.println("HOST JE");
-		  	return kdao.getHostsUsers(user);
-		  }
-		else {
-			 System.out.println("GOST JE");
-			return null;
-		}
-
-	}*/
 	
 	@GET
 	@Path("/allUsers")
@@ -246,13 +228,6 @@ public class UserService {
 		return Response.status(400).build();
 
 	}
-	
 
 
 }
-	
-
-/*if(dao.getAll() != null)
-			return Response.ok(dao.getAll()).status(200).build();
-		else 
-			return Response.status(400).build();*/

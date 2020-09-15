@@ -1,0 +1,32 @@
+[ {
+  "username" : "giba",
+  "password" : "giba",
+  "name" : "mika",
+  "surname" : "giba",
+  "gender" : "MALE",
+  "role" : "GUEST"
+},
+ {
+  "username" : "mika",
+  "password" : "mika",
+  "name" : "mika",
+  "surname" : "giba",
+  "gender" : "MALE",
+  "role" : "HOST"
+},
+ {
+  "username" : "dika",
+  "password" : "dika",
+  "name" : "mika",
+  "surname" : "giba",
+  "gender" : "MALE",
+  "role" : "HOST"
+},
+ {
+  "username" : "rika",
+  "password" : "rika",
+  "name" : "mika",
+  "surname" : "giba",
+  "gender" : "MALE",
+  "role" : "ADMIN"
+} ]

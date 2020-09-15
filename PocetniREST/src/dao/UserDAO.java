@@ -38,6 +38,7 @@ public class UserDAO {
 	public UserDAO(String contextPath) {
 	
 		loadUsers(contextPath);
+		//loadAdmins
 		
 	}
 	public Collection<User> getUsersLogin() {

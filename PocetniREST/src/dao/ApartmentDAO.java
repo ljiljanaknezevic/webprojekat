@@ -57,13 +57,15 @@ public class ApartmentDAO {
 			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			
-			
-			
-			List<Apartment> car = objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, Apartment.class)); 
-			for(Apartment u : car)
-			{
-				apartments.put(u.getId(),u);
+			if(file.exists()) {
+				List<Apartment> car = objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, Apartment.class)); 
+				for(Apartment u : car)
+				{
+					apartments.put(u.getId(),u);
+				}
 			}
+			
+			
 		}
 		catch (Exception ex) {
 			System.out.println(ex);

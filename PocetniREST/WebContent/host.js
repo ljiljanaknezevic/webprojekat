@@ -27,26 +27,12 @@ function readURL(input) {
     reader.onload = function(e) {
       $('#blah').attr('src', e.target.result);
     }
-    
     reader.readAsDataURL(input.files[0]); // convert to base64 string
   }
+
 }
-/**
-function encodeImgtoBase64(element) {
- 
-      var img = element.files[0];
- 
-      var reader = new FileReader();
- 
-      reader.onloadend = function() {
- 
-        $("#convertImg").attr("href",reader.result);
- 
-        $("#convertImg").text(reader.result);
-      }
-      reader.readAsDataURL(img);
-    }
- */
+
+
 
 function drawComments(data){
 	let temp='';
@@ -210,7 +196,7 @@ function drawApartments(data){
 		temp+=`<tr id="`+data[i].id+`">
 			<td class = "tdCol">`+data[i].status+`</td>
 			<td class="tdCol">`+data[i].type+`</td>
-			<td>`+data[i].location.address.street+" "+data[i].location.address.number+" "+data[i].location.address.city+" "+data[i].location.address.zipCode+`</td>
+			<td>`+data[i].location.address.street+","+data[i].location.address.number+","+data[i].location.address.city+","+data[i].location.address.zipCode+`</td>
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
@@ -222,7 +208,7 @@ function drawApartments(data){
 			tempPassive+=`<tr id="`+data[i].id+`">
 			<td>`+data[i].status+`</td>
 			<td class = "tdCol">`+data[i].type+`</td>
-			<td>`+data[i].location.address.street+" "+data[i].location.address.number+" "+data[i].location.address.city+" "+data[i].location.address.zipCode+`</td>
+			<td>`+data[i].location.address.street+","+data[i].location.address.number+","+data[i].location.address.city+","+data[i].location.address.zipCode+`</td>
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
@@ -317,10 +303,22 @@ function someFunc(event){
 		$('#type').val("apartment");
 	else 
 		$('#type').val("room");
-	$('#location').val($(event.target).parent().parent().children().first().next().next().text()); //nema nista pa nema sta da ispise
+		
+		var lokacija=$(event.target).parent().parent().children().first().next().next().text();
+		var deloviLok=lokacija.split(",");
+	$('#street-name').val(deloviLok[0])
+	$('#street-number').val(deloviLok[1])
+	$('#city').val(deloviLok[2])
+	$('#zip-code').val(deloviLok[3])
+	
 	$('#number-od-rooms').val($(event.target).parent().parent().children().first().next().next().next().text());
 	$('#number-od-guests').val($(event.target).parent().parent().children().first().next().next().next().next().text());
 	$('#price-per-night').val($(event.target).parent().parent().children().first().next().next().next().next().next().text());
+	
+	
+	$('#location-longitude').attr('hidden',true);
+	$('#location-latitude').attr('hidden',true);
+	
 	
 	$('#add-apartment').text("EDIT APARTMENT");
 }
@@ -564,8 +562,16 @@ $(document).ready(function(){
 		$('#street-number').val("");
 		$('#city').val("");
 		$('#zip-code').val("");
+		
+		$('#location-longitude').attr('hidden',false);
+		$('#location-latitude').attr('hidden',false);
+		
 		$('#location-longitude').val("");
 		$('#location-latitude').val("");
+		$('#blah').val("");
+		$('#file').val("");
+		
+	
 		
 		
  
@@ -612,7 +618,7 @@ $(document).ready(function(){
 		let dani = $('#Dates').val();
 		apartment.dates= dani.split(',');
 		let price = $('#price-per-night').val();apartment.price = price;
-		var images=[];
+		
 		
 		var image=$('#blah').attr('src');
 		
@@ -684,6 +690,10 @@ $(document).ready(function(){
 			$('#error-apartment').text('Price has to be higher then 0').show();
        		$('#error-apartment').delay(4000).fadeOut('slow');
 		}
+		else if(image==null){
+			$('#error-apartment').text('You have to put image!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
 		else{
 			$.ajax({
 			url:"ProjectRents/addApartment",
@@ -740,11 +750,12 @@ $(document).ready(function(){
 			let dani = $('#Dates').val();
 			apartment.dates= dani.split(',');
 			let price = $('#price-per-night').val();apartment.price = price;
-			//TODO :images
-			//let images=$('#blah').src;
-			//var base64 = getBase64Image(document.getElementById("blah"));
-			//apartment.images=base64;
-			//console.log(base64);
+			  
+		
+			var image=$('#blah').attr('src');
+			
+			
+			apartment.images=image;
 			apartment.availables=apartment.dates;
 			console.log(apartment.availables);
 
@@ -791,22 +802,17 @@ $(document).ready(function(){
 		$('#error-apartment').text('Enter zip code!').show();
        		$('#error-apartment').delay(4000).fadeOut('slow');	
 		}
-		else if(locationLength=="")
-		{
-		$('#error-apartment').text('Enter  longitude!').show();
-       		$('#error-apartment').delay(4000).fadeOut('slow');	
-		}
-		else if(locationWidth=="")
-		{
-		$('#error-apartment').text('Enter lantitude!').show();
-       		$('#error-apartment').delay(4000).fadeOut('slow');	
-		}
+		
 		else if(jQuery.isEmptyObject(dani)){
 			$('#error-apartment').text('You have to choose at least one date for rent').show();
        		$('#error-apartment').delay(4000).fadeOut('slow');
 		}
 		else if(price<1){
 			$('#error-apartment').text('Price has to be higher then 0').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
+		else if(image==null){
+			$('#error-apartment').text('You have to put image!').show();
        		$('#error-apartment').delay(4000).fadeOut('slow');
 		}
 		
