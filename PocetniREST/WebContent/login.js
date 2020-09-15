@@ -31,7 +31,7 @@ $(document).ready(function(){
 	$('#content').attr("hidden", true);
 	$('form#login').submit(function(event){
 		event.preventDefault();
-		
+		console.log("usloooo")
 		var user = new Object();
 		user.username=$('#username').val()
 		user.password=$('#password').val()
@@ -39,16 +39,24 @@ $(document).ready(function(){
 	
 		$.post({
 			url : 'ProjectRents/login',
-			data :temp,
 			contentType : 'application/json',
-			success : function(temp){
-				currentUser();
+			data :temp,
+			success : function(pom){
+				
+				if(pom.role=="ADMIN")
+					window.location.href="./admin.html";
+					if(pom.role=="HOST")
+						window.location.href="./host.html";
+					if(pom.role=="GUEST")
+						window.location.href="./guest.html";
 				alert('Succesfully loged in.');
 			},
 			error: function(message) {
-				$('#error').text(message.responseText);
-				$('#error').show();
-				$('#error').delay(4000).fadeOut('slow');
+//				$('#error').text(message.responseText);
+//				$('#error').show();
+//				$('#error').delay(4000).fadeOut('slow');
+				$('#error').text("Nesipravno korisnicko ime ili lozinka");
+				$("#error").show().delay(3000).fadeOut();
 			}
 		})
 	})
