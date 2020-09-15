@@ -7,7 +7,7 @@ var trid = '';
 function readURL(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
-    
+    var file=input.files[0];
     reader.onload = function(e) {
       $('#blah').attr('src', e.target.result);
     }
@@ -15,40 +15,23 @@ function readURL(input) {
     reader.readAsDataURL(input.files[0]); // convert to base64 string
   }
 }
-/*function convertToDataURLviaCanvas(url, callback, outputFormat){
-    var img = new Image();
-    img.crossOrigin = 'Anonymous';
-    img.onload = function(){
-        var canvas = document.createElement('CANVAS');
-        var ctx = canvas.getContext('2d');
-        var dataURL;
-        canvas.height = this.height;
-        canvas.width = this.width;
-        ctx.drawImage(this, 0, 0);
-        dataURL = canvas.toDataURL(outputFormat);
-        callback(dataURL);
-        canvas = null; 
-    };
-    img.src = url;
-}*/
+/**
+function encodeImgtoBase64(element) {
+ 
+      var img = element.files[0];
+ 
+      var reader = new FileReader();
+ 
+      reader.onloadend = function() {
+ 
+        $("#convertImg").attr("href",reader.result);
+ 
+        $("#convertImg").text(reader.result);
+      }
+      reader.readAsDataURL(img);
+    }
+ */
 
-/*function getBase64Image(imgElem) {
-// imgElem must be on the same server otherwise a cross-origin error will be thrown "SECURITY_ERR: DOM Exception 18"
-    var canvas = document.createElement("canvas");
-    //canvas.width = imgElem.clientWidth;
-    //canvas.height = imgElem.clientHeight;
-	canvas.width=$(window).width();
-	canvas.height=$(window).height();
-    var ctx = canvas.getContext("2d");
-	ctx.drawImage(imgElem, 0, 0);
-    var dataURL = canvas.toDataURL("image/png");
-    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-}*/
-
-function toDate(dateStr) {
-  var parts = dateStr.split("-")
-  return new Date(parts[2], parts[1] - 1, parts[0])
-}
 function drawComments(data){
 	let temp='';
 	for (i in data.comments){
@@ -88,9 +71,12 @@ function drawReservations(data){
 	
 		
 		var arr = data[i].arrivalDate.split('/');
-		
+		//Mon Sep 14 2020 19:09:29 GMT+0200 (Central European Summer Time)
+		//format.setTimeZone(TimeZone.getTimeZone("GMT"));
+		//date = format.parse(strDate);
 		
 		var pom=new Date(arr[0],arr[1]-1,arr[2]);
+		//pom=pom.toLocaleDate();
 		var j;
 		
 	//	for(j=0;j<data[i].numberOfStay;++j){
@@ -199,7 +185,7 @@ function drawReservations(data){
 }
 
 function drawApartments(data){
-	
+//"data:image/webp;base64,"	
 	
 	let temp='';
 	let tempPassive='';
@@ -212,6 +198,7 @@ function drawApartments(data){
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
+			<td><img id="blah" height="150px alt="your image" src="data:image/webp;base64,"`+data[i].images`</td>
 			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
 			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
 			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td></tr>`;
@@ -223,6 +210,7 @@ function drawApartments(data){
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
+			<td><img id="blah" height="150px alt="your image" src="data:image/webp;base64,"`+data[i].images+`</td>
 			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
 			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
 			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td></tr>`;
@@ -544,6 +532,7 @@ $(document).ready(function(){
 		$('#location-longitude').val("");
 		$('#location-latitude').val("");
 		
+		
  
 		$('#check-in').val("14:00");
 		$('#check-out').val("10:00");
@@ -573,7 +562,7 @@ $(document).ready(function(){
 		apartment.type = type;
 		let numRooms = $('#number-od-rooms').val();apartment.numberOfRooms = numRooms;
 		let numGuest = $('#number-od-guests').val();apartment.numberOfGuest = numGuest;
-		//TODO :location
+		
 		
 		
 		let street=$('#street-name').val();address.street=street;
@@ -588,11 +577,11 @@ $(document).ready(function(){
 		let dani = $('#Dates').val();
 		apartment.dates= dani.split(',');
 		let price = $('#price-per-night').val();apartment.price = price;
-		//TODO :images
-		//let images=$('#blah').src;
-		//var base64 = getBase64Image(document.getElementById("blah"));
-		//apartment.images=base64;
-		//console.log(base64);
+		var images=[];
+		var image=$('#blah').attr('src');
+		//images.push(image);
+		apartment.images=image;
+		
 		
 		apartment.availables=apartment.dates;
 		console.log(apartment.availables);

@@ -251,7 +251,7 @@ $(document).ready(function(){
 				type : "GET",
 				contentType:'application/json',
 				success:function(apartment){
-					 availabledates = apartment.dates;
+					 availabledates = apartment.availables ;
 					
 					arrivale=availabledates[0];
 					
@@ -262,22 +262,6 @@ $(document).ready(function(){
 			});
 			
 			modal.style.display="block";
- 			
-
-		/*	function availableS(date) {
- 			 dmy =date.getDate() + "/"+(date.getMonth() + 1)+"/" + date.getFullYear();
-
-  				if ($.inArray(dmy, availabledates) != -1) {
-    				return true;
- 				 } else {
-    				return false;
- 				 }
-				}
-				
-				$("#start-date").datepicker({
- 				 beforeShowDay: function(dt){
-					return [availableS(dt),""];
-			}	});*/
 			
 			$('#dropdown select').empty();
 			$('#nights-of-stay').val("");
@@ -296,6 +280,7 @@ $(document).ready(function(){
 	
 	$('#make-reservation2').click(function(){
 				var valid=false;
+				var valid2=true;
 				var reservation=new Object();
 				//reservation.arrivalDate=$('#start-date').val();
 				reservation.arrivalDate=arrivale;
@@ -317,6 +302,7 @@ $(document).ready(function(){
 				var i;
 				var j;
 				var av=[];
+				
 				
 				
 				for (j = 0; j < availabledates.length; ++j) {
@@ -343,7 +329,7 @@ $(document).ready(function(){
 						console.log('U DOSTPUNIM DATUMIMA');
 					}
 					
-					console.log(valid);
+					
 				}
 				
 				
