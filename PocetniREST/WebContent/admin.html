@@ -557,11 +557,11 @@
           <th height="50">Check out time :</th>
           <th height="50"><input type ="time" id = "check-out" required></th>
         </tr>
-        <form method="post" enctype="multipart/form-data">
+       <form method="post" enctype="multipart/form-data">
 		 	<tr>
 		   <th height="50"><label for="file">Images of apartment :</label></th>
-		  	<th height="50"><input type="file" id="file" name="file" multiple required></th>
-		  	<th><img id="blah" src="#" alt="your image" /></th>
+		  	<th height="50"><input type="file" id="file" name="file" multiple required onchange="readURL(this);" accept=".jpg, .jpeg, .png"></th>
+		  	<th><img id="blah" height="150px" alt="your image" /></th>
 		   </tr>
 		</form>
          <tr>

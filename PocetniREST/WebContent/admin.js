@@ -73,7 +73,7 @@ function drawApartments(data){
 			<td>`+data[i].hostUsername+`</td>
 			<td  class = "nameStatus">`+data[i].status+`</td>
 			<td  class = "nameType">`+data[i].type+`</td>
-			<td>`+data[i].location.address.street+" "+data[i].location.address.number+" "+data[i].location.address.city+" "+data[i].location.address.zipCode+`</td>
+			<td>`+data[i].location.address.street+","+data[i].location.address.number+","+data[i].location.address.city+","+data[i].location.address.zipCode+`</td>
 			<td class = "nameAmenitie">`+partsOfStr+`</td>
 			<td class = "nameRooms">`+data[i].numberOfRooms+`</td>
 			<td class = "nameGuests">`+data[i].numberOfGuest+`</td>
@@ -109,6 +109,18 @@ function drawUsers(data){
 		</tr>`;
 	}
 	$('#usersTable').html(temp);
+}
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    var file=input.files[0];
+    reader.onload = function(e) {
+      $('#blah').attr('src', e.target.result);
+    }
+    
+    reader.readAsDataURL(input.files[0]); // convert to base64 string
+  }
 }
 var id2='';
 var username2 = '';
@@ -555,11 +567,12 @@ $(document).ready(function(){
 		let dani = $('#Dates').val();
 		apartment.dates= dani.split(',');
 		let price = $('#price-per-night').val();apartment.price = price;
-		//TODO :images
-		//let images=$('#blah').src;
-		//var base64 = getBase64Image(document.getElementById("blah"));
-		//apartment.images=base64;
-		//console.log(base64);
+		
+		var image=$('#blah').attr('src');
+			
+			
+		apartment.images=image;
+		
 		apartment.availables=apartment.dates;
 		console.log(apartment.availables);
 		apartment.hostUsername = username;
@@ -603,22 +616,16 @@ $(document).ready(function(){
 		$('#error-apartment').text('Enter zip code!').show();
        		$('#error-apartment').delay(4000).fadeOut('slow');	
 		}
-		else if(locationLength=="")
-		{
-		$('#error-apartment').text('Enter  longitude!').show();
-       		$('#error-apartment').delay(4000).fadeOut('slow');	
-		}
-		else if(locationWidth=="")
-		{
-		$('#error-apartment').text('Enter lantitude!').show();
-       		$('#error-apartment').delay(4000).fadeOut('slow');	
-		}
 		else if(jQuery.isEmptyObject(dani)){
 			$('#error-apartment').text('You have to choose at least one date for rent').show();
        		$('#error-apartment').delay(4000).fadeOut('slow');
 		}
 		else if(price<1){
 			$('#error-apartment').text('Price has to be higher then 0').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
+		else if(image==null){
+			$('#error-apartment').text('You have to put image!').show();
        		$('#error-apartment').delay(4000).fadeOut('slow');
 		}
 		
@@ -713,14 +720,27 @@ $(document).ready(function(){
 			
 			
 			$('#status').val($(event.target).parent().parent().children().first().next().text());
-			if($(event.target).parent().parent().children().first().next().text() == "APARTMENT")
+			if($(event.target).parent().parent().children().first().next().next().text() == "APARTMENT")
 				$('#type').val("apartment");
 			else 
 				$('#type').val("room");
-			$('#location').val($(event.target).parent().parent().children().first().next().next().text());
-			$('#number-od-rooms').val($(event.target).parent().parent().children().first().next().next().next().next().text());
-			$('#number-od-guests').val($(event.target).parent().parent().children().first().next().next().next().next().next().text());
-			$('#price-per-night').val($(event.target).parent().parent().children().first().next().next().next().next().next().text());
+				
+			var lokacija=$(event.target).parent().parent().children().first().next().next().next().text();
+			var deloviLok=lokacija.split(',');
+			$('#street-name').val(deloviLok[0])
+			$('#street-number').val(deloviLok[1])
+			$('#city').val(deloviLok[2])
+			$('#zip-code').val(deloviLok[3])
+			
+			console.log()
+			
+			$('#number-od-rooms').val($(event.target).parent().parent().children().first().next().next().next().next().next().text());
+			$('#number-od-guests').val($(event.target).parent().parent().children().first().next().next().next().next().next().next().text());
+			$('#price-per-night').val($(event.target).parent().parent().children().first().next().next().next().next().next().next().next().text());
+			
+			
+			$('#location-longitude').attr('hidden',true);
+			$('#location-latitude').attr('hidden',true);
 			
 			$('#add-apartment').text("EDIT APARTMENT");
 		}

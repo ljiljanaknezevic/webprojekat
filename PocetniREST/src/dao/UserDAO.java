@@ -37,6 +37,7 @@ public class UserDAO {
 	public UserDAO(String contextPath) {
 	
 		loadUsers(contextPath);
+		//loadAdmins
 		
 	}
 
