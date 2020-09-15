@@ -270,7 +270,7 @@
     	 <table width="500" align="center">
     	  <tr>
           <th height="50">Your comment:</th>
-          <th height="50"><input type ="text" id = "comment-left" required></th>
+          <th height="50"><input type ="text" id = "comment-left" required  oninvalid="this.setCustomValidity('Comment is required')" oninput="setCustomValidity('')"></th>
         </tr>
           <tr>
           <th height="50" >Rate apartment:</th>
@@ -317,9 +317,9 @@
 		       <p>Username</p>
 		      <input type="text" class="form-control" id="username" disabled/>
 		        <p>Name</p>
-		       <input type="text" class="form-control" id="name" />
+		       <input type="text" class="form-control" id="name" required  oninvalid="this.setCustomValidity('Name is required.')" oninput="setCustomValidity('')" />
 		        <p>Surname</p>
-		      <input type="text" class="form-control" id="surname"/>     
+		      <input type="text" class="form-control" id="surname" required  oninvalid="this.setCustomValidity('Surname is required.')" oninput="setCustomValidity('')"/>     
 		      <p>Gender</p> 
 		      <select name="gender" id="gender" class="form-control" >
 		      	<option value="male" >Male</option>

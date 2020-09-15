@@ -50,10 +50,11 @@ function drawApartments(data){
 		temp+=`<tr id="`+data[i].id+`">
 			<td>`+data[i].status+`</td>
 			<td class= "tdCol">`+data[i].type+`</td>
-			<td>`+data[i].location+`</td>
+			<td>`+data[i].location.address.street+" "+data[i].location.address.number+" "+data[i].location.address.city+" "+data[i].location.address.zipCode+`</td>
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
+			<td><img id="blah" height="150px alt="your image" src="`+data[i].images+`"</td>
 			<td><button id="make-reservation" class="btn btn-primary">Make reservation</button></td>
 			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
 			</tr>`;
@@ -76,6 +77,7 @@ function drawComments(data){
 		}
 		$('#tbodyComments').html(temp);
 }
+
 
 
 
@@ -203,6 +205,7 @@ $(document).ready(function(){
 	
 //SENDING COMMENT	
 	$('#send-comment').click(function(){
+				event.preventDefault();
 				var comment=new Object();
 				comment.text=$('#comment-left').val();
 				comment.grade=$('#rate').val();	
@@ -249,7 +252,7 @@ $(document).ready(function(){
 				type : "GET",
 				contentType:'application/json',
 				success:function(apartment){
-					 availabledates = apartment.dates;
+					 availabledates = apartment.availables ;
 					
 					arrivale=availabledates[0];
 					
@@ -260,22 +263,6 @@ $(document).ready(function(){
 			});
 			
 			modal.style.display="block";
- 			
-
-		/*	function availableS(date) {
- 			 dmy =date.getDate() + "/"+(date.getMonth() + 1)+"/" + date.getFullYear();
-
-  				if ($.inArray(dmy, availabledates) != -1) {
-    				return true;
- 				 } else {
-    				return false;
- 				 }
-				}
-				
-				$("#start-date").datepicker({
- 				 beforeShowDay: function(dt){
-					return [availableS(dt),""];
-			}	});*/
 			
 			$('#dropdown select').empty();
 			$('#nights-of-stay').val("");
@@ -293,6 +280,8 @@ $(document).ready(function(){
 	});
 	
 	$('#make-reservation2').click(function(){
+				var valid=false;
+				var valid2=true;
 				var reservation=new Object();
 				//reservation.arrivalDate=$('#start-date').val();
 				reservation.arrivalDate=arrivale;
@@ -304,34 +293,58 @@ $(document).ready(function(){
 				reservation.totalPrice=0;
 				reservation.reservationId=id;
 				
-	
-				
-				console.log(reservation.arrivalDate);
+				//console.log(reservation.arrivalDate);
 				var arr = reservation.arrivalDate.split('/');
 		
 				var pom=new Date(arr[2],arr[1]-1,arr[0]);
-				console.log(pom);
+				//console.log(pom);
 				
 				//PROVERA DA LI SU DATUMI DOSTUPNI
-				var i=1;
-				for(i;i<reservation.numberOfStay;i++){
+				var i;
+				var j;
+				var av=[];
+				
+				
+				
+				for (j = 0; j < availabledates.length; ++j) {
+    				var arrA=availabledates[j].split('/');
+					console.log(availabledates[j]);
+					var pomA=new Date(arrA[2],arrA[1]-1,arrA[0]);
+					av.push(pomA.getTime());
+					}
+
+				
+				for(i=0;i<reservation.numberOfStay;++i){
+					console.log("**************");
 					pom.setDate(pom.getDate()+1);
-					console.log(pom);
+					console.log(pom.getTime());
 					
-					dmy =pom.getDate().toString() + "/"+(pom.getMonth() + 1)+"/" + pom.getFullYear();
-					if($.inArray(dmy, availabledates) != -1){
-						
-						console.log(' U DOSTUPNIM DATUMIMA')
+					console.log($.inArray(pom.getTime(), av));
+					if($.inArray(pom.getTime(), av) == -1){
+						console.log(' NIJE U DOSTUPNIM DATUMIMA ')
+						valid=false;
+						break;
 					}
 					else{
-						console.log(dmy);
-						console.log('NIJE u DOSTPUNIM DATUMIMA');
+						valid=true;
+						console.log('U DOSTPUNIM DATUMIMA');
 					}
+					
+					
 				}
 				
-				console.log(trid);
-				console.log(availabledates);
 				
+				console.log(av);
+				
+			 if(reservation.numberOfStay<1){
+			$('#error-apartment').text('Nights of stay has to be at least 1').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
+		else if(!valid){
+			$('#error-apartment').text('Nights you have choosen are not available').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
+		else{
 				$.ajax({
 					url:'ProjectRents/makeReservation',
 					type : "POST",
@@ -347,6 +360,9 @@ $(document).ready(function(){
 						console.log("Error with making reservation");
 					}
 				})
+		}
+				
+			
 				
 				
 			})
@@ -406,8 +422,14 @@ $(document).ready(function(){
 		if(gen=='male')
 			gender=0;
 		else
-			gender=1;		
-    	$.ajax({
+			gender=1;	
+		
+		if(name=="" || surname==""){
+			$('#error').text('Surname and Name fields can not be empty!').show();
+       		$('#error').delay(4000).fadeOut('slow');
+		}
+		else{
+			 	$.ajax({
     		type :"POST",
     		url :"ProjectRents/userEdit",
     		data :JSON.stringify({
@@ -424,6 +446,9 @@ $(document).ready(function(){
     			alert('successfully edited profile.')
     		}
     	})
+		}
+			
+   
     })
     
      $('form#form-change-password').submit(function(){

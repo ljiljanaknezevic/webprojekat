@@ -21,7 +21,7 @@ public class Apartment {
 	//private Host host;  //da li umesto citave klase host da cuvamo samo username hosta
 	private String hostUsername;
 	private ArrayList<Comment> comments = new ArrayList<Comment>();
-	private ArrayList<String> images ;
+	private String images ;
 	private double price;
 	private String checkIn = "14:00";
 	private String checkOut = "10:00";
@@ -52,9 +52,9 @@ public class Apartment {
 		this.amenities = amenities;
 		this.reservations = reservations;
 	}*/
-	public Apartment(UUID id, ApartmentType type, int numberOfRooms, int numberOfGuest, /*Location location,*/
+	public Apartment(UUID id, ApartmentType type, int numberOfRooms, int numberOfGuest, Location location,
 			ArrayList<String> dates, String hostUsername,
-			/*ArrayList<String> images,*/ double price, String checkIn, String checkOut, ApartmentStatus status,
+			String images, double price, String checkIn, String checkOut, ApartmentStatus status,
 			ArrayList<Amenities> amenities, boolean isDeleted) {
 		super();
 		this.id = id;
@@ -63,11 +63,11 @@ public class Apartment {
 		this.numberOfGuest = numberOfGuest;
 		this.isDeleted = isDeleted;
 		////////////////////
-		this.location = new Location();
+		this.location = location;
 		this.dates = dates;
 		this.hostUsername = hostUsername;
 		///////////////////////////
-		this.images = new ArrayList<String>();
+		this.images = images;
 		this.price = price;
 		this.checkIn = checkIn;
 		this.checkOut = checkOut;
@@ -132,10 +132,10 @@ public class Apartment {
 	public void setComments(ArrayList<Comment> comments) {
 		this.comments = comments;
 	}
-	public ArrayList<String> getImages() {
+	public String getImages() {
 		return images;
 	}
-	public void setImages(ArrayList<String> images) {
+	public void setImages(String images) {
 		this.images = images;
 	}
 	public double getPrice() {

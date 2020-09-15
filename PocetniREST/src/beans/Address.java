@@ -1,10 +1,10 @@
 package beans;
 
 public class Address {
-	private String street;
-	private int number;
-	private String city;
-	private int zipCode;
+	public String street;
+	public String number;
+	public String city;
+	public int zipCode;
 	
 	public String getStreet() {
 		return street;
@@ -12,10 +12,10 @@ public class Address {
 	public void setStreet(String street) {
 		this.street = street;
 	}
-	public int getNumber() {
+	public String getNumber() {
 		return number;
 	}
-	public void setNumber(int number) {
+	public void setNumber(String number) {
 		this.number = number;
 	}
 	public String getCity() {

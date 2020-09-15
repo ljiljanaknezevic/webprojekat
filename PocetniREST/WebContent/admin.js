@@ -73,11 +73,12 @@ function drawApartments(data){
 			<td>`+data[i].hostUsername+`</td>
 			<td  class = "nameStatus">`+data[i].status+`</td>
 			<td  class = "nameType">`+data[i].type+`</td>
-			<td>`+data[i].location+`</td>
+			<td>`+data[i].location.address.street+" "+data[i].location.address.number+" "+data[i].location.address.city+" "+data[i].location.address.zipCode+`</td>
 			<td class = "nameAmenitie">`+partsOfStr+`</td>
 			<td class = "nameRooms">`+data[i].numberOfRooms+`</td>
 			<td class = "nameGuests">`+data[i].numberOfGuest+`</td>
 			<td class = "namePrice">`+data[i].price+`</td>
+			<td><img id="blah" height="150px alt="your image" src="`+data[i].images+`"</td>
 			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
 			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
 			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td>
@@ -528,6 +529,8 @@ $(document).ready(function(){
 	//EDITING APARTMENT
 	$('#add-apartment').click(function(){
 		let apartment = new Object();
+		var location=new Object();
+		var address=new Object();
 		let gen=$('#type').val()
 		let type
 		if(gen=='apartment')
@@ -539,9 +542,15 @@ $(document).ready(function(){
 		console.log(apartment.type)
 		let numRooms = $('#number-od-rooms').val();	apartment.numberOfRooms = numRooms;
 		let numGuest = $('#number-od-guests').val();apartment.numberOfGuest = numGuest;
-		//TODO :location
-		//let adress=$('#location-entered').val();
-		//getLocation(adress);
+		let street=$('#street-name').val();address.street=street;
+		let streetNum=$('#street-number').val();address.number=streetNum;
+		let city=$('#city').val();address.city=city;
+		let zipCode=$('#zip-code').val();address.zipCode=zipCode;
+		let locationLength=$('#location-longitude').val();location.locationLength=locationLength;
+		let locationWidth=$('#location-latitude').val();location.locationWidth=locationWidth;
+
+		location.address=address;
+		apartment.location=location;
 
 		let dani = $('#Dates').val();
 		apartment.dates= dani.split(',');
@@ -551,7 +560,8 @@ $(document).ready(function(){
 		//var base64 = getBase64Image(document.getElementById("blah"));
 		//apartment.images=base64;
 		//console.log(base64);
-
+		apartment.availables=apartment.dates;
+		console.log(apartment.availables);
 		apartment.hostUsername = username;
 			apartment.checkIn = $('#check-in').val();
 			apartment.checkOut = $('#check-out').val();
@@ -564,7 +574,56 @@ $(document).ready(function(){
 		apartment.id = trid;
 		apartment.amenities = checkIdListEdit;
 		apartment.status = $('#status').val();
-		$.ajax({
+		
+			 if(numRooms<1){
+			$('#error-apartment').text('Number of rooms has to be higher then 0').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
+		else if(numGuest<1){
+			$('#error-apartment').text('Number of guests has to be higher then 0').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
+		else if(street=="")
+		{
+		$('#error-apartment').text('Enter street name!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(streetNum=="")
+		{
+		$('#error-apartment').text('Enter street number!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(city=="")
+		{
+		$('#error-apartment').text('Enter city!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(zipCode=="")
+		{
+		$('#error-apartment').text('Enter zip code!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(locationLength=="")
+		{
+		$('#error-apartment').text('Enter  longitude!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(locationWidth=="")
+		{
+		$('#error-apartment').text('Enter lantitude!').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');	
+		}
+		else if(jQuery.isEmptyObject(dani)){
+			$('#error-apartment').text('You have to choose at least one date for rent').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
+		else if(price<1){
+			$('#error-apartment').text('Price has to be higher then 0').show();
+       		$('#error-apartment').delay(4000).fadeOut('slow');
+		}
+		
+		else{
+					$.ajax({
 			url:"ProjectRents/editApartment",
 			type :"POST",
 			data: JSON.stringify(apartment),
@@ -575,6 +634,9 @@ $(document).ready(function(){
 				drawApartments(data)
 			}
 		})
+		}
+		
+
 	})
 	
 	$('#datepicker').datepicker({
@@ -655,7 +717,7 @@ $(document).ready(function(){
 				$('#type').val("apartment");
 			else 
 				$('#type').val("room");
-			$('#location').val($(event.target).parent().parent().children().first().next().next().text()); //nema nista pa nema sta da ispise
+			$('#location').val($(event.target).parent().parent().children().first().next().next().text());
 			$('#number-od-rooms').val($(event.target).parent().parent().children().first().next().next().next().next().text());
 			$('#number-od-guests').val($(event.target).parent().parent().children().first().next().next().next().next().next().text());
 			$('#price-per-night').val($(event.target).parent().parent().children().first().next().next().next().next().next().text());
@@ -696,7 +758,12 @@ $(document).ready(function(){
 		user.password=password
 		var temp = JSON.stringify(user);
 		
-		 if(password != passwordControl){
+		 if(password.length<8)
+		{
+			$('#herror').text('Password has to have 8 characters minimum!').show();
+       		$('#herror').delay(4000).fadeOut('slow');
+		}
+		 else if(password != passwordControl){
        		$('#herror').text('Passwords don\'t match. Try again.').show();
        		$('#herror').delay(4000).fadeOut('slow');
         }else{
@@ -771,8 +838,14 @@ $(document).ready(function(){
 		if(gen=='male')
 			gender=0;
 		else
-			gender=1;		
-    	$.ajax({
+			gender=1;	
+			
+		if(name=="" || surname==""){
+			$('#error').text('Surname and Name fields can not be empty!').show();
+       		$('#error').delay(4000).fadeOut('slow');
+		}
+		else{
+			 	$.ajax({
     		type :"POST",
     		url :"ProjectRents/userEdit",
     		data :JSON.stringify({
@@ -789,6 +862,8 @@ $(document).ready(function(){
     			alert('successfully edited profile.')
     		}
     	})
+		}	
+   
     })
     
     
