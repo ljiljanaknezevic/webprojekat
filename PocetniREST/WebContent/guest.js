@@ -93,6 +93,42 @@ var trid = '';
 var trid2 = '';
 var availabledates='';
 var arrivale='';
+//
+//$.get({
+//	url : "ProjectRents/currentUser",
+//	 contentType: 'application/json',
+//	success : function(data){
+//		 if(data){
+//             if(data.role == "ADMIN"){
+//                 window.location.href="./admin.html";
+//             }else if(data.role == "HOST"){
+//                 window.location.href="./host.html";
+//             }
+//         }else{
+//              window.location.href="./login.html";
+//         }
+//	}	
+//})
+
+$.ajax({
+	url : "ProjectRents/currentUser",
+	type : "GET",
+	 contentType: 'application/json',
+	success : function(data){
+		 if(data){
+             if(data.role == "ADMIN"){
+                 window.location.href="./admin.html";
+                 return;
+             }else if(data.role == "HOST"){
+                 window.location.href="./host.html";
+                 return;
+             }
+            
+         }else{
+              window.location.href="./login.html";
+         }
+	}	
+})
 $(document).ready(function(){
 		//MODAL
 	var modal = document.getElementById('myModal');

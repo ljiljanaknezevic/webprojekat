@@ -4,6 +4,22 @@ var checkIdList = [];
 var username = '';
 var id = '';
 var trid = '';
+
+//$.get({
+//	url : "ProjectRents/currentUser",
+//	 contentType: 'application/json',
+//	success : function(data){
+//		 if(data){
+//             if(data.role == "ADMIN"){
+//                 window.location.href="./admin.html";
+//             }else if(data.role == "GUEST"){
+//                 window.location.href="./guest.html";
+//             }
+//         }else{
+//              window.location.href="./login.html";
+//         }
+//	}	
+//})
 function readURL(input) {
   if (input.files && input.files[0]) {
     var reader = new FileReader();
@@ -318,6 +334,25 @@ var surname = 'none';
 var gender = 'none';
 var password ='none';
 var role = 'none';
+$.ajax({
+	url : "ProjectRents/currentUser",
+	type : "GET",
+	 contentType: 'application/json',
+	success : function(data){
+		 if(data){
+             if(data.role == "GUEST"){
+                 window.location.href="./guest.html";
+                 return;
+             }else if(data.role == "ADMIN"){
+                 window.location.href="./admin.html";
+                 return;
+             }
+            
+         }else{
+              window.location.href="./login.html";
+         }
+	}	
+})
 $(document).ready(function(){
 	
 	$('#content').attr('hidden', false);

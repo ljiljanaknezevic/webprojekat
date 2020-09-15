@@ -88,6 +88,7 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addApartment(Apartment ap) {
 		//System.out.println("USAO JE ");
+		
 		ApartmentDAO dao = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
 		
 		String contextPath = ctx.getRealPath("");

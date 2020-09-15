@@ -1,3 +1,21 @@
+//$.get({
+//	url : "ProjectRents/currentUser",
+//	 contentType: 'application/json',
+//	success : function(data){
+//		 if(data){
+//             if(data.role == "GUEST"){
+//                 window.location.href="./guest.html";
+//             }else if(data.role == "HOST"){
+//                 window.location.href="./host.html";
+//             }
+//         }else{
+//              window.location.href="./login.html";
+//         }
+//	}	
+//})
+
+
+
 var checkList = [];
 var checkIdListEdit = [];
 var checkIdList = [];
@@ -118,6 +136,25 @@ var gender = 'none';
 var password ='none';
 var role = 'none';
 
+$.ajax({
+	url : "ProjectRents/currentUser",
+	type : "GET",
+	 contentType: 'application/json',
+	success : function(data){
+		 if(data){
+             if(data.role == "GUEST"){
+                 window.location.href="./guest.html";
+                 return;
+             }else if(data.role == "HOST"){
+                 window.location.href="./host.html";
+                 return;
+             }
+            
+         }else{
+              window.location.href="./login.html";
+         }
+	}	
+})
 
 $(document).ready(function(){
 		// amenities 
@@ -186,8 +223,9 @@ $(document).ready(function(){
     $('ul.dropdown-menu li').click(function(e) 
     { 
     	if($(this).attr('id') == 'logout'){
-    		$.get({
+    		$.ajax({
     			url: "ProjectRents/logout",
+    			type :"GET",
     			success: function() {
     				alert("Successfully logged out .");
     				window.location="./login.html";

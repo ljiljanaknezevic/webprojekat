@@ -4,6 +4,7 @@ package dao;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,10 @@ public class UserDAO {
 		loadUsers(contextPath);
 		
 	}
-
+	public Collection<User> getUsersLogin() {
+		return users.values();
+	}
+	
 	public HashMap<String, User> getUsers() {
 		return users;
 	}

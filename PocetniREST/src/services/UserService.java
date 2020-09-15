@@ -52,7 +52,18 @@ public class UserService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response login(User user, @Context HttpServletRequest request) {
 		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
-		String message = userDao.findUser(user.getUsername(), user.getPassword());
+		
+		for(User u:userDao.getUsersLogin()) {
+			if(user.getUsername().equals(u.getUsername()) && user.getPassword().equals(u.getPassword()))
+			{
+				request.getSession().setAttribute("user", u);
+				return Response.ok(u).build();
+			}
+		}
+		return Response.serverError().build();
+		
+		
+	/*	String message = userDao.findUser(user.getUsername(), user.getPassword());
 		if(message.equals("bas taj postoji u bazi")) {
 			User userr = userDao.findByUsername(user.getUsername());
 			request.getSession().setAttribute("user", userr);
@@ -60,7 +71,7 @@ public class UserService {
 			u.setUsername(user.getUsername());
 			u.setName(user.getName());
 			u.setRole(user.getRole());
-			return Response.status(200).build();
+			return Response.ok(u).build();
 		}
 		else if(message.equals("bad password"))
 			return Response.status(Status.BAD_REQUEST).entity("The password you entered is incorrect. Try again, or choose another login option.").build();
