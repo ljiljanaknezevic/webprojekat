@@ -78,6 +78,7 @@ function drawApartments(data){
 			<td class = "nameRooms">`+data[i].numberOfRooms+`</td>
 			<td class = "nameGuests">`+data[i].numberOfGuest+`</td>
 			<td class = "namePrice">`+data[i].price+`</td>
+			<td><img id="blah" height="150px alt="your image" src="`+data[i].images+`"</td>
 			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
 			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
 			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td>

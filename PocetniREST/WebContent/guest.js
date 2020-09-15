@@ -54,6 +54,7 @@ function drawApartments(data){
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
+			<td><img id="blah" height="150px alt="your image" src="`+data[i].images+`"</td>
 			<td><button id="make-reservation" class="btn btn-primary">Make reservation</button></td>
 			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
 			</tr>`;

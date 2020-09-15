@@ -198,7 +198,7 @@ function drawApartments(data){
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
-			<td><img id="blah" height="150px alt="your image" src="data:image/webp;base64,"`+data[i].images`</td>
+			<td><img id="blah" height="150px alt="your image" src="`+data[i].images`"</td>
 			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
 			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
 			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td></tr>`;
@@ -210,7 +210,7 @@ function drawApartments(data){
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
-			<td><img id="blah" height="150px alt="your image" src="data:image/webp;base64,"`+data[i].images+`</td>
+			<td><img id="blah" height="150px alt="your image" src="`+data[i].images+`"</td>
 			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
 			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
 			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td></tr>`;
@@ -578,7 +578,9 @@ $(document).ready(function(){
 		apartment.dates= dani.split(',');
 		let price = $('#price-per-night').val();apartment.price = price;
 		var images=[];
+		
 		var image=$('#blah').attr('src');
+		
 		//images.push(image);
 		apartment.images=image;
 		
