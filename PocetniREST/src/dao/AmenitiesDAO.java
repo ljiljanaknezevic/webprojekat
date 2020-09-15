@@ -57,11 +57,12 @@ public class AmenitiesDAO {
 			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			
-			
+			if(file.exists()) {
 			List<Amenities> car = objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, Amenities.class)); 
 			for(Amenities u : car)
 			{
 				amenities.put(u.getId(),u);
+			}
 			}
 		}
 		catch (Exception ex) {
@@ -92,8 +93,9 @@ public class AmenitiesDAO {
 
 	public boolean isUnique(String name) {
 		for(Amenities a : amenities.values()) {
-			if(a.getName().equals(name) )
-				return false;
+			if(a.getName().equals(name))
+				if(a.isDeleted() == false)
+					return false;
 		}
 		return true;
 	}

@@ -349,8 +349,10 @@ $(document).ready(function(){
 	function drawAmenities(data){
 		let temp='';
 		for (i in data){
-			temp+=`<tr id="`+data[i].id+`"><td>`+data[i].id
-			+`</td><td>`+data[i].name+`</td>
+			temp+=`<tr id="`+data[i].id+`" >
+			<td hidden = "true">`+data[i].id
+			+`</td>
+			<td>`+data[i].name+`</td>
 			<td><button id="edit-amenities" class="btn btn-primary">Edit</button></td>
 			<td><button id="delete-amenitie" class="btn btn-primary">Delete </button></td></tr>`;
 		}
@@ -414,14 +416,15 @@ $(document).ready(function(){
 				})
 			}else if( $(event.target).attr("id")=="delete-amenitie"){
 				var id =$(event.target).parent().parent().children().first().text();
+				console.log(id)
 				$.ajax({
 					url:"ProjectRents/deleteAmenities"+id,
 					type :"POST",
 					contentType:'multipart/form-data',
 					success:function(data){
 						drawAmenities(data);
-						modal2.style.display="none";
 						alert("Successfully deleted ");
+						modal2.style.display="none";
 					}
 				})
 			}
