@@ -125,7 +125,7 @@ public class ApartmentService {
 	public Response editApartment(Apartment ap) {
 		ApartmentDAO dao = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
 		String contextPath = ctx.getRealPath("");
-
+		System.out.println(ap.getStatus());
 		Apartment a =dao.findApartment(ap.getId());
 		a.setAmenities(ap.getAmenities());
 		a.setCheckIn(ap.getCheckIn());

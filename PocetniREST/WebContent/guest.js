@@ -425,6 +425,7 @@ $(document).ready(function(){
     		url: 'ProjectRents/currentUser',
     		type : "GET",
     		success: function(user) {
+    			username = user.username;
     			 name = user.name;
     			 surname = user.surname;
     			 password = user.password;
@@ -495,6 +496,7 @@ $(document).ready(function(){
 	
     	var checkOldPass = true;
     	console.log(password)
+    	console.log(oldpassword)
     	if(oldpassword != password){
     		$('#error-old').text('password isnt correct for your username.try again.');
 			$('#error-old').show();
@@ -522,6 +524,9 @@ $(document).ready(function(){
 		    		contentType : "application/json",
 		    		success : function(data){
 		    			alert('successfully edited profile password.')
+		    				$('#old-password').val("")
+			    			$('#new-password').val("")
+			    			$('#confirm-new-password').val("")
 		    		}
 		    	})	    		
 	    	}

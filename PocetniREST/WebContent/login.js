@@ -52,11 +52,11 @@ $(document).ready(function(){
 				alert('Succesfully loged in.');
 			},
 			error: function(message) {
-//				$('#error').text(message.responseText);
-//				$('#error').show();
-//				$('#error').delay(4000).fadeOut('slow');
-				$('#error').text("Nesipravno korisnicko ime ili lozinka");
-				$("#error").show().delay(3000).fadeOut();
+				$('#error').text(message.responseText);
+				$('#error').show();
+				$('#error').delay(4000).fadeOut('slow');
+//				$('#error').text("Nesipravno korisnicko ime ili lozinka");
+//				$("#error").show().delay(3000).fadeOut();
 			}
 		})
 	})

@@ -539,7 +539,7 @@ $(document).ready(function(){
 			contentType:'multipart/form-data',
 			success :function(data){
 				drawComments(data);
-				alert('izenjeno')
+				//alert('Comments ')
 			}, 
 			error: function(){
 				console.log('smt went wrong')
@@ -975,6 +975,9 @@ $(document).ready(function(){
 			    		contentType : "application/json",
 			    		success : function(data){
 			    			alert('successfully edited profile password.')
+			    			$('#old-password').val("")
+			    			$('#new-password').val("")
+			    			$('#confirm-new-password').val("")
 			    		}
 			    	})	    		
 		    	}
