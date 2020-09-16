@@ -64,7 +64,18 @@ public class UserService {
 				return Response.ok(u).build();
 			}
 		}
-		return Response.serverError().build();
+		boolean isExists =false;
+		for(User u:userDao.getUsersLogin()) {
+			if(u.getUsername().equals(user.getUsername()))
+			{
+				isExists = true;
+				return Response.status(Status.BAD_REQUEST).entity("The password you entered is incorrect. Try again, or choose another login option.").build();
+			}
+		}
+		if(!isExists)
+			return Response.status(Status.BAD_REQUEST).entity("There isn’t an account with this username. Please try another username.").build();
+		else
+			return Response.serverError().build();
 		
 		
 	/*	String message = userDao.findUser(user.getUsername(), user.getPassword());
@@ -214,7 +225,7 @@ public class UserService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response userEditPassword(User user, @Context HttpServletRequest request) {
 		UserDAO dao=(UserDAO) ctx.getAttribute("userDAO");
-		System.out.println("*****************************");
+		System.out.println("*************~~~~~~~~~******");
 		System.out.println(user.getPassword());
 		System.out.println(user.getUsername());
 		for(User u:dao.getUsers().values()) {

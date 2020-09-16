@@ -488,7 +488,7 @@ $(document).ready(function(){
 		$('#addAmenities').click(function() {
 				var amenitie = new Object();
 				amenitie.name = $('#amenities-name').val();
-				if($('#amenities-name').val() == "")
+			/*	if($('#amenities-name').val() == "")
 				{
 					$('#error-amenities').text('You didnt entered anything. Try again.');
 					$('#error-amenities').show();
@@ -496,7 +496,7 @@ $(document).ready(function(){
 					return;
 				}
 				else
-				{
+				{*/
 					$.ajax({
 						url:"ProjectRents/addAmenities",
 						type: "POST",
@@ -506,14 +506,14 @@ $(document).ready(function(){
 							drawAmenities(data);
 							modal.style.display="none";
 						},
-						error : function(){
-							$('#error-amenities').text('Amenitie name already exists. Try again.');
-							$('#error-amenities').show();
-							$('#error-amenities').delay(4000).fadeOut('slow');
+						error : function(message){
+								$('#error-amenities').text(message.responseText);
+								$('#error-amenities').show();
+								$('#error-amenities').delay(4000).fadeOut('slow');
 						}
 					})
 				
-				}
+				//}
 			})
 	})
 	
@@ -870,6 +870,7 @@ $(document).ready(function(){
     		url: 'ProjectRents/currentUser',
     		type : "GET",
     		success: function(user) {
+    			username = user.username;
     			 name = user.name;
     			 surname = user.surname;
     			 password = user.password;
@@ -963,6 +964,9 @@ $(document).ready(function(){
 		    		contentType : "application/json",
 		    		success : function(data){
 		    			alert('successfully edited profile password.')
+		    			$('#old-password').val("")
+			    			$('#new-password').val("")
+			    			$('#confirm-new-password').val("")
 		    		}
 		    	})	    		
 	    	}
