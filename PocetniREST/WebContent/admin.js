@@ -119,12 +119,22 @@ function drawUsers(data){
 	let temp='';
 	
 	for (i in data){
-		temp+=`<tr><td class = "nameUser">` + data[i].username + `</td>
+		temp+=`<tr id="`+data[i].username+`"><td class = "nameUser">` + data[i].username + `</td>
 		<td >`+data[i].name+`</td>
 		<td>`+data[i].surname+`</td>
 		<td class = "nameGender">`+data[i].gender+`</td>
-		<td class = "nameRole">`+data[i].role+`</td>
-		</tr>`;
+		<td class = "nameRole">`+data[i].role+`</td>`
+		if(data[i].role != "ADMIN"){
+			if(data[i].blocked == false)
+			temp +=	`<td><button id = "block-button" type="button" class="btn btn-danger btn-sm">
+	           Block account</button></td>`;
+			else
+			temp +=	`<td><button id = "block-button" type="button" class="btn btn-success btn-sm">
+			           Unblock account</button></td>`;
+		}else{
+			temp += `<td></td>`
+		}
+		`</tr>`;
 	}
 	$('#usersTable').html(temp);
 }
@@ -155,11 +165,22 @@ $.ajax({
 	success : function(data){
 		 if(data){
              if(data.role == "GUEST"){
-                 window.location.href="./guest.html";
-                 return;
+            	 if(data.blocked == true){
+            		 window.location.href="./login.html";
+            		 return;
+            	 }else{
+	                 window.location.href="./guest.html";
+	                 return;
+            	 }
              }else if(data.role == "HOST"){
-                 window.location.href="./host.html";
-                 return;
+            	 if(data.blocked == true){
+	                 window.location.href="./login.html";
+	                 return;
+            	 }else
+            	{
+            		  window.location.href="./host.html";
+                      return;
+            	}
              }
             
          }else{
@@ -246,7 +267,24 @@ $(document).ready(function(){
     	}
     });
 
-
+	//BLOCK USER
+	$('#usersTable').on('click','button',function(event){
+		trid=$(event.target).closest('tr').attr('id');
+		console.log(trid)
+		if( $(event.target).attr("id")=="block-button"){
+			$.ajax({
+				url:"ProjectRents/blockUser" + trid,
+				type : "POST",
+				contentType:'multipart/form-data',
+				success:function(data){
+					drawUsers(data);
+				}, 
+				error:function(){
+					alert('Something went wrong with blocking account.Try later.')
+				}
+			})
+		}
+	})
 
 //	RESERVATION TAB
     	$('a[href="#reservationsClick"]').click(function(e){

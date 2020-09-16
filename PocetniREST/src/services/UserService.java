@@ -3,6 +3,7 @@ package services;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -12,6 +13,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -60,8 +62,14 @@ public class UserService {
 		for(User u:userDao.getUsersLogin()) {
 			if(user.getUsername().equals(u.getUsername()) && user.getPassword().equals(u.getPassword()))
 			{
-				request.getSession().setAttribute("user", u);
-				return Response.ok(u).build();
+				
+				if(!u.isBlocked()) {
+					request.getSession().setAttribute("user", u);
+					return Response.ok(u).build();
+				}else {
+					return Response.status(Status.BAD_REQUEST).entity("Your account is blocked.").build();
+
+				}
 			}
 		}
 		boolean isExists =false;
@@ -240,5 +248,27 @@ public class UserService {
 
 	}
 
+	@POST
+	@Path("/blockUser{id}")
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response blockUser(@PathParam("id") String username,@Context HttpServletRequest request) {
+		UserDAO dao = (UserDAO) ctx.getAttribute("userDAO");
+		User u = dao.findByUsername(username);
+			if(u != null) {
+				if(u.isBlocked()) {
+					u.setBlocked(false);
+				
+				}else {
+					u.setBlocked(true);
+				//	request.getSession().setAttribute("user",u );
 
+				}
+			String contextPath = ctx.getRealPath("");
+			dao.saveUser(contextPath);
+			return Response.ok(dao.getAll()).build();
+			}
+		return Response.status(400).build();
+		
+	}
 }

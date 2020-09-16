@@ -128,8 +128,19 @@ $.ajax({
                  window.location.href="./admin.html";
                  return;
              }else if(data.role == "HOST"){
-                 window.location.href="./host.html";
-                 return;
+            	 console.log(data.blocked)
+            	 if(data.blocked == true){
+            		 window.location.href="./login.html";
+            		 return;
+            	 }else{
+	                 window.location.href="./host.html";
+	                 return;
+            	 }
+             }else if(data.role == "GUEST"){
+            	 if(data.blocked == true){
+            		 window.location.href="./login.html";
+            		 return;
+            	 }
              }
             
          }else{

@@ -10,7 +10,18 @@ public class User {
 	protected String surname;
 	protected Gender gender;
 	protected Role role;
+	protected boolean isBlocked = false;
 	
+	public boolean isBlocked() {
+		return isBlocked;
+	}
+
+
+	public void setBlocked(boolean isBlocked) {
+		this.isBlocked = isBlocked;
+	}
+
+
 	public User() {
 		
 	}
@@ -24,6 +35,16 @@ public class User {
 		this.surname = surname;
 		this.gender = gender;
 		this.role = role;
+	}
+	public User(String username, String password, String name, String surname, Gender gender, Role role, boolean isBlocked) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.name = name;
+		this.surname = surname;
+		this.gender = gender;
+		this.role = role;
+		this.isBlocked = isBlocked;
 	}
 	public User(String username, String password, String name, String surname, Gender gender) {
 		super();
