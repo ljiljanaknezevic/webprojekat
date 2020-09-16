@@ -192,5 +192,7 @@ public class Apartment {
 	public void addComment(Comment c) {
 		comments.add(c);
 	}
+
+	
 	
 }

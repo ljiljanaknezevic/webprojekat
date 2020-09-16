@@ -44,8 +44,7 @@ function drawAllReservations(data){
 	for (i in data){
 
 			temp+=`<tr id="`+data[i].reservationId+`">
-			<td>`+data[i].reservationId+`</td>
-			<td>`+data[i].apartmentId+`</td>
+			<td>`+data[i].guest+`</td>
 			<td>`+data[i].arrivalDate+`</td>
 			<td>`+data[i].numberOfStay+`</td>
 			<td>`+data[i].totalPrice+`</td>
@@ -82,7 +81,8 @@ function drawApartments(data){
 	for (i in data){
 		var list = [];
 		for(x in data[i].amenities){
-			list.push(data[i].amenities[x].name)
+			if(!data[i].amenities[x].deleted)
+				list.push(data[i].amenities[x].name)
 		}
 		var partsOfStr = list.join(',').replace(/,/g ,'<br>').split();
 		 dates = data[i].dates.join(',').replace(/,/g ,'<br>').split();

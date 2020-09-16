@@ -170,17 +170,15 @@ public class ApartmentService {
 		
 		//PRONADJEM APARTMAN SA DATIM ID,I SMESTIM MU KOMENTAR U NJEGOV NIZ KOMENTARA
 		Apartment a = dao.findApartment(c.getApartment());
-		System.out.println(c.getText());
-		System.out.println(c.getApartment() + "~~~~~~~~~");
-		System.out.println(c.getGrade());
-		System.out.println(c.getGuest());
+		
+		if(c.getText().equals("")) {
+			return Response.status(404).entity("You didn't wirte a comment").build();
+		}
 		
 		if(a.getComments()==null) {
-			System.out.println("NUll je i dodajemo komentar");
 			a.setComments(newComment);
 		}
 		else {
-			System.out.println("Ima komentara i dodajemo novi kom");
 			a.addComment(c);
 		}
 		

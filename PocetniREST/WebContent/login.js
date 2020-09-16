@@ -1,11 +1,14 @@
 var userLogged = 'none';
 
 
+
+
 $(document).ready(function(){
 	function currentUser(){
-		
-		$.get({
+
+		$.ajax({
 			url : "ProjectRents/currentUser",
+			type : "GET",
 			success : function(user){
 				if(user == null){
 					userLogged = 'none';
@@ -16,8 +19,8 @@ $(document).ready(function(){
 					currentUserLogged = user;
 				}
 				console.log("********************* ",userLogged)
-				 if(userLogged == 'ADMIN'){
 						window.location="./admin.html";
+				 if(userLogged == 'ADMIN'){
 					}else if(userLogged== 'HOST'){
 						window.location="./host.html";
 					}else if(userLogged== 'GUEST'){
@@ -37,8 +40,9 @@ $(document).ready(function(){
 		user.password=$('#password').val()
 		var temp = JSON.stringify(user);
 	
-		$.post({
+		$.ajax({
 			url : 'ProjectRents/login',
+			type : "POST",
 			contentType : 'application/json',
 			data :temp,
 			success : function(pom){
@@ -74,7 +78,10 @@ $(document).ready(function(){
 //			
 //		})
 //	})
+
+
 })
+
 
 
 	/*function goToPage(){
