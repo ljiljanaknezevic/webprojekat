@@ -1,7 +1,8 @@
 package services;
 
 import java.io.InputStream;
-
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import java.util.UUID;
@@ -27,8 +28,10 @@ import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 import beans.Apartment;
 import beans.Comment;
+import beans.Reservation;
 import beans.User;
 import dao.ApartmentDAO;
+import dao.ReservationDAO;
 
 @Path("")
 public class ApartmentService {
@@ -156,6 +159,8 @@ public class ApartmentService {
 		dao.saveApartments(contextPath);
 		return Response.ok(dao.getAllApartments()).build();
 	}
+	
+
 	
 	@POST
 	@Path("/leaveComment")

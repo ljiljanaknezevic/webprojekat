@@ -192,6 +192,23 @@ public class Apartment {
 	public void addComment(Comment c) {
 		comments.add(c);
 	}
+	public void editAvailableDates(ArrayList<String> pomList) {
+		//System.out.println("Dodaje u modelu");
+		ArrayList<String> pom=new ArrayList();
+		for(int i=0;i<availables.size();i++) {
+			System.out.println(availables.get(i));
+			if(!pomList.contains(availables.get(i))) {
+				pom.add(availables.get(i));
+			}
+		}
+		this.availables=pom;
+		
+	}
+	public void addAvailableDates(ArrayList<String> pomList) {
+		for(int i=0;i<pomList.size();i++)
+			this.availables.add(pomList.get(i));
+		
+	}
 
 	
 	
