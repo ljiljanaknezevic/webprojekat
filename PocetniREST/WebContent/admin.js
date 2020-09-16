@@ -71,6 +71,8 @@ function drawFilterAmenities(data){
 	console.log("draw for filter amenities")
 	 t = '';	
 	for(am in data){
+		$('#filterAmeniti').append($('<option>', {value:data[am].name, text:data[am].name}));
+	//
 		listOfAmenities.push(data[am].name);
 		//t += (`<input type = "checkbox" id = "${data[am].id}" name ="amenities-box" value = "${data[am].name}">${data[am].name}</input><br>`);
 	}
@@ -119,12 +121,22 @@ function drawUsers(data){
 	let temp='';
 	
 	for (i in data){
-		temp+=`<tr><td class = "nameUser">` + data[i].username + `</td>
+		temp+=`<tr id="`+data[i].username+`"><td class = "nameUser">` + data[i].username + `</td>
 		<td >`+data[i].name+`</td>
 		<td>`+data[i].surname+`</td>
 		<td class = "nameGender">`+data[i].gender+`</td>
-		<td class = "nameRole">`+data[i].role+`</td>
-		</tr>`;
+		<td class = "nameRole">`+data[i].role+`</td>`
+		if(data[i].role != "ADMIN"){
+			if(data[i].blocked == false)
+			temp +=	`<td><button id = "block-button" type="button" class="btn btn-danger btn-sm">
+	           Block account</button></td>`;
+			else
+			temp +=	`<td><button id = "block-button" type="button" class="btn btn-success btn-sm">
+			           Unblock account</button></td>`;
+		}else{
+			temp += `<td></td>`
+		}
+		`</tr>`;
 	}
 	$('#usersTable').html(temp);
 }
@@ -155,11 +167,22 @@ $.ajax({
 	success : function(data){
 		 if(data){
              if(data.role == "GUEST"){
-                 window.location.href="./guest.html";
-                 return;
+            	 if(data.blocked == true){
+            		 window.location.href="./login.html";
+            		 return;
+            	 }else{
+	                 window.location.href="./guest.html";
+	                 return;
+            	 }
              }else if(data.role == "HOST"){
-                 window.location.href="./host.html";
-                 return;
+            	 if(data.blocked == true){
+	                 window.location.href="./login.html";
+	                 return;
+            	 }else
+            	{
+            		  window.location.href="./host.html";
+                      return;
+            	}
              }
             
          }else{
@@ -167,7 +190,14 @@ $.ajax({
          }
 	}	
 })
-
+$.ajax({
+			url:'ProjectRents/getAllAmenities',
+			type :"GET",
+			contentType:'application/json',
+			success:function(data){
+				drawFilterAmenities(data);
+			}
+		})
 $(document).ready(function(){
 		// amenities 
 	var modal = document.getElementById('myModal');
@@ -246,7 +276,24 @@ $(document).ready(function(){
     	}
     });
 
-
+	//BLOCK USER
+	$('#usersTable').on('click','button',function(event){
+		trid=$(event.target).closest('tr').attr('id');
+		console.log(trid)
+		if( $(event.target).attr("id")=="block-button"){
+			$.ajax({
+				url:"ProjectRents/blockUser" + trid,
+				type : "POST",
+				contentType:'multipart/form-data',
+				success:function(data){
+					drawUsers(data);
+				}, 
+				error:function(){
+					alert('Something went wrong with blocking account.Try later.')
+				}
+			})
+		}
+	})
 
 //	RESERVATION TAB
     	$('a[href="#reservationsClick"]').click(function(e){
@@ -347,13 +394,13 @@ $(document).ready(function(){
     	//FILTER FOR AMENITIES
     	
     	//2.nacin sa opcijom za selektovanje
-    	window.onload = function () {
-        		var select = document.getElementById("filterAmeniti");
-        		console.log(listOfAmenities)
-        		for(i = 1; i<listOfAmenities.length; i++) {
-        		    select.options[select.options.length] = new Option(listOfAmenities[i], listOfAmenities[i]);
-        		}
-    	};
+//    	window.onload = function () {
+//        		var select = document.getElementById("filterAmeniti");
+//        		console.log(listOfAmenities)
+//        		for(i = 1; i<listOfAmenities.length; i++) {
+//        		    select.options[select.options.length] = new Option(listOfAmenities[i], listOfAmenities[i]);
+//        		}
+//    	};
     
     	//1.nacin sa checkBox-om
     	$("#filterByAmenities").click(function(){
@@ -424,7 +471,7 @@ $(document).ready(function(){
 			contentType:'application/json',
 			success:function(data){
 				drawAmenities(data);
-				drawFilterAmenities(data);
+			//	drawFilterAmenities(data);
 			}
 		})
 		$('#amenitiesTable').on('click','button',function(event){
@@ -526,14 +573,7 @@ $(document).ready(function(){
 				drawApartments(data)
 			}
 	})
-		$.ajax({
-			url:'ProjectRents/getAllAmenities',
-			type :"GET",
-			contentType:'application/json',
-			success:function(data){
-				drawFilterAmenities(data);
-			}
-		})
+		
 	$('a[href="#apartments"]').click(function(){
 		
 		$('#content-apartmant').attr('hidden', false);

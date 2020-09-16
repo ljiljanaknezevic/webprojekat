@@ -57,11 +57,12 @@ private void loadReservations(String contextPath) {
 			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			
-			
-			List<Reservation> car = objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, Reservation.class)); 
-			for(Reservation u : car)
-			{
-				reservations.put(u.getReservationId(),u);
+			if(file.exists()) {
+				List<Reservation> car = objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, Reservation.class)); 
+				for(Reservation u : car)
+				{
+					reservations.put(u.getReservationId(),u);
+				}
 			}
 		}
 		catch (Exception ex) {

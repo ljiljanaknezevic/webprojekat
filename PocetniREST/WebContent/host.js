@@ -346,11 +346,21 @@ $.ajax({
 	success : function(data){
 		 if(data){
              if(data.role == "GUEST"){
-                 window.location.href="./guest.html";
-                 return;
+            	 if(data.blocked == true){
+            		 window.location.href="./login.html";
+            		 return;
+            	 }else{
+	                 window.location.href="./guest.html";
+	                 return;
+            	 }
              }else if(data.role == "ADMIN"){
                  window.location.href="./admin.html";
                  return;
+             }else if(data.role == "HOST"){
+            	 if(data.blocked == true){
+            		 window.location.href="./login.html";
+            		 return;
+            	 }
              }
             
          }else{
