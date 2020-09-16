@@ -58,11 +58,11 @@ public class AmenitiesDAO {
 			objectMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
 			
 			if(file.exists()) {
-			List<Amenities> car = objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, Amenities.class)); 
-			for(Amenities u : car)
-			{
-				amenities.put(u.getId(),u);
-			}
+				List<Amenities> car = objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, Amenities.class)); 
+				for(Amenities u : car)
+				{
+					amenities.put(u.getId(),u);
+				}
 			}
 		}
 		catch (Exception ex) {

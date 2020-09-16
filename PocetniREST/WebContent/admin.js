@@ -71,6 +71,8 @@ function drawFilterAmenities(data){
 	console.log("draw for filter amenities")
 	 t = '';	
 	for(am in data){
+		$('#filterAmeniti').append($('<option>', {value:data[am].name, text:data[am].name}));
+	//
 		listOfAmenities.push(data[am].name);
 		//t += (`<input type = "checkbox" id = "${data[am].id}" name ="amenities-box" value = "${data[am].name}">${data[am].name}</input><br>`);
 	}
@@ -188,7 +190,14 @@ $.ajax({
          }
 	}	
 })
-
+$.ajax({
+			url:'ProjectRents/getAllAmenities',
+			type :"GET",
+			contentType:'application/json',
+			success:function(data){
+				drawFilterAmenities(data);
+			}
+		})
 $(document).ready(function(){
 		// amenities 
 	var modal = document.getElementById('myModal');
@@ -385,13 +394,13 @@ $(document).ready(function(){
     	//FILTER FOR AMENITIES
     	
     	//2.nacin sa opcijom za selektovanje
-    	window.onload = function () {
-        		var select = document.getElementById("filterAmeniti");
-        		console.log(listOfAmenities)
-        		for(i = 1; i<listOfAmenities.length; i++) {
-        		    select.options[select.options.length] = new Option(listOfAmenities[i], listOfAmenities[i]);
-        		}
-    	};
+//    	window.onload = function () {
+//        		var select = document.getElementById("filterAmeniti");
+//        		console.log(listOfAmenities)
+//        		for(i = 1; i<listOfAmenities.length; i++) {
+//        		    select.options[select.options.length] = new Option(listOfAmenities[i], listOfAmenities[i]);
+//        		}
+//    	};
     
     	//1.nacin sa checkBox-om
     	$("#filterByAmenities").click(function(){
@@ -462,7 +471,7 @@ $(document).ready(function(){
 			contentType:'application/json',
 			success:function(data){
 				drawAmenities(data);
-				drawFilterAmenities(data);
+			//	drawFilterAmenities(data);
 			}
 		})
 		$('#amenitiesTable').on('click','button',function(event){
@@ -564,14 +573,7 @@ $(document).ready(function(){
 				drawApartments(data)
 			}
 	})
-		$.ajax({
-			url:'ProjectRents/getAllAmenities',
-			type :"GET",
-			contentType:'application/json',
-			success:function(data){
-				drawFilterAmenities(data);
-			}
-		})
+		
 	$('a[href="#apartments"]').click(function(){
 		
 		$('#content-apartmant').attr('hidden', false);

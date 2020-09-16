@@ -96,20 +96,13 @@ public class UserDAO {
 			//objectMapper.writeValue(new File(contextPath + "/users.json"), proba);
 			
 			
-			//String json = "{  \"username\" : \"jov\", \"password\" : \"jov\", \"ime\" : \"Petar\", \"prezime\" : \"Petrovic\", \"pol\" : MALE}";
-		//	objectMapper.writeValue(file,"{ \"username\" : \"pera\", \"password\" : \"pera\", \"ime\" : \"Petar\", \"prezime\" : \"Petrovic\", \"pol\" : \"FEMALE\"}");
-			//User[] car = objectMapper.readValue(file, User[].class);
-			List<User> car = objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, User.class)); 
-			System.out.println("load User: "+car);
-			
-			//objectMapper.writeValue(new File(contextPath + "/proba.json"), new User("asfas","joasfasv","jov","jov",0,"jov","jov", "jov"));
-			
-			for(User u : car)
-			{
-				users.put(u.getUsername(),u);
+			if(file.exists()) {
+				List<User> car = objectMapper.readValue(file, objectMapper.getTypeFactory().constructCollectionType(List.class, User.class)); 
+				for(User u : car)
+				{
+					users.put(u.getUsername(),u);
+				}
 			}
-			
-			System.out.println(users);
 			
 		}
 		catch (Exception ex) {

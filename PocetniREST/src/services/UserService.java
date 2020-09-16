@@ -26,7 +26,6 @@ import beans.enums.Gender;
 import beans.enums.Role;
 import dao.ApartmentDAO;
 import dao.ReservationDAO;
-import dao.SearchUsers;
 import dao.UserDAO;
 
 @Path("")
