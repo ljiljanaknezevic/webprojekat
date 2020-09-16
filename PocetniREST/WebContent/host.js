@@ -192,11 +192,18 @@ function drawApartments(data){
 	let temp='';
 	let tempPassive='';
 	for (i in data){
+		var list = [];
+		for(x in data[i].amenities){
+		if(!data[i].amenities[x].deleted)
+			list.push(data[i].amenities[x].name)
+		}
+		var partsOfStr = list.join(',').replace(/,/g ,'<br>').split();
 		if(data[i].status == "ACTIV")
 		temp+=`<tr id="`+data[i].id+`">
 			<td class = "tdCol">`+data[i].status+`</td>
 			<td class="tdCol">`+data[i].type+`</td>
 			<td>`+data[i].location.address.street+","+data[i].location.address.number+","+data[i].location.address.city+","+data[i].location.address.zipCode+`</td>
+			<td class = "nameAmenitie">`+partsOfStr+`</td>
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
@@ -209,6 +216,7 @@ function drawApartments(data){
 			<td>`+data[i].status+`</td>
 			<td class = "tdCol">`+data[i].type+`</td>
 			<td>`+data[i].location.address.street+","+data[i].location.address.number+","+data[i].location.address.city+","+data[i].location.address.zipCode+`</td>
+			<td class = "nameAmenitie">`+partsOfStr+`</td>
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
@@ -311,9 +319,9 @@ function someFunc(event){
 	$('#city').val(deloviLok[2])
 	$('#zip-code').val(deloviLok[3])
 	
-	$('#number-od-rooms').val($(event.target).parent().parent().children().first().next().next().next().text());
-	$('#number-od-guests').val($(event.target).parent().parent().children().first().next().next().next().next().text());
-	$('#price-per-night').val($(event.target).parent().parent().children().first().next().next().next().next().next().text());
+	$('#number-od-rooms').val($(event.target).parent().parent().children().first().next().next().next().next().text());
+	$('#number-od-guests').val($(event.target).parent().parent().children().first().next().next().next().next().next().text());
+	$('#price-per-night').val($(event.target).parent().parent().children().first().next().next().next().next().next().next().text());
 	
 	
 	$('#location-longitude').attr('hidden',true);
@@ -640,7 +648,9 @@ $(document).ready(function(){
 			}
 		}
 		
+		
 		apartment.id = id;
+		console.log(checkList);
 		apartment.amenities = checkList;
 		
 		

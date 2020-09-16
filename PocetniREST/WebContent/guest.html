@@ -179,13 +179,15 @@
 	                  <th colspan="9" style="text-align: center;">APARTMENTS</th>
 	                </tr>
 	                	<tr class="success">
+	                	<th>Host Name</th>
 	                	<th>Status</th>
 	                	<th>Apartment Type</th>
 	                	<th>Location</th>
+	                	<th>Amenities</th>
 	                	<th>Number of rooms</th>
 	                	<th>Number of guests</th>
 	                	<th name="sort">Price<span name="arrow" class="glyphicon glyphicon-arrow-down"/></th>
-	                	<th></th>
+	                	<th>Image</th>
 	                  	<th></th>
 	                  	<th></th>
 	               	 	</tr>
@@ -288,9 +290,11 @@
         </tr>
        <span class="close">&times;</span>
         </table>
+        
        <br>
        <button id="send-comment" class="btn btn-primary">Send comment</button>
        <br>
+        <p id="error-com"></p>
   	  </div> 
    	</div>
    	
@@ -372,7 +376,9 @@
 		 </tbody>
 		  <span class="close">&times;</span>
 		</table>
+		
 		 </div>
+		
 	</div>
 </body>
 </html>

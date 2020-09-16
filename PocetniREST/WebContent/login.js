@@ -1,9 +1,11 @@
 var userLogged = 'none';
 
 
+
+
 $(document).ready(function(){
 	function currentUser(){
-		
+
 		$.get({
 			url : "ProjectRents/currentUser",
 			success : function(user){
@@ -74,7 +76,10 @@ $(document).ready(function(){
 //			
 //		})
 //	})
+
+
 })
+
 
 
 	/*function goToPage(){

@@ -18,6 +18,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.Amenities;
+import beans.Apartment;
 import dao.AmenitiesDAO;
 import dao.ApartmentDAO;
 
@@ -89,13 +90,23 @@ public class AmenitiesService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response deletingAmenities(@PathParam("id") UUID id) {
 		AmenitiesDAO dao = (AmenitiesDAO) ctx.getAttribute("amenitiesDAO");
+		ApartmentDAO apdao=(ApartmentDAO) ctx.getAttribute("apartmentDAO");
 		
 		Amenities ameniti = dao.findAmenitie(id);
+		
+		for(Apartment a:apdao.getAllApartments()) {
+			for(Amenities am: a.getAmenities()) {
+				if(am.getId().equals(ameniti.getId())) {
+					am.setDeleted(true);
+				}
+			}
+		}
 		
 		String contextPath=ctx.getRealPath("");
 	//	dao.deleteAmenitie(ameniti, contextPath);
 		ameniti.setDeleted(true);
 		dao.saveAmenities(contextPath);
+		apdao.saveApartments(contextPath);
 		return Response.ok(dao.getAllAmenities()).build();
 	}
 	

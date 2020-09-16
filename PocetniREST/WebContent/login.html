@@ -78,13 +78,16 @@
 	                  <th colspan="9" style="text-align: center;">APARTMENTS</th>
 	                </tr>
 	                	<tr class="success">
+	                	<th>Host username</th>
 	                	<th>Status</th>
 	                	<th>Apartment Type</th>
 	                	<th>Location</th>
+	                	<th>Amenities</th>
 	                	<th>Number of rooms</th>
 	                	<th>Number of guests</th>
-	                	<th>Price</th>
-	                	<th>Comments</th>
+	                	<th name="sort">Price<span name="arrow" class="glyphicon glyphicon-arrow-down"/></th>
+	                	<th>Image</th>
+	                	<th></th>
 	               	 	</tr>
 	                </thead>
 	                <tbody id="apartmentsTable">
@@ -93,7 +96,26 @@
      		</div> 
 			</div>
 			</div>
+    <!-- modals for comments-->	
+   	   	<div id="modal3" class="modal">
 
+  		<!-- Modal content -->
+  		<div class="modal-content"  >
+    	 
+    	 <table width="500" align="center">
+    	 <thead class="success" >
+    	 <tr style="text-align: center;">
+    	  <th>Guest</th>
+    	  <th>Comment</th>
+    	  <th>Grade</th>
+    	  </tr>
+    	  </thead>
+    	  <tbody id="tbodyComments">
+		 </tbody>
+		  <span class="close">&times;</span>
+		</table>
+		 </div>
+	</div>
 
 </body>
 </html>

@@ -47,10 +47,18 @@ function drawMyReservations(data){
 function drawApartments(data){
 	let temp='';
 	for (i in data){
+		var list = [];
+		for(x in data[i].amenities){
+		if(!data[i].amenities[x].deleted)
+			list.push(data[i].amenities[x].name)
+		}
+		var partsOfStr = list.join(',').replace(/,/g ,'<br>').split();
 		temp+=`<tr id="`+data[i].id+`">
+			<td>`+data[i].hostUsername+`</td>
 			<td>`+data[i].status+`</td>
 			<td class= "tdCol">`+data[i].type+`</td>
 			<td>`+data[i].location.address.street+" "+data[i].location.address.number+" "+data[i].location.address.city+" "+data[i].location.address.zipCode+`</td>
+			<td class = "nameAmenitie">`+partsOfStr+`</td>
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
@@ -258,9 +266,11 @@ $(document).ready(function(){
 						modal2.style.display="none";
 						alert('Successfully sent comment!')
 					},
-					error:function(){
+					error:function(message){
 						modal2.style.display="block";
-						alert("Error with sending comment");
+						$('#error-com').text(message.responseText);
+						$('#error-com').show();
+						$('#error-com').delay(4000).fadeOut('slow');
 					}
 				})
 				
@@ -348,9 +358,12 @@ $(document).ready(function(){
 					var pomA=new Date(arrA[2],arrA[1]-1,arrA[0]);
 					av.push(pomA.getTime());
 					}
-
-				
-				for(i=0;i<reservation.numberOfStay;++i){
+			
+			if(reservation.numberOfStay==1){
+				valid=true;
+			}
+			else{
+					for(i=0;i<reservation.numberOfStay;++i){
 					console.log("**************");
 					pom.setDate(pom.getDate()+1);
 					console.log(pom.getTime());
@@ -368,6 +381,8 @@ $(document).ready(function(){
 					
 					
 				}
+			}	
+			
 				
 				
 				console.log(av);
