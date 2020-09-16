@@ -72,14 +72,15 @@ $('#apartmentsTable').on('click','button',function(event){
 	
 	trid=$(event.target).closest('tr').attr('id');
 	if( $(event.target).attr("id")=="view-comment"){
+		//modal.style.display="none";
 		
 			$.ajax({
 			url:"ProjectRents/getApartmentById" + trid,
 			type : "GET",
 			contentType:'multipart/form-data',
 			success:function(data){
-				modal.style.display="block";
 				drawComments(data);
+				modal.style.display="block";
 				
 			}
 		})
