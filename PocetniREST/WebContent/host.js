@@ -69,125 +69,137 @@ function drawReservations(data){
 	$('#tbodyReservations').html('');
 	for (i in data){
 		
-		var currentDate=new Date();
-	
-		
-		var arr = data[i].arrivalDate.split('/');
-		//Mon Sep 14 2020 19:09:29 GMT+0200 (Central European Summer Time)
-		//format.setTimeZone(TimeZone.getTimeZone("GMT"));
-		//date = format.parse(strDate);
-		
-		var pom=new Date(arr[0],arr[1]-1,arr[2]);
-		//pom=pom.toLocaleDate();
-		var j;
-		
-	//	for(j=0;j<data[i].numberOfStay;++j){
-		pom.setDate(pom.getDate()+data[i].numberOfStay);
-		console.log(pom);
-		console.log(currentDate)
-		//}
-		
-		if(pom<currentDate){
-			console.log("DATUM JE ISTEKAO");
-		
-		if(data[i].status=='CREATED'){
-			temp+=`<tr id="`+data[i].reservationId+`">
-			<td>`+data[i].apartmentId+`</td>
-			<td>`+data[i].arrivalDate+`</td>
-			<td>`+data[i].numberOfStay+`</td>
-			<td>`+data[i].totalPrice+`</td>
-			<td>`+data[i].message+`</td>
-			<td>`+data[i].status+`</td>
-			<td><button  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
-			<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
-			<td><button   id="end-reservation" class="btn btn-primary">End reservation</button></td>
-			</tr>`;
-		}
-		 else if(data[i].status=='ACCEPTED'){
-				temp+=`<tr id="`+data[i].reservationId+`">
-			<td>`+data[i].apartmentId+`</td>
-			<td>`+data[i].arrivalDate+`</td>
-			<td>`+data[i].numberOfStay+`</td>
-			<td>`+data[i].totalPrice+`</td>
-			<td>`+data[i].message+`</td>
-			<td>`+data[i].status+`</td>
-			<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
-			<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
-			<td><button   id="end-reservation" class="btn btn-primary">End reservation</button></td>
-			</tr>`;
-		}
-		
-		 else{
+		//var currentDate=new Date();
 			
-			temp+=`<tr id="`+data[i].reservationId+`">
-			<td>`+data[i].apartmentId+`</td>
-			<td>`+data[i].arrivalDate+`</td>
-			<td>`+data[i].numberOfStay+`</td>
-			<td>`+data[i].totalPrice+`</td>
-			<td>`+data[i].message+`</td>
-			<td>`+data[i].status+`</td>
-			<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
-			<td><button disabled  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
-			<td><button  id="end-reservation" class="btn btn-primary">End reservation</button></td>
-			</tr>`;
 		
-		}
-		}
-		else{
-			console.log("DATUM NIJE ISTEKAO");
+		//datume iz data treba da konvertujem da budu datumi tipa Date i da ih poredim sa danasnjim danom
+		
+		$.ajax({
+			url:"ProjectRents/getEndDate"+data[i].reservationId,
+			type : "GET",
+			contentType:'multipart/form-data',
+			success:function(pom){
+				drawAvailable(data[i],pom);
+				console.log("end date success");
+			}, 
+			error:function(){
+				console.log("end Date");
+			}
+		})
+		
+function drawAvailable(data,pom){
+			//ako rezervacija nije istekla
+			if(pom){
+				console.log("DATUM NIJE ISTEKAO");
+				if(data.status=='CREATED'){
+					temp+=`<tr id="`+data.reservationId+`">
+					<td>`+data.apartmentId+`</td>
+					<td>`+data.arrivalDate+`</td>
+					<td>`+data.numberOfStay+`</td>
+					<td>`+data.totalPrice+`</td>
+					<td>`+data.message+`</td>
+					<td>`+data.status+`</td>
+					<td><button  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
+					<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
+					<td><button disabled  id="end-reservation" class="btn btn-primary">End reservation</button></td>
+					</tr>`;
+				}
+				else  if(data.status=='ACCEPTED'){
+						temp+=`<tr id="`+data.reservationId+`">
+					<td>`+data.apartmentId+`</td>
+					<td>`+data.arrivalDate+`</td>
+					<td>`+data.numberOfStay+`</td>
+					<td>`+data.totalPrice+`</td>
+					<td>`+data.message+`</td>
+					<td>`+data.status+`</td>
+					<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
+					<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
+					<td><button disabled  id="end-reservation" class="btn btn-primary">End reservation</button></td>
+					</tr>`;
+				}
+				
+				 else{
+					//console.log("Istekla je rezervacija");
+					temp+=`<tr id="`+data.reservationId+`">
+					<td>`+data.apartmentId+`</td>
+					<td>`+data.arrivalDate+`</td>
+					<td>`+data.numberOfStay+`</td>
+					<td>`+data.totalPrice+`</td>
+					<td>`+data.message+`</td>
+					<td>`+data.status+`</td>
+					<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
+					<td><button disabled  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
+					<td><button  disabled id="end-reservation" class="btn btn-primary">End reservation</button></td>
+					</tr>`;
+				
+				}
+		
+			}
 			
-			if(data[i].status=='CREATED'){
-			temp+=`<tr id="`+data[i].reservationId+`">
-			<td>`+data[i].apartmentId+`</td>
-			<td>`+data[i].arrivalDate+`</td>
-			<td>`+data[i].numberOfStay+`</td>
-			<td>`+data[i].totalPrice+`</td>
-			<td>`+data[i].message+`</td>
-			<td>`+data[i].status+`</td>
-			<td><button  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
-			<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
-			<td><button disabled  id="end-reservation" class="btn btn-primary">End reservation</button></td>
-			</tr>`;
-		}
-		else  if(data[i].status=='ACCEPTED'){
-				temp+=`<tr id="`+data[i].reservationId+`">
-			<td>`+data[i].apartmentId+`</td>
-			<td>`+data[i].arrivalDate+`</td>
-			<td>`+data[i].numberOfStay+`</td>
-			<td>`+data[i].totalPrice+`</td>
-			<td>`+data[i].message+`</td>
-			<td>`+data[i].status+`</td>
-			<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
-			<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
-			<td><button disabled  id="end-reservation" class="btn btn-primary">End reservation</button></td>
-			</tr>`;
-		}
+			else
+				{
+				console.log("DATUM JE ISTEKAO");
+				
+				if(data.status=='CREATED'){
+					temp+=`<tr id="`+data.reservationId+`">
+					<td>`+data.apartmentId+`</td>
+					<td>`+data.arrivalDate+`</td>
+					<td>`+data.numberOfStay+`</td>
+					<td>`+data.totalPrice+`</td>
+					<td>`+data.message+`</td>
+					<td>`+data.status+`</td>
+					<td><button  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
+					<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
+					<td><button   id="end-reservation" class="btn btn-primary">End reservation</button></td>
+					</tr>`;
+				}
+				 else if(data.status=='ACCEPTED'){
+						temp+=`<tr id="`+data.reservationId+`">
+					<td>`+data.apartmentId+`</td>
+					<td>`+data.arrivalDate+`</td>
+					<td>`+data.numberOfStay+`</td>
+					<td>`+data.totalPrice+`</td>
+					<td>`+data.message+`</td>
+					<td>`+data.status+`</td>
+					<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
+					<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
+					<td><button   id="end-reservation" class="btn btn-primary">End reservation</button></td>
+					</tr>`;
+				}
+				
+				 else{
+					
+					temp+=`<tr id="`+data.reservationId+`">
+					<td>`+data.apartmentId+`</td>
+					<td>`+data.arrivalDate+`</td>
+					<td>`+data.numberOfStay+`</td>
+					<td>`+data.totalPrice+`</td>
+					<td>`+data.message+`</td>
+					<td>`+data.status+`</td>
+					<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
+					<td><button disabled  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
+					<td><button  id="end-reservation" class="btn btn-primary">End reservation</button></td>
+					</tr>`;
+				
+				}
+				
+				}
+			
+			$('#tbodyReservations').html(temp);
+}	
 		
-		 else{
-			//console.log("Istekla je rezervacija");
-			temp+=`<tr id="`+data[i].reservationId+`">
-			<td>`+data[i].apartmentId+`</td>
-			<td>`+data[i].arrivalDate+`</td>
-			<td>`+data[i].numberOfStay+`</td>
-			<td>`+data[i].totalPrice+`</td>
-			<td>`+data[i].message+`</td>
-			<td>`+data[i].status+`</td>
-			<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
-			<td><button disabled  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
-			<td><button  disabled id="end-reservation" class="btn btn-primary">End reservation</button></td>
-			</tr>`;
 		
-		}
+		
+		
 
-		}			
 	}
 	
 	
-	$('#tbodyReservations').html(temp);
+	
 }
 
 function drawApartments(data){
-//"data:image/webp;base64,"	
+
 	
 	let temp='';
 	let tempPassive='';

@@ -169,6 +169,16 @@ public class ReservationService {
 	}
 	
 	@GET
+	@Path("/getEndDate{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.MULTIPART_FORM_DATA)
+	public Response getIfDateExpired(@PathParam("id") UUID id) {
+		System.out.println("SERVICE RESERVATIONS");
+		ReservationDAO dao=(ReservationDAO) ctx.getAttribute("reservationDAO");
+		return Response.ok(dao.getIfDateExpired(id)).build();
+	}
+	
+	@GET
 	@Path("/allUsersForHost")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllUsersForHost(@Context HttpServletRequest request) {

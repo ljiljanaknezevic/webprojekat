@@ -91,7 +91,7 @@ function drawApartments(data){
 			<td>`+data[i].hostUsername+`</td>
 			<td  class = "nameStatus">`+data[i].status+`</td>
 			<td  class = "nameType">`+data[i].type+`</td>
-			<td>`+data[i].location.address.street+","+data[i].location.address.number+","+data[i].location.address.city+","+data[i].location.address.zipCode+`</td>
+			<td class = "nameLocation">`+data[i].location.address.street+","+data[i].location.address.number+","+data[i].location.address.city.toUpperCase()+","+data[i].location.address.zipCode+`</td>
 			<td class = "nameAmenitie">`+partsOfStr+`</td>
 			<td class = "nameRooms">`+data[i].numberOfRooms+`</td>
 			<td class = "nameGuests">`+data[i].numberOfGuest+`</td>

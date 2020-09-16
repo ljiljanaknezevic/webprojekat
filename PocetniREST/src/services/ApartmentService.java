@@ -81,6 +81,9 @@ public class ApartmentService {
 		ApartmentDAO dao=(ApartmentDAO) ctx.getAttribute("apartmentDAO");
 		return Response.ok(dao.findApartment(id)).build();
 	}
+
+	
+	
 	
 	@POST
 	@Path("/addApartment")

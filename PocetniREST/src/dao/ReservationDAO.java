@@ -2,6 +2,8 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -124,5 +126,22 @@ public void addToMap(Reservation r) {
 			}
 		}
 		return list;
+	}
+
+	public boolean getIfDateExpired(UUID id) {
+		System.out.println("SERVICE DAO");
+		LocalDate endDate = null;
+		for(Reservation r:reservations.values()) {
+			if(r.getReservationId().equals(id)) {
+				endDate=LocalDate.parse(r.getArrivalDate(),DateTimeFormatter.ofPattern("dd/MM/yyyy")).plusDays(r.getNumberOfStay());
+				System.out.println("endDate"+endDate);
+			}
+		}
+		
+		if(endDate.isBefore(LocalDate.now())) {
+			return false;
+		}
+		else
+			return true;		
 	}
 }

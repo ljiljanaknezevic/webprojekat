@@ -107,9 +107,31 @@ $(document).ready(function() {
 		    		var roomTo=$("#content-apartmant td.nameRooms").filter(function() {return $(this).text()-rTo<=0}).parent();
 		    	}
 		    	
-		    	naziv.filter(priceTo).filter(priceFrom).filter(roomTo).filter(roomFrom).show();
+		    	//search by city
+		    	var l = $("#searchByLocation").val();
+		    	var location = [];
+		    	function func(){
+		    		 $("#apartmentsTable  tr").each(function () {
+				            var name = $('td.nameLocation', this).text().toLowerCase();
+				            if (name.indexOf($("#searchByLocation").val().toLowerCase()) > -1) {
+				            	 $(this).show();
+				            } 
+				        });
+		    	}
+		    	
+		    	if(l ==""){
+		      		var location=$("#content-apartmant td.nameGuests").parent();
+		    	}else{
+		    		//func();
+		    		var m = l.toUpperCase();
+		    		var location=$("#content-apartmant td.nameLocation:contains('" + m + "')").parent();
+
+		    	}
+		    	
+		    	
+		    	naziv.filter(priceTo).filter(priceFrom).filter(roomTo).filter(roomFrom).filter(location).show();
 		    
-		    	$("#content-apartmant td.nameGuests").parent().not(naziv.filter(priceTo).filter(priceFrom).filter(roomTo).filter(roomFrom)).hide();
+		    	$("#content-apartmant td.nameGuests").parent().not(naziv.filter(priceTo).filter(priceFrom).filter(roomTo).filter(roomFrom).filter(location)).hide();
 		//	    }
 			
 			
