@@ -67,13 +67,7 @@ function drawReservations(data){
 	
 	let temp='';
 	$('#tbodyReservations').html('');
-	for (i in data){
-		
-		//var currentDate=new Date();
-			
-		
-		//datume iz data treba da konvertujem da budu datumi tipa Date i da ih poredim sa danasnjim danom
-		
+	for (i in data){	
 		$.ajax({
 			url:"ProjectRents/getEndDate"+data[i].reservationId,
 			type : "GET",
@@ -86,8 +80,9 @@ function drawReservations(data){
 				console.log("end Date");
 			}
 		})
-		
+	}
 function drawAvailable(data,pom){
+	
 			//ako rezervacija nije istekla
 			if(pom){
 				console.log("DATUM NIJE ISTEKAO");
@@ -104,7 +99,7 @@ function drawAvailable(data,pom){
 					<td><button disabled  id="end-reservation" class="btn btn-primary">End reservation</button></td>
 					</tr>`;
 				}
-				else  if(data.status=='ACCEPTED'){
+				else if(data.status=='ACCEPTED'){
 						temp+=`<tr id="`+data.reservationId+`">
 					<td>`+data.apartmentId+`</td>
 					<td>`+data.arrivalDate+`</td>
@@ -119,7 +114,6 @@ function drawAvailable(data,pom){
 				}
 				
 				 else{
-					//console.log("Istekla je rezervacija");
 					temp+=`<tr id="`+data.reservationId+`">
 					<td>`+data.apartmentId+`</td>
 					<td>`+data.arrivalDate+`</td>
@@ -185,16 +179,9 @@ function drawAvailable(data,pom){
 				
 				}
 			
-			$('#tbodyReservations').html(temp);
-}	
-		
-		
-		
-		
-
-	}
-	
-	
+		$('#tbodyReservations').html(temp);
+	}	
+			
 	
 }
 

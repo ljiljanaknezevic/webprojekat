@@ -1,3 +1,4 @@
+
 function drawMyReservations(data){
 	let temp='';
 	for (i in data){
@@ -303,6 +304,7 @@ $(document).ready(function(){
 			//AVAILABLE DATES FO RESERVATION	
 		if($(event.target).attr("id")=="make-reservation"){
 			var trid3 = $(event.target).closest('tr').attr('id');
+			$('#dropdown select').empty();
 			
 				$.ajax({
 				url:"ProjectRents/getApartmentById" + trid3,
@@ -415,6 +417,7 @@ $(document).ready(function(){
 					success: function(data){
 						alert('Successfully made reservation!')
 						modal.style.display="none";
+						
 						
 					},
 					error:function(){

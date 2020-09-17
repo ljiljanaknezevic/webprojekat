@@ -1,5 +1,7 @@
 package services;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -76,11 +78,36 @@ public class ReservationService {
 		r.setTotalPrice(price);
 		r.setReservationId(UUID.randomUUID());
 		
-		//TODO:PROVERA DA LI JE TRAZENI DATUM DOSTUPAN
+		//Kada se kreira rezervacija da mi edituje available dates na nove datume,sve osim datih
 		
+		LocalDate pom;
+		//ArrayList<LocalDate> pomList=new ArrayList<LocalDate>();
+		
+		ArrayList<String> pomList=new ArrayList<String>();
+		
+		pomList.add(r.getArrivalDate());
+		System.out.println(r.getNumberOfStay());
+		pom=LocalDate.parse(r.getArrivalDate(),DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		
+		for(int i=1;i<r.getNumberOfStay();i++)
+		{
+			
+			pom=pom.plusDays(1);
+			String newPom = "";
+			String aray[] = pom.toString().split("-");
+			newPom=aray[2]+"/"+aray[1]+"/"+aray[0];
+			//System.out.println(pom.toString());
+			pomList.add(newPom);
+			System.out.println(newPom);
+		}
+		
+		System.out.println(pomList);
+		ap.editAvailableDates(pomList);
+		
+		daoA.saveApartments(contextPath);
 		dao.addToMap(r);
 		dao.saveReservations(contextPath);
-		return Response.ok().build();
+		return Response.ok(dao.getReservationById(r.getReservationId())).build();
 	}
 	
 	@POST
@@ -90,9 +117,41 @@ public class ReservationService {
 	public Response cancelReservation(@PathParam("id") UUID id,@Context HttpServletRequest request) {
 		ReservationDAO dao=(ReservationDAO) ctx.getAttribute("reservationDAO");
 		User u = (User)request.getSession().getAttribute("user");
+		ApartmentDAO daoA=(ApartmentDAO) ctx.getAttribute("apartmentDAO");
+		
+		
 		Reservation r=dao.findReservation(id);
+		Apartment ap=daoA.findApartment(r.getApartmentId());
 		String contextPath=ctx.getRealPath("");
 		r.setStatus(ReservationStatus.CANCELED);
+		
+		LocalDate pom;
+		//ArrayList<LocalDate> pomList=new ArrayList<LocalDate>();
+		
+		ArrayList<String> pomList=new ArrayList<String>();
+		
+		pomList.add(r.getArrivalDate());
+		System.out.println(r.getNumberOfStay());
+		pom=LocalDate.parse(r.getArrivalDate(),DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		
+		for(int i=1;i<r.getNumberOfStay();i++)
+		{
+			
+			pom=pom.plusDays(1);
+			String newPom = "";
+			String aray[] = pom.toString().split("-");
+			newPom=aray[2]+"/"+aray[1]+"/"+aray[0];
+			//System.out.println(pom.toString());
+			pomList.add(newPom);
+			System.out.println(newPom);
+		}
+		
+		System.out.println(pomList);
+		
+		ap.addAvailableDates(pomList);
+		
+		daoA.saveApartments(contextPath);
+		
 		dao.saveReservations(contextPath);
 		return Response.ok(dao.getGuestsReservations(u.getUsername())).build();
 	}
@@ -142,6 +201,36 @@ public class ReservationService {
 		Reservation r=dao.findReservation(id);
 		String contextPath=ctx.getRealPath("");
 		r.setStatus(ReservationStatus.REJECTED);
+		
+		Apartment ap=daoA.findApartment(r.getApartmentId());
+		LocalDate pom;
+		//ArrayList<LocalDate> pomList=new ArrayList<LocalDate>();
+		
+		ArrayList<String> pomList=new ArrayList<String>();
+		
+		pomList.add(r.getArrivalDate());
+		System.out.println(r.getNumberOfStay());
+		pom=LocalDate.parse(r.getArrivalDate(),DateTimeFormatter.ofPattern("dd/MM/yyyy"));
+		
+		for(int i=1;i<r.getNumberOfStay();i++)
+		{
+			
+			pom=pom.plusDays(1);
+			String newPom = "";
+			String aray[] = pom.toString().split("-");
+			newPom=aray[2]+"/"+aray[1]+"/"+aray[0];
+			//System.out.println(pom.toString());
+			pomList.add(newPom);
+			System.out.println(newPom);
+		}
+		
+		System.out.println(pomList);
+		
+		ap.addAvailableDates(pomList);
+		
+		daoA.saveApartments(contextPath);
+		
+		
 		dao.saveReservations(contextPath);
 		return Response.ok(dao.getReservationsForHost(hostsA)).build();
 	}

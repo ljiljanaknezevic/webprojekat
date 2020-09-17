@@ -104,8 +104,7 @@ public void addToMap(Reservation r) {
 	}
 
 	public Object getReservationsForHost(ArrayList<Apartment> hostsA) {
-		//TODO:uzela sam sve apartmane od hosta koji je ulogovan,sad
-		//u service proci kroz te apartmane i naci rezervisane
+		
 		ArrayList<Reservation> list=new ArrayList<>();
 		for(Apartment a:hostsA) {
 			for(Reservation r:reservations.values()) {
@@ -144,5 +143,16 @@ public void addToMap(Reservation r) {
 		}
 		else
 			return true;		
+	}
+
+	public Reservation getReservationById(UUID id) {
+	for(Reservation r:reservations.values()){
+			if(r.getReservationId().equals(id)) {
+				return r;
+			}
+	
+		
+	}
+	return null;
 	}
 }
