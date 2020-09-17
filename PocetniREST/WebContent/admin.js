@@ -264,6 +264,7 @@ $(document).ready(function(){
 	$('.profileLook').attr('hidden', true);
 	$('#allReservations').attr('hidden',true);
 	$('#content-hregistration').attr('hidden',true);
+	
     $('ul.dropdown-menu li').click(function(e) 
     { 
     	if($(this).attr('id') == 'logout'){
@@ -271,6 +272,7 @@ $(document).ready(function(){
     			url: "ProjectRents/logout",
     			type :"GET",
     			success: function() {
+					console.log("Izloguje")
     				alert("Successfully logged out .");
     				window.location="./login.html";
     			}

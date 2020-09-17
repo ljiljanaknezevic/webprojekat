@@ -1,32 +1,45 @@
 [ {
-  "username" : "giba",
-  "password" : "giba",
-  "name" : "mika",
-  "surname" : "giba",
+  "username" : "gost2",
+  "password" : "gost2gost2",
+  "name" : "Mila",
+  "surname" : "Milic",
   "gender" : "MALE",
-  "role" : "GUEST"
+  "role" : "GUEST",
+  "blocked" : false
+}, 
+{
+  "username" : "gost",
+  "password" : "gost",
+  "name" : "Nikola",
+  "surname" : "Nikolic",
+  "gender" : "MALE",
+  "role" : "GUEST",
+  "blocked" : false
 },
  {
-  "username" : "mika",
-  "password" : "mika",
-  "name" : "mika",
-  "surname" : "giba",
+  "username" : "host",
+  "password" : "host",
+  "name" : "Filip",
+  "surname" : "Filipovic",
   "gender" : "MALE",
-  "role" : "HOST"
+  "role" : "HOST",
+  "blocked" : false
 },
  {
-  "username" : "dika",
-  "password" : "dika",
-  "name" : "mika",
-  "surname" : "giba",
-  "gender" : "MALE",
-  "role" : "HOST"
+  "username" : "host2",
+  "password" : "host2",
+  "name" : "Mina",
+  "surname" : "Filipovic",
+  "gender" : "FEMALE",
+  "role" : "HOST",
+  "blocked" : false
 },
- {
-  "username" : "rika",
-  "password" : "rika",
-  "name" : "mika",
-  "surname" : "giba",
+{
+  "username" : "admin",
+  "password" : "admin",
+  "name" : "Pera",
+  "surname" : "Peric",
   "gender" : "MALE",
-  "role" : "ADMIN"
+  "role" : "ADMIN",
+  "blocked" : false
 } ]
