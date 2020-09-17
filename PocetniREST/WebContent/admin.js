@@ -25,6 +25,8 @@ var trid = '';
 
 
 var listOfAmenities = [];
+
+var oki = false;
 function addUsersTr(user){
 	let tr = $('<tr></tr>');
 	let tdUsername = $('<td>' + user.username + '</td>');
@@ -255,7 +257,7 @@ $(document).ready(function(){
 	
 	
 	
-	
+	$('#content-holiday').attr('hidden', true);
 	$('#content-users').attr('hidden', true);
 	$('#dugmad').attr('hidden', true);
 	$('#content-apartmant').attr('hidden', false);
@@ -303,6 +305,7 @@ $(document).ready(function(){
     		$('.profileLook').attr('hidden', true);
     		$('#allReservations').attr('hidden',false);
 			$('#content-hregistration').attr('hidden',true);
+			$('#content-holiday').attr('hidden', true);
 		$.ajax({
 			url:"ProjectRents/allReservations",
 			type : "GET",
@@ -327,7 +330,7 @@ $(document).ready(function(){
 		$('.profileLook').attr('hidden', true);
 		$('#allReservations').attr('hidden',true);
 		$('#content-hregistration').attr('hidden',true);
-
+		$('#content-holiday').attr('hidden', true);
 		$.ajax({
 			url:"ProjectRents/allUsers",
 			type:"GET",
@@ -464,6 +467,7 @@ $(document).ready(function(){
 		$('#content-users').attr('hidden', true);
 		$('#allReservations').attr('hidden',true);
 		$('#content-hregistration').attr('hidden',true);
+		$('#content-holiday').attr('hidden', true);
 		var ameniti = new Object();
 		$.ajax({
 			url:'ProjectRents/getAllAmenities',
@@ -582,9 +586,19 @@ $(document).ready(function(){
 		$('#content-users').attr('hidden', true);
 		$('#allReservations').attr('hidden',true);
 		$('#content-hregistration').attr('hidden',true);
+		$('#content-holiday').attr('hidden', true);
 
 	})
-	
+	$('a[href="#holiday"]').click(function(){
+		$('#content-holiday').attr('hidden', false);
+		$('#content-apartmant').attr('hidden', true);
+		$('#dugmad').attr('hidden', true);
+		$('.profileLook').attr('hidden', true);
+		$('#content-users').attr('hidden', true);
+		$('#allReservations').attr('hidden',true);
+		$('#content-hregistration').attr('hidden',true);
+
+	})
 	//VIEW COMMENTS
 		$('#apartmentsTable').on('click','button',function(event){
 		trid=$(event.target).closest('tr').attr('id');
@@ -726,7 +740,48 @@ $(document).ready(function(){
 		
 
 	})
+	//HOLIDAY
+	function m(){
+		oki = true;
+	}
+	$("#done-holiday").click(function(){
+		var holidays = $("#holi-days").val()
+		var holi = holidays.split(",");
+		for(x in holi){
+			$.ajax({
+				url:"ProjectRents/addHolidayDate",
+				type: "POST",
+				contentType: 'application/json',
+				data:JSON.stringify(
+						{date : holi[x]}),
+				success:function(data){
+					m();
+					$("#holi-days").val('')
+					$('#datepickerHoliday').datepicker('setDate', '');
+
+				},
+				error : function(message){
+						$('#error-holi').text(message.responseText);
+						$('#error-holi').show();
+						$('#error-holi').delay(4000).fadeOut('slow');
+				}
+			})
+		}
+		
+		if(oki == true)
+			alert("Successfully added holiday days.")
+	})
 	
+		$('#datepickerHoliday').datepicker({
+        multidate: true,
+        format: "dd/mm/yyyy",
+        daysOfWeekHighlighted: "5,6",
+        datesDisabled: ['31/08/2017'],
+        language: 'en'
+    }).on('changeDate', function(e) {
+        // `e` here contains the extra attributes
+        $(this).find('.input-group-addon .count').text(' ' + e.dates.length);
+    });
 	$('#datepicker').datepicker({
         startDate: new Date(),
         multidate: true,
@@ -837,7 +892,7 @@ $(document).ready(function(){
 		$('#content-users').attr('hidden', true);
 		$('#allReservations').attr('hidden',true);
 		$('#content-hregistration').attr('hidden',false);
-		
+		$('#content-holiday').attr('hidden', true);
 		$('form#registrationHost').submit(function(event){
 		event.preventDefault()
 		console.log('saljemo rest')
@@ -905,7 +960,7 @@ $(document).ready(function(){
 		$('#content-users').attr('hidden', true);
 		$('#allReservations').attr('hidden',true);
 		$('#content-hregistration').attr('hidden',true);
-
+		$('#content-holiday').attr('hidden', true);
     	$.ajax({
     		url: 'ProjectRents/currentUser',
     		type : "GET",

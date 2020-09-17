@@ -73,7 +73,12 @@
   overflow: auto;
 }
 
-
+.form-signin {
+    max-width: auto;
+    padding: 0px 150px 50px;
+    margin: rgb(255, 255, 255);
+    background-color: #fff;
+}
 /* The Modal (background) */
 .modal {
     display: none; /* Hidden by default */
@@ -131,6 +136,7 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
+         <li><a href="#holiday">HOLIDAY DATES</a></li>
          <li><a href="#reservationsClick">RESERVATIONS</a></li>
         <li><a href="#registerNewHost">REGISTER NEW HOST</a></li>
         
@@ -155,6 +161,31 @@
 
   </div>
 </nav>
+	
+	<div id = "content-holiday" hidden = "true" style="background-image: url('./backs/back2.jpg');height: 100vh;
+	
+	 background-attachment: fixed;
+/*   -webkit-background-size: cover; */
+/*   -moz-background-size: cover; */
+/*   -o-background-size: cover; */
+  background-size: 100% 100%;
+   overflow-x: hidden;
+    overflow-y: hidden; position: fixed;  ">
+	<br><br>
+		<div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+		<p style = " font: 400 20px Lato, sans-serif;
+  line-height: 1.8;">Choose holiday dates :</p>
+		<br>
+		<div class="input-group date form-group" id="datepickerHoliday" style="height: 50px;">
+ 			   <input type="text" class="form-control" id="holi-days" name="Dates" placeholder="Select days" required style="height: 50px;" />
+ 			   <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i><span class="count" style="height: 50px;"></span></span>
+			</div>
+		<br>
+		<button class="btn btn-lg btn-primary btn-block" type="button" id = "done-holiday" >DONE</button> 
+		<p id = "#error-holi"></p>
+		</div>
+		
+	</div>
       <!-- this is for #amenities content -->
       	<br><br>
       	   	<div id="dugmad" style="text-align: center" hidden="true">

@@ -1,21 +1,19 @@
 package beans;
 
-import java.util.ArrayList;
-
 public class HolidayDates {
-	private ArrayList<String> holidayDates;
-
-	public HolidayDates(ArrayList<String> holidayDates) {
+	private String date ;
+	public HolidayDates() {
+		
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public HolidayDates(String date) {
 		super();
-		this.holidayDates = holidayDates;
-	}
-
-	public ArrayList<String> getHolidayDates() {
-		return holidayDates;
-	}
-
-	public void setHolidayDates(ArrayList<String> holidayDates) {
-		this.holidayDates = holidayDates;
+		this.date = date;
 	}
 	
 	
