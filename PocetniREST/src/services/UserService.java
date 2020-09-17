@@ -45,10 +45,6 @@ public class UserService {
 			ctx.setAttribute("userDAO", new UserDAO(contextPath));
 			
 		}
-		//ctx.getAtributes(admins)-lista administratora
-		//if ctx.getAt==null{
-		
-		//}
 	}
 
 	
@@ -86,10 +82,9 @@ public class UserService {
 		
 		
 	/*	String message = userDao.findUser(user.getUsername(), user.getPassword());
-=======
 	
 		String message = userDao.findUser(user.getUsername(), user.getPassword());
->>>>>>> c296265519a7800ee0ebfb590499521bd6f9a26d
+
 		if(message.equals("bas taj postoji u bazi")) {
 			User userr = userDao.findByUsername(user.getUsername());
 			request.getSession().setAttribute("user", userr);
@@ -191,7 +186,11 @@ public class UserService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response logout(@Context HttpServletRequest request) {
+		System.out.println(request.getSession().toString());
+		
 		request.getSession().invalidate();
+		
+		
 		return Response.status(200).build();
 	}
 	

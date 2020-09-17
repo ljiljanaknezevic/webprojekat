@@ -1,0 +1,41 @@
+[ {
+  "id" : "93159148-39bd-4f09-ae7f-c59a9afad046",
+  "name" : "sto",
+  "deleted" : false
+}, {
+  "id" : "e7430475-021f-4654-ace1-788bd8b193f4",
+  "name" : "krevet",
+  "deleted" : false
+}, {
+  "id" : "9d959d07-40e4-4eec-bca0-586545f6187c",
+  "name" : "stolica",
+  "deleted" : false
+}, {
+  "id" : "c3d7be28-6ff9-4a1c-8514-84f0c7a7a56f",
+  "name" : "cajnik",
+  "deleted" : false
+}, {
+  "id" : "2710a1b9-a12e-4b31-afcb-f874cdca382a",
+  "name" : "televizor",
+  "deleted" : false
+}, {
+  "id" : "de4671c2-62e0-4c05-97c0-91f6a4ce0ec2",
+  "name" : "djakuzi",
+  "deleted" : false
+}, {
+  "id" : "ae640e60-85fb-46b0-aaa1-8519fabbe9f1",
+  "name" : "frizider",
+  "deleted" : false
+}, {
+  "id" : "96149192-2c0e-4be2-9283-889852469819",
+  "name" : "sporet",
+  "deleted" : false
+}, {
+  "id" : "265d4e69-7ed9-4e58-8c1d-0d49cd7ec0c0",
+  "name" : "toster",
+  "deleted" : false
+}, {
+  "id" : "ac74a810-8b6b-4e7c-9dc2-c59b3448b75d",
+  "name" : "fen",
+  "deleted" : false
+} ]

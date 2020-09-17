@@ -478,18 +478,7 @@ $(document).ready(function(){
 	})
 	
 	
-	 $('ul.dropdown-menu li').click(function(e) 
-    { 
-    	if($(this).attr('id') == 'logout'){
-    		$.get({
-    			url: "ProjectRents/logout",
-    			success: function() {
-    				alert("Successfully logged out .");
-    				window.location="./login.html";
-    			}
-    		})
-    	}
-    });
+
 	
 	
 	//apartments modal
@@ -1003,7 +992,18 @@ $(document).ready(function(){
 	    	}
 	    	
 	    })
-	  
+	   	 $('ul.dropdown-menu li').click(function(e) 
+	       { 
+	       	if($(this).attr('id') == 'logout'){
+	       		$.get({
+	       			url: "ProjectRents/logout",
+	       			success: function() {
+	       				alert("Successfully logged out .");
+	       				window.location="./login.html";
+	       			}
+	       		})
+	       	}
+	       });
 })
 let jsonObjekat;
 
@@ -1057,6 +1057,7 @@ let pomocna = function () {
         var vectorSource = new ol.source.Vector({
             features: iconFeatures //add an array of features
         });
+
 
         var iconStyle = new ol.style.Style({
             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */({

@@ -1,0 +1,40 @@
+[ {
+  "reservationId" : "b21852a4-a9b9-4e7a-a004-1205ae67b02a",
+  "apartmentId" : "951fb424-8148-4f20-84d1-adefb4dc9702",
+  "arrivalDate" : "25/09/2020",
+  "numberOfStay" : 3,
+  "totalPrice" : 280.0,
+  "message" : "",
+  "guest" : "gost",
+  "status" : "CREATED"
+}, 
+{
+  "reservationId" : "385316df-8ba3-4364-82e8-831e1ae053e9",
+  "apartmentId" : "cb73befd-da90-41d6-a4fe-244b5954ec29",
+  "arrivalDate" : "11/10/2020",
+  "numberOfStay" : 2,
+  "totalPrice" : 28.5,
+  "message" : "",
+  "guest" : "gost",
+  "status" : "CREATED"
+}, 
+{
+  "reservationId" : "71f06e09-9f0d-4853-80ca-57b751adf77f",
+  "apartmentId" : "cb73befd-da90-41d6-a4fe-244b5954ec29",
+  "arrivalDate" : "13/10/2020",
+  "numberOfStay" : 3,
+  "totalPrice" : 45.0,
+  "message" : "poruka",
+  "guest" : "gost2",
+  "status" : "CREATED"
+}, 
+{
+  "reservationId" : "d12b28b1-8d55-4dba-b612-8b982dd55fc0",
+  "apartmentId" : "951fb424-8148-4f20-84d1-adefb4dc9702",
+  "arrivalDate" : "28/09/2020",
+  "numberOfStay" : 1,
+  "totalPrice" : 20.0,
+  "message" : "poruka",
+  "guest" : "gost2",
+  "status" : "CREATED"
+}]
