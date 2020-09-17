@@ -1,5 +1,6 @@
 //SEARCH MIC
-
+var exitsFrom;
+var exitsTo;
 $(document).ready(function() {
 //		 $("#searchByGuests").keyup(function () { //by username
 //		        $("#apartmentsTable  tr").each(function () {
@@ -127,11 +128,36 @@ $(document).ready(function() {
 		    		var location=$("#content-apartmant td.nameLocation:contains('" + m + "')").parent();
 
 		    	}
+		    	var start1 =  new Date(dFrom).toLocaleDateString("en-US", { day: '2-digit' })      
+		    	+ "/"+  new Date(dFrom).toLocaleDateString("en-US", { month: '2-digit' })      
+		    	+ "/" +  new Date(dFrom).toLocaleDateString("en-US", { year: 'numeric' });
+		    	 exitsFrom = false;
+		    	if(dFrom ==""){
+		    		var dates=$("#content-apartmant td.nameGuests").parent();
+		    	}else{
+		    		exitsFrom = true;
+		    		var dates=$("#content-apartmant td.nameDate:contains('" + start1 + "')").parent();
+		    		
+		    	}
+	        	var end1 =  new Date(dTo).toLocaleDateString("en-US", { day: '2-digit' })      
+	        		+ "/"+  new Date(dTo).toLocaleDateString("en-US", { month: '2-digit' })      
+	        		+ "/" +  new Date(dTo).toLocaleDateString("en-US", { year: 'numeric' });
+	        	 exitsTo = false;
+	        	if(dTo ==""){
+		      		var datesTo=$("#content-apartmant td.nameGuests").parent();
+		    	}else{
+		    		exitsTo = true;
+		    		var datesTo=$("#content-apartmant td.nameDate:contains('" + end1 + "')").parent();
+
+		    	}
+	        	if(datesTo != $("#content-apartmant td.nameGuests").parent()){
+		      	//	var datesTo=$("#content-apartmant td.nameGuests").parent();
+console.log("sadrzi neki datum")
+	        	}
 		    	
-		    	
-		    	naziv.filter(priceTo).filter(priceFrom).filter(roomTo).filter(roomFrom).filter(location).show();
+		    	naziv.filter(priceTo).filter(priceFrom).filter(roomTo).filter(roomFrom).filter(location).filter(dates).filter(datesTo).show();
 		    
-		    	$("#content-apartmant td.nameGuests").parent().not(naziv.filter(priceTo).filter(priceFrom).filter(roomTo).filter(roomFrom).filter(location)).hide();
+		    	$("#content-apartmant td.nameGuests").parent().not(naziv.filter(priceTo).filter(priceFrom).filter(roomTo).filter(roomFrom).filter(location).filter(dates).filter(datesTo)).hide();
 		//	    }
 			
 			
