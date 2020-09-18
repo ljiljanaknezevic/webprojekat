@@ -62,28 +62,40 @@ function drawAmenities(data){
 			}
 			$('#amenitiesTable').html(temp);
 }
-
-function drawReservations(data){
-	
-	let temp='';
-	$('#tbodyReservations').html('');
-	for (i in data){	
+function getA(data){
 		$.ajax({
-			url:"ProjectRents/getEndDate"+data[i].reservationId,
+			url:"ProjectRents/getEndDate"+data.reservationId,
 			type : "GET",
 			contentType:'multipart/form-data',
 			success:function(pom){
-				drawAvailable(data[i],pom);
+				drawAvailable(data,pom);
 				console.log("end date success");
 			}, 
 			error:function(){
 				console.log("end Date");
 			}
 		})
-	}
-function drawAvailable(data,pom){
+}
+
+let temp='';
+	$('#tbodyReservations').html('');
+
+function drawReservations(dat){
+	console.log("**************************");
+	console.log(dat);
 	
+	let temp='';
+	$('#tbodyReservations').html('');
+	for (i in dat){	
+		console.log(dat[i].guest)
+		getA(dat[i])
+	}
+		
+}
+
+function drawAvailable(data,pom){
 			//ako rezervacija nije istekla
+			console.log(data.guest);
 			if(pom){
 				console.log("DATUM NIJE ISTEKAO");
 				if(data.status=='CREATED'){
@@ -186,10 +198,7 @@ function drawAvailable(data,pom){
 				}
 			
 		$('#tbodyReservations').html(temp);
-	}	
-			
-	
-}
+	}
 
 function drawApartments(data){
 
@@ -213,6 +222,7 @@ function drawApartments(data){
 			<td class = "nameGuests">`+data[i].numberOfGuest+`</td>
 			<td class = "namePrice">`+data[i].price+`</td>
 			<td><img id="blah" height="150px alt="your image" src="`+data[i].images+`"</td>
+
 			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
 			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
 			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td>
@@ -227,7 +237,7 @@ function drawApartments(data){
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
-			<td><img id="blah" height="150px alt="your image" src="`+data[i].images+`"</td>
+			<td><img id="blah2" height="150px alt="your image" src="`+data[i].images+`"</td>
 			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
 			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
 			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td></tr>`;
@@ -442,7 +452,7 @@ $(document).ready(function(){
 			url:"ProjectRents/hostsReservations",
 			type : "GET",
 			success:function(reservations){
-				console.log('Crta');
+				//console.log('Crta');
 				drawReservations(reservations);
 			},
 			error:function(message){

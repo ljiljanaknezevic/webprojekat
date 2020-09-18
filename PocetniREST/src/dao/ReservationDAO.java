@@ -107,9 +107,14 @@ public void addToMap(Reservation r) {
 		
 		ArrayList<Reservation> list=new ArrayList<>();
 		for(Apartment a:hostsA) {
+			System.out.println("Apartment id"+a.getId());
 			for(Reservation r:reservations.values()) {
+				System.out.println("Reservation id"+r.getReservationId());
 				if(a.getId().equals(r.getApartmentId())) {
-					list.add(r);
+					System.out.println("*********************");
+					if(!list.contains(r))
+						list.add(r);
+					System.out.println(r.getGuest());
 				}
 			}
 		}

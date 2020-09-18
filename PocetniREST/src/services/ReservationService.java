@@ -282,8 +282,10 @@ public class ReservationService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getHostsReservations(@Context HttpServletRequest request) {
 		User u = (User)request.getSession().getAttribute("user");
+		
 		ReservationDAO daoR = (ReservationDAO) ctx.getAttribute("reservationDAO");
 		ApartmentDAO dao = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
+		
 		ArrayList<Apartment> hostsA=dao.getHostsApartments(u.getUsername());
 		return Response.ok(daoR.getReservationsForHost(hostsA)).build();
 	
