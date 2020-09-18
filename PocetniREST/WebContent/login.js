@@ -31,7 +31,7 @@ $(document).ready(function(){
 		})
 	}
 	$('#content-login').attr("hidden", false);
-	$('#content').attr("hidden", true);
+	$('#content-apartmant').attr("hidden", true);
 	$('form#login').submit(function(event){
 		event.preventDefault();
 		console.log("usloooo")

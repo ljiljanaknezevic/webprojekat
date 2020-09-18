@@ -46,12 +46,12 @@ function drawAllReservations(data){
 	for (i in data){
 
 			temp+=`<tr id="`+data[i].reservationId+`">
-			<td>`+data[i].guest+`</td>
+			<td class = "nameGuest">`+data[i].guest+`</td>
 			<td>`+data[i].arrivalDate+`</td>
 			<td>`+data[i].numberOfStay+`</td>
 			<td>`+data[i].totalPrice+`</td>
 			<td>`+data[i].message+`</td>
-			<td>`+data[i].status+`</td>
+			<td class = "nameStatusRes">`+data[i].status+`</td>
 			</tr>`;
 		}
 		$('#tbodyAllReservations').html(temp);
@@ -104,7 +104,7 @@ function drawApartments(data){
 			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
 			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
 			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td>
-			<td class = "nameDate" name = "nameDate">`+data[i].dates+`</td>
+			<td class = "nameDate" name = "nameDate" hidden= "true">`+data[i].dates+`</td>
 			</tr>`;
 	}
 	$('#apartmentsTable').html(temp);
@@ -262,7 +262,7 @@ $(document).ready(function(){
 	$('#dugmad').attr('hidden', true);
 	$('#content-apartmant').attr('hidden', false);
 	$('.profileLook').attr('hidden', true);
-	$('#allReservations').attr('hidden',true);
+	$('#myReservations').attr('hidden',true);
 	$('#content-hregistration').attr('hidden',true);
 	
     $('ul.dropdown-menu li').click(function(e) 
@@ -305,7 +305,7 @@ $(document).ready(function(){
     		$('#dugmad').attr('hidden', true);
     		$('#content-apartmant').attr('hidden', true);
     		$('.profileLook').attr('hidden', true);
-    		$('#allReservations').attr('hidden',false);
+    		$('#myReservations').attr('hidden',false);
 			$('#content-hregistration').attr('hidden',true);
 			$('#content-holiday').attr('hidden', true);
 		$.ajax({
@@ -320,9 +320,47 @@ $(document).ready(function(){
 		})
 	})
 	
-	
-	
-	
+	//pretraga po korisnickom imenu u rezervacijama
+		  $("#myReservations").on('change paste keyup','[name=filterRestReservation]',function (event) {
+			  	var n=$("#searchByGuestUsername").val();
+						
+						if ($("#searchByGuestUsername").val()==""){
+							
+							var username=$("#myReservations td.nameGuest").parent();
+						}else{
+							var username=$("#myReservations td.nameGuest:contains('" + n + "')").parent()
+						}
+						username.show();
+				        $("#myReservations td.nameGuest").parent().not(username).hide();
+		  })
+		// mica pretraga
+		$("#myReservations").on('change paste keyup','[name=filterRestResStatus]',function (event) {
+            var g=$("#filterRes").val();
+            console.log(g)
+            if ($("#filterRes").val()=="Filter by status"){
+            	var status=$("#myReservations td.nameStatusRes").parent();
+            }else{      
+            	var status=$("#myReservations td.nameStatusRes:contains('" + g + "')").parent()
+            }
+            
+           
+            status.show();
+            $("#myReservations td.nameStatusRes").parent().not(status).hide();
+        });
+		  
+//		  	$("#filterRes").change(function () { //filter po STATUSU REERVACIJE
+//			if ($(this).val() == "Filter by status") {
+//				$("#tbodyAllReservations td.nameStatusRes").parent().show();
+//			} else if ($(this).val() == "ACCEPTED") {
+//				console.log($(this).val());
+//				$("#tbodyAllReservations td.nameStatusRes:not(:contains('" + $(this).val() + "'))").parent().hide();
+//				$("#tbodyAllReservations td.nameStatusRes:contains('" + $(this).val() + "')").parent().show();
+//			}
+//			else {
+//				$("#tbodyAllReservations td.nameStatusRes:not(:contains('" + $(this).val() + "'))").parent().hide();
+//				$("#tbodyAllReservations td.nameStatusRes:contains('" + $(this).val() + "')").parent().show();
+//			}
+//		});
 	    // users tab
 	$('#users').click(function(e)
 	{
@@ -330,7 +368,7 @@ $(document).ready(function(){
 		$('#dugmad').attr('hidden', true);
 		$('#content-apartmant').attr('hidden', true);
 		$('.profileLook').attr('hidden', true);
-		$('#allReservations').attr('hidden',true);
+		$('#myReservations').attr('hidden',true);
 		$('#content-hregistration').attr('hidden',true);
 		$('#content-holiday').attr('hidden', true);
 		$.ajax({
@@ -345,31 +383,10 @@ $(document).ready(function(){
 			}
 		});
 	
-		// mica pretraga
+	
+		
 		
 		$("#content-users").on('change paste keyup','[name=filterRest]',function (event) {
-	//		var n=$("#filterUsername").val();
-	//		var g=$("#filterGender").val();
-	//		var r=$("#filterRole").val();
-	//		if ($("#filterUsername").val()==""){
-	//			
-	//			var username=$("#content-users td.nameUser").parent();
-	//		}else{
-	//			var username=$("#content-users td.nameUser:contains('" + n + "')").parent()
-	//		}
-	//		if ($("#filterGender").val()=="Filter by gender"){
-	//			var gender=$("#content-users td.nameUser").parent();
-	//		}else{      
-	//			var gender=$("#content-users td.nameGender:contains('" + g + "')").parent()
-	//		}
-	//		if ($("#filterRole").val()=="Filter by role"){
-	//			var role=$("#content-users td.nameUser").parent();
-	//		}else{
-	//			
-	//			var role=$("#content-users td.nameRole:contains('" + r + "')").parent()
-	//		}
-	//		username.filter(gender).filter(role).show();
-	//		$("#content-users td.nameUser").parent().not(username.filter(gender).filter(role)).hide();
 	        var g=$("#filterGender").val();
 	        var r=$("#filterRole").val();
 	        	
@@ -397,28 +414,6 @@ $(document).ready(function(){
     	//////////////////////////////////////
     	//micas filters apartmants
     	//FILTER FOR AMENITIES
-    	
-    	//2.nacin sa opcijom za selektovanje
-//    	window.onload = function () {
-//        		var select = document.getElementById("filterAmeniti");
-//        		console.log(listOfAmenities)
-//        		for(i = 1; i<listOfAmenities.length; i++) {
-//        		    select.options[select.options.length] = new Option(listOfAmenities[i], listOfAmenities[i]);
-//        		}
-//    	};
-    
-    	//1.nacin sa checkBox-om
-    	$("#filterByAmenities").click(function(){
-    		var areChecked = false;
-    		$('input[name = "amenities-box"]:checked').each(function(){
-    			$("#apartmentsTable td.nameAmenitie:not(:contains('" + $(this).val()+"'))").parent().hide();
-    			$("#apartmentsTable td.nameAmenitie:contains('"+ $(this).val()+"')").parent().show();
-    			areChecked = true;
-    		})
-    		if(!areChecked)
-    			$("#apartmentsTable td.nameAmenitie:contains('"+ $(this).val()+"')").parent().show();
-    			
-    	})
     	
     	$("#content-apartmant").on('change paste keyup','[name=filterRestApartment]',function (event) {
             var n=$("#filterType").val();
@@ -467,7 +462,7 @@ $(document).ready(function(){
 		$('#content-apartmant').attr('hidden', true);
 		$('.profileLook').attr('hidden', true);
 		$('#content-users').attr('hidden', true);
-		$('#allReservations').attr('hidden',true);
+		$('#myReservations').attr('hidden',true);
 		$('#content-hregistration').attr('hidden',true);
 		$('#content-holiday').attr('hidden', true);
 		var ameniti = new Object();
@@ -586,7 +581,7 @@ $(document).ready(function(){
 		$('#dugmad').attr('hidden', true);
 		$('.profileLook').attr('hidden', true);
 		$('#content-users').attr('hidden', true);
-		$('#allReservations').attr('hidden',true);
+		$('#myReservations').attr('hidden',true);
 		$('#content-hregistration').attr('hidden',true);
 		$('#content-holiday').attr('hidden', true);
 
@@ -597,7 +592,7 @@ $(document).ready(function(){
 		$('#dugmad').attr('hidden', true);
 		$('.profileLook').attr('hidden', true);
 		$('#content-users').attr('hidden', true);
-		$('#allReservations').attr('hidden',true);
+		$('#myReservations').attr('hidden',true);
 		$('#content-hregistration').attr('hidden',true);
 
 	})
@@ -892,7 +887,7 @@ $(document).ready(function(){
 		$('#dugmad').attr('hidden', true);
 		$('.profileLook').attr('hidden', true);
 		$('#content-users').attr('hidden', true);
-		$('#allReservations').attr('hidden',true);
+		$('#myReservations').attr('hidden',true);
 		$('#content-hregistration').attr('hidden',false);
 		$('#content-holiday').attr('hidden', true);
 		$('form#registrationHost').submit(function(event){
@@ -960,7 +955,7 @@ $(document).ready(function(){
 		$('#dugmad').attr('hidden', true);
 		$('.profileLook').attr('hidden', false);
 		$('#content-users').attr('hidden', true);
-		$('#allReservations').attr('hidden',true);
+		$('#myReservations').attr('hidden',true);
 		$('#content-hregistration').attr('hidden',true);
 		$('#content-holiday').attr('hidden', true);
     	$.ajax({

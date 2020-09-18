@@ -29,10 +29,9 @@
 <!-- <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> -->
 <!-- 	<script src="aut.js"></script> -->
 	<script src="host.js"></script>
-	<script src="filtersApartmentRezervations.js"></script>
 	<script src="sortByPrice.js"></script>
 	<script src="searchUsers.js"></script>
-	
+		 <script src="searchApartmentMix.js"></script>
 </head>
 <style>
 	.map {
@@ -138,13 +137,50 @@
 						              <option value="ROOM">ROOM</option>
 						              <option value="APARTMENT">APARTMENT</option>
 						      </select>
+			    			 	<select style="height: 30px;float:left;margin-right: 10px;" name="filterRestApartment" id="filterAmeniti"> <option >Filter by amenitie</option></select>
 			    </div>
+			    
+			    <br>
+			    			<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+		    <div id = "content-apartmant">
+		     <div style="width: 80%;height: 30px; margin: 0 auto;" id="searchDiv">
+           <p style ="float:left;margin-right: 5px;"> Price from:</p>
+     <input type="number" style="width: 5%;float:left;" name="filterSearch" id="filterPriceFrom" >
+       <p style ="float:left;margin-right: 5px;"">to:</p>
+     <input type="number" style="width: 5%;float:left;margin-right: 7px;"  name="filterSearch" id="filterPriceTo">
+        <p style ="float:left;margin-right: 5px;">Rooms from:</p>
+     <input type="number" style="width: 5%;float:left;margin-right: 7px;"  name="filterSearch" id="filterRoomFrom" >
+       <p style ="float:left;margin-right: 7px;">to:</p>
+     <input type="number" style="width: 5%;float:left;margin-right: 7px;"  name="filterSearch" id="filterRoomTo">
+   
+ <input type="number" style="width: 12%;float:left;margin-right: 7px;margin-bottom:15px;"  name="filterSearch" id="searchByGuests" placeholder="Search guests" >
+     <input type="text" style="width: 12%;float:left;margin-right: 7px;margin-bottom:15px;" name="filterSearch" id="searchByLocation" placeholder="Search city" >
+           <p style ="float:left;margin-right: 5px;">Date from:</p>
+   
+     <div class="input-group date form-group" id="datepicker2" style="height: 30px;float:left;width : 12%;margin-right: 7px;"
+    style = "background:transparent;text:transparent"/>
+    <input type="text" class="form-control" id="filterDateFrom"   name="filterSearch"  placeholder="Select day" required style = "background:transparent;text:transparent;"/>
+    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" style = "background:transparent;"/></i><span class="count"></span></span>
+</div>
+       <p style ="float:left;margin-right:7px;"">to:</p>
+     <div class="input-group date form-group" id="datepicker3" style="height: 30px;float:left;margin-right: 7px;width : 12%;"
+      >
+    <input type="text" class="form-control"  id="filterDateTo" name="filterSearch" placeholder="Select day" required />
+    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i><span class="count"></span></span>
+</div>
+        </div>
+      
 			<br>
 			 <div style="width: 80%;max-height: 300px;overflow: auto; margin: 0 auto; ">
 	        <table class="table  table-bordered" onclick="someFunc(event)">
 	              <thead class="success">
 	                <tr class="success">
-	                  <th colspan="9" style="text-align: center;">APARTMENTS</th>
+	                  <th colspan="11" style="text-align: center;">APARTMENTS</th>
 	                </tr>
 	                	<tr class="success">
 	                	<th>Status</th>
@@ -157,6 +193,7 @@
 	                  	<th>Image</th>
 	                  	<th></th>
 	                  	<th></th>
+	                  	<th></th>
 	               	 	</tr>
 	                </thead>
 	                <tbody id="apartmentsTable">
@@ -164,7 +201,7 @@
 	            </table>
      		</div> 
 		
-			
+			  </div>
     	<br><br>
 				 <div style="width: 80%;height: 30px; margin: 0 auto;" >
 		    					<select style="height: 30px;"  id="filterTypePassive" >
@@ -178,7 +215,7 @@
 	        <table class="table  table-bordered" onclick="someFunc(event)">
 	              <thead class="success">
 	                <tr class="success" >
-	                  <th colspan="9" style="text-align: center;">PASSIVE APARTMENTS</th>
+	                  <th colspan="11" style="text-align: center;">PASSIVE APARTMENTS</th>
 	                </tr>
 	                	<tr class="success">
 	                	<th>Status</th>
@@ -191,6 +228,7 @@
 	                  	<th>Image</th>
 	                  	<th></th>
 	                	<th></th>
+	                	<th></th>
 	               	 	</tr>
 	                </thead>
 	                <tbody id="apartmentsTable-passive">
@@ -199,17 +237,24 @@
      		</div> 
 	</div>
 	<br><br><br>
-	       <div id = "myReservationsTable" hidden = "true">
-			<div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+	<div id = "myReservations" >
+	
+	        <input type="text"  id="searchByGuestUsername" placeholder="Search by guest username" name="filterRest" style="width: 80%;margin-left: 150px;">
+			<br></br>
+	       <div id = "myReservationsTable" >
+			<div style="width: 80%;height: 500px;overflow: auto; margin: 0 auto; ">
 	        <table class="table  table-bordered" >
 	              <thead class="success">
 				     <tr class = "success">
 			         <th>Apartment id</th>
+			         <th>Guest username</th>
 			          <th>Arrivale date</th>
 			          <th>Nights of stay</th>
 			          <th name="sort">Total price<span name="arrow" class="glyphicon glyphicon-arrow-down"/></th>
 			          <th>Message for host</th>
 			          <th>Status</th>       
+			          <th></th>     
+			          <th></th>     
 			          <th></th>     
 			        </tr>
 			      </thead>
@@ -218,7 +263,7 @@
 	            </table>
      		</div> 
      		</div>
- 
+	 </div>
 
 	   <!-- BUTTON PROFIL LOOK -->
     

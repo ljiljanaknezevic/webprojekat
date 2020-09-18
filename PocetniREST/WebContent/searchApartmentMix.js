@@ -12,7 +12,29 @@ $(document).ready(function() {
 //		            }
 //		        });
 //		    });
-//		 
+	
+		 	$('#datepicker2').datepicker({
+		    startDate: new Date(),
+		    multidate: false,
+		    format: "mm/dd/yyyy",
+		    daysOfWeekHighlighted: "5,6",
+		    datesDisabled: ['31/08/2017'],
+		    language: 'en'
+		}).on('changeDate', function(e) {
+		    // `e` here contains the extra attributes
+		    $(this).find('.input-group-addon .count').text(' ' + e.dates.length);
+		});
+		$('#datepicker3').datepicker({
+		    startDate: new Date(),
+		    multidate: false,
+		    format:"mm/dd/yyyy",
+		    daysOfWeekHighlighted: "5,6",
+		    datesDisabled: ['31/08/2017'],
+		    language: 'en'
+		}).on('changeDate', function(e) {
+		    // `e` here contains the extra attributes
+		    $(this).find('.input-group-addon .count').text(' ' + e.dates.length);
+		});
 		 $("#content-apartmant").on('change paste keyup','[name=filterSearch]',function(event){
 		    	var n=$("#searchByGuests").val();
 		    	
@@ -150,10 +172,6 @@ $(document).ready(function() {
 		    		var datesTo=$("#content-apartmant td.nameDate:contains('" + end1 + "')").parent();
 
 		    	}
-	        	if(datesTo != $("#content-apartmant td.nameGuests").parent()){
-		      	//	var datesTo=$("#content-apartmant td.nameGuests").parent();
-console.log("sadrzi neki datum")
-	        	}
 		    	
 		    	naziv.filter(priceTo).filter(priceFrom).filter(roomTo).filter(roomFrom).filter(location).filter(dates).filter(datesTo).show();
 		    

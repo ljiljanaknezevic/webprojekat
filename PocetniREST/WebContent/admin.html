@@ -194,7 +194,7 @@
 		    	</button>
 			
 			<br><br><br>
-			 <div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+			 <div style="width: 80%;height: 500px;overflow: auto; margin: 0 auto; ">
 	        <table class="table  table-bordered" >
 	              <thead class="success">
 	                <tr class="success">
@@ -271,12 +271,12 @@
     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i><span class="count"></span></span>
 </div>
         </div>
-			 <div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+		 <div style="width: 90%;height: 450px;overflow: auto; margin: 0 auto; ">
 			
 	        <table class="table  table-bordered" >
 	              <thead class="success">
 	                <tr class="success">
-	                  <th colspan="11" style="text-align: center;">APARTMENTS</th>
+	                  <th colspan="12" style="text-align: center;">APARTMENTS</th>
 	                </tr>
 	                	<tr class="success">
 	                	<th>Host username</th>
@@ -288,6 +288,7 @@
 	                	<th>Number of guests</th>
 	                	<th name="sort">Price<span name="arrow" class="glyphicon glyphicon-arrow-down"/></th>
 	                	<th>Image</th>
+	                  	<th></th>
 	                  	<th></th>
 	                  	<th></th>
 	               	 	</tr>
@@ -428,12 +429,26 @@
     </div> 
     
       <!-- RESERVATIONS -->	
-      <div id = "allReservations" hidden = "true">
+      <div id = "myReservations" >
+      <div style="width: 80%;height: 30px; margin: 0 auto;">
+		    					<select style="height: 30px;"  id="filterRes"  name="filterRestResStatus">
+						              <option value = "Filter by status">Filter by status</option>
+						              <option value="CREATED">CREATED</option>
+						              <option value="ACCEPTED">ACCEPTED</option>
+						              <option value="CANCELED">CANCELED</option>
+						              <option value="COMPLETED">COMPLETED</option>
+						              <option value="REJECTED">REJECTED</option>
+						      </select>
+			    </div>
+      	<br>
+	        <input type="text"  id="searchByGuestUsername" placeholder="Search by guest username" name="filterRestReservation" style="width: 80%;margin-left: 150px;">
+			<br></br>
+      <div id = "allReservations">
 		<div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
         <table class="table  table-bordered" >
               <thead class="success">
                <tr class="success">
-	                  <th colspan="9" style="text-align: center;">ALL RESERVATIONS</th>
+	                  <th colspan="8" style="text-align: center;">ALL RESERVATIONS</th>
 	                </tr>
 			     <tr class = "success">
 			     <th>Guest username</th>
@@ -442,14 +457,14 @@
 	              <th name="sort">Total price<span name="arrow" class="glyphicon glyphicon-arrow-down"/></th>
 		          <th>Message for host</th>
 		          <th>Status</th>       
-		          <th></th>     
 		        </tr>
 		      </thead>
 		      <tbody id="tbodyAllReservations">
 		      </tbody>
             </table>
-    		</div> 
-    		</div>
+    			</div> 
+     		</div>
+	 </div>
 
 
     

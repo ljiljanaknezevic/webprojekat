@@ -1,6 +1,6 @@
 [ {
-  "username" : "gost2",
-  "password" : "gost2gost2",
+  "username" : "guest",
+  "password" : "guest",
   "name" : "Mila",
   "surname" : "Milic",
   "gender" : "MALE",
@@ -26,8 +26,8 @@
   "blocked" : false
 },
  {
-  "username" : "host2",
-  "password" : "host2",
+  "username" : "domacin",
+  "password" : "domacin",
   "name" : "Mina",
   "surname" : "Filipovic",
   "gender" : "FEMALE",
