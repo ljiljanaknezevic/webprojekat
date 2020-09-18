@@ -78,13 +78,16 @@ function getA(data){
 }
 
 let temp='';
-	$('#tbodyReservations').html('');
+
+	//$('#tbodyReservations').html('');
+	$('#myReservationsTable tbody').empty();
 
 function drawReservations(dat){
+	$('#myReservationsTable tbody').empty();
 	console.log("**************************");
 	console.log(dat);
 	
-	let temp='';
+	 temp='';
 	$('#tbodyReservations').html('');
 	for (i in dat){	
 		console.log(dat[i].guest)
@@ -378,6 +381,7 @@ $.ajax({
 	}	
 })
 $(document).ready(function(){
+	$('#tbodyReservations').html('');
 	
 	$('#content').attr('hidden', false);
 	$('.profileLook').attr('hidden', true);
@@ -419,6 +423,7 @@ $(document).ready(function(){
 	    
 	//RESERVATION TAB
 	$('a[href="#reservationsClick"]').click(function(e){
+		$('#myReservationsTable tbody').empty();
 		$('#content').attr('hidden',true);
 		$('#content-users').attr('hidden',true);
 		$('#myReservationsTable').attr('hidden',false);
@@ -447,7 +452,9 @@ $(document).ready(function(){
 				type : "POST",
 				contentType:'multipart/form-data',
 				success:function(data){
-					drawReservations(data);
+					setTimeout(function(){// wait for 5 secs(2)
+			           location.reload(); // then reload the page.(3)
+			      }, 500); 
 					alert("Successfully accepted. ");
 				}
 			})
@@ -462,7 +469,9 @@ $(document).ready(function(){
 				type : "POST",
 				contentType:'multipart/form-data',
 				success:function(data){
-					drawReservations(data);
+					setTimeout(function(){// wait for 5 secs(2)
+			           location.reload(); // then reload the page.(3)
+			      }, 500); 
 					alert("Successfully ended.");
 				}
 			})
@@ -477,9 +486,9 @@ $(document).ready(function(){
 				type : "POST",
 				contentType:'multipart/form-data',
 				success:function(data){
-				//	console.log(data);
-					//$('#tbodyReservations').html('');
-					drawReservations(data);
+				setTimeout(function(){// wait for 5 secs(2)
+			           location.reload(); // then reload the page.(3)
+			      }, 500); 
 					alert("Successfully rejected. ");
 				}
 			})
