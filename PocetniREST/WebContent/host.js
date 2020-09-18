@@ -62,28 +62,40 @@ function drawAmenities(data){
 			}
 			$('#amenitiesTable').html(temp);
 }
-
-function drawReservations(data){
-	
-	let temp='';
-	$('#tbodyReservations').html('');
-	for (i in data){	
+function getA(data){
 		$.ajax({
-			url:"ProjectRents/getEndDate"+data[i].reservationId,
+			url:"ProjectRents/getEndDate"+data.reservationId,
 			type : "GET",
 			contentType:'multipart/form-data',
 			success:function(pom){
-				drawAvailable(data[i],pom);
+				drawAvailable(data,pom);
 				console.log("end date success");
 			}, 
 			error:function(){
 				console.log("end Date");
 			}
 		})
-	}
-function drawAvailable(data,pom){
+}
+
+let temp='';
+	$('#tbodyReservations').html('');
+
+function drawReservations(dat){
+	console.log("**************************");
+	console.log(dat);
 	
+	let temp='';
+	$('#tbodyReservations').html('');
+	for (i in dat){	
+		console.log(dat[i].guest)
+		getA(dat[i])
+	}
+		
+}
+
+function drawAvailable(data,pom){
 			//ako rezervacija nije istekla
+			console.log(data.guest);
 			if(pom){
 				console.log("DATUM NIJE ISTEKAO");
 				if(data.status=='CREATED'){
@@ -180,10 +192,7 @@ function drawAvailable(data,pom){
 				}
 			
 		$('#tbodyReservations').html(temp);
-	}	
-			
-	
-}
+	}
 
 function drawApartments(data){
 
@@ -419,7 +428,7 @@ $(document).ready(function(){
 			url:"ProjectRents/hostsReservations",
 			type : "GET",
 			success:function(reservations){
-				console.log('Crta');
+				//console.log('Crta');
 				drawReservations(reservations);
 			},
 			error:function(message){
