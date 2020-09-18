@@ -56,16 +56,18 @@ function drawApartments(data){
 		var partsOfStr = list.join(',').replace(/,/g ,'<br>').split();
 		temp+=`<tr id="`+data[i].id+`">
 			<td>`+data[i].hostUsername+`</td>
-			<td>`+data[i].status+`</td>
+				<td  class = "nameStatus">`+data[i].status+`</td>
 			<td class= "tdCol">`+data[i].type+`</td>
-			<td>`+data[i].location.address.street+" "+data[i].location.address.number+" "+data[i].location.address.city+" "+data[i].location.address.zipCode+`</td>
+			<td class = "nameLocation">`+data[i].location.address.street+" "+data[i].location.address.number+" "+data[i].location.address.city.toUpperCase()+" "+data[i].location.address.zipCode+`</td>
 			<td class = "nameAmenitie">`+partsOfStr+`</td>
-			<td>`+data[i].numberOfRooms+`</td>
-			<td>`+data[i].numberOfGuest+`</td>
-			<td>`+data[i].price+`</td>
+			<td class = "nameRooms">`+data[i].numberOfRooms+`</td>
+			<td class=  "nameGuests">`+data[i].numberOfGuest+`</td>
+			<td class = "namePrice">`+data[i].price+`</td>
 			<td><img id="blah" height="150px alt="your image" src="`+data[i].images+`"</td>
 			<td><button id="make-reservation" class="btn btn-primary">Make reservation</button></td>
 			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
+			<td class = "nameDate" name = "nameDate" hidden= "true">`+data[i].dates+`</td>
+
 			</tr>`;
 	}
 	$('#apartmentsTable').html(temp);
@@ -118,6 +120,24 @@ var arrivale='';
 //         }
 //	}	
 //})
+function drawFilterAmenities(data){
+	console.log("draw for filter amenities")
+	 t = '';	
+	for(am in data){
+		$('#filterAmeniti').append($('<option>', {value:data[am].name, text:data[am].name}));
+	//
+		//t += (`<input type = "checkbox" id = "${data[am].id}" name ="amenities-box" value = "${data[am].name}">${data[am].name}</input><br>`);
+	}
+	//$('#amenitiesCheckBox').html(t);
+}
+$.ajax({
+	url:'ProjectRents/getAllAmenities',
+	type :"GET",
+	contentType:'application/json',
+	success:function(data){
+		drawFilterAmenities(data);
+	}
+})
 
 $.ajax({
 	url : "ProjectRents/currentUser",
@@ -561,6 +581,24 @@ $(document).ready(function(){
 	    	}
     	}
     })
-
+    $("#content-apartmant").on('change paste keyup','[name=filterRestApartment]',function (event) {
+        var n=$("#filterType").val();
+        var a = $("#filterAmeniti").val();
+        
+        
+        if ($("#filterType").val()=="Filter by type"){
+        	var type=$("#content-apartmant td.tdCol").parent();
+        }else{
+        	
+        	var type=$("#content-apartmant td.tdCol:contains('" + n + "')").parent()
+        }
+        if ($("#filterAmeniti").val()=="Filter by amenitie"){
+        	var amenitie=$("#content-apartmant td.tdCol").parent();
+        }else{
+        	var amenitie=$("#content-apartmant td.nameAmenitie:contains('" + a + "')").parent()
+        }
+        type.filter(amenitie).show();
+        $("#content-apartmant td.nameStatus").parent().not(type.filter(amenitie)).hide();
+    });
    
 })

@@ -307,10 +307,14 @@ public class ReservationService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getAllUsersForHost(@Context HttpServletRequest request) {
 		ArrayList<String> guestUsernameList = new ArrayList<String>(); 
+		
 		User host=(User)request.getSession().getAttribute("user");
+		
 		UserDAO userDao = (UserDAO) ctx.getAttribute("userDAO");
+		
 		ApartmentDAO apartDao = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
 		ReservationDAO resDao = (ReservationDAO) ctx.getAttribute("reservationDAO");
+		
 		//vraca listu aparmtna od hosta
 		ArrayList<Apartment> hostsApartmentsList = apartDao.getAllApartmentsByHostUsername(host.getUsername());
 		for(Apartment a : hostsApartmentsList) {

@@ -25,7 +25,7 @@
   "numberOfStay" : 3,
   "totalPrice" : 45.0,
   "message" : "poruka",
-  "guest" : "gost2",
+  "guest" : "guest",
   "status" : "CREATED"
 }, 
 {
@@ -35,6 +35,6 @@
   "numberOfStay" : 1,
   "totalPrice" : 20.0,
   "message" : "poruka",
-  "guest" : "gost2",
+  "guest" : "guest",
   "status" : "CREATED"
 }]

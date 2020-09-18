@@ -104,11 +104,12 @@ function drawAvailable(data,pom){
 				if(data.status=='CREATED'){
 					temp+=`<tr id="`+data.reservationId+`">
 					<td>`+data.apartmentId+`</td>
+					<td class = "nameGuest">`+data.guest+`</td>
 					<td>`+data.arrivalDate+`</td>
 					<td>`+data.numberOfStay+`</td>
 					<td>`+data.totalPrice+`</td>
 					<td>`+data.message+`</td>
-					<td>`+data.status+`</td>
+					<td class ="nameStatusRes">`+data.status+`</td>
 					<td><button  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
 					<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
 					<td><button disabled  id="end-reservation" class="btn btn-primary">End reservation</button></td>
@@ -117,11 +118,12 @@ function drawAvailable(data,pom){
 				else if(data.status=='ACCEPTED'){
 						temp+=`<tr id="`+data.reservationId+`">
 					<td>`+data.apartmentId+`</td>
+					<td class = "nameGuest">`+data.guest+`</td>
 					<td>`+data.arrivalDate+`</td>
 					<td>`+data.numberOfStay+`</td>
 					<td>`+data.totalPrice+`</td>
 					<td>`+data.message+`</td>
-					<td>`+data.status+`</td>
+				<td class ="nameStatusRes">`+data.status+`</td>
 					<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
 					<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
 					<td><button disabled  id="end-reservation" class="btn btn-primary">End reservation</button></td>
@@ -131,11 +133,12 @@ function drawAvailable(data,pom){
 				 else{
 					temp+=`<tr id="`+data.reservationId+`">
 					<td>`+data.apartmentId+`</td>
+					<td class = "nameGuest">`+data.guest+`</td>
 					<td>`+data.arrivalDate+`</td>
 					<td>`+data.numberOfStay+`</td>
 					<td>`+data.totalPrice+`</td>
 					<td>`+data.message+`</td>
-					<td>`+data.status+`</td>
+				<td class ="nameStatusRes">`+data.status+`</td>
 					<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
 					<td><button disabled  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
 					<td><button  disabled id="end-reservation" class="btn btn-primary">End reservation</button></td>
@@ -152,11 +155,12 @@ function drawAvailable(data,pom){
 				if(data.status=='CREATED'){
 					temp+=`<tr id="`+data.reservationId+`">
 					<td>`+data.apartmentId+`</td>
+					<td class = "nameGuest">`+data.guest+`</td>
 					<td>`+data.arrivalDate+`</td>
 					<td>`+data.numberOfStay+`</td>
 					<td>`+data.totalPrice+`</td>
 					<td>`+data.message+`</td>
-					<td>`+data.status+`</td>
+					<td class ="nameStatusRes">`+data.status+`</td>
 					<td><button  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
 					<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
 					<td><button   id="end-reservation" class="btn btn-primary">End reservation</button></td>
@@ -165,11 +169,12 @@ function drawAvailable(data,pom){
 				 else if(data.status=='ACCEPTED'){
 						temp+=`<tr id="`+data.reservationId+`">
 					<td>`+data.apartmentId+`</td>
+					<td class = "nameGuest">`+data.guest+`</td>
 					<td>`+data.arrivalDate+`</td>
 					<td>`+data.numberOfStay+`</td>
 					<td>`+data.totalPrice+`</td>
 					<td>`+data.message+`</td>
-					<td>`+data.status+`</td>
+					<td class ="nameStatusRes">`+data.status+`</td>
 					<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
 					<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
 					<td><button   id="end-reservation" class="btn btn-primary">End reservation</button></td>
@@ -180,11 +185,12 @@ function drawAvailable(data,pom){
 					
 					temp+=`<tr id="`+data.reservationId+`">
 					<td>`+data.apartmentId+`</td>
+					<td class = "nameGuest">`+data.guest+`</td>
 					<td>`+data.arrivalDate+`</td>
 					<td>`+data.numberOfStay+`</td>
 					<td>`+data.totalPrice+`</td>
 					<td>`+data.message+`</td>
-					<td>`+data.status+`</td>
+					<td class ="nameStatusRes">`+data.status+`</td>
 					<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
 					<td><button disabled  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
 					<td><button  id="end-reservation" class="btn btn-primary">End reservation</button></td>
@@ -213,21 +219,24 @@ function drawApartments(data){
 		temp+=`<tr id="`+data[i].id+`">
 			<td class = "tdCol">`+data[i].status+`</td>
 			<td class="tdCol">`+data[i].type+`</td>
-			<td>`+data[i].location.address.street+","+data[i].location.address.number+","+data[i].location.address.city+","+data[i].location.address.zipCode+`</td>
+			<td class = "nameLocation">`+data[i].location.address.street+","+data[i].location.address.number+","+data[i].location.address.city.toUpperCase()+","+data[i].location.address.zipCode+`</td>
 			<td class = "nameAmenitie">`+partsOfStr+`</td>
-			<td>`+data[i].numberOfRooms+`</td>
-			<td>`+data[i].numberOfGuest+`</td>
-			<td>`+data[i].price+`</td>
-			<td><img id="blah3" height="150px alt="your image" src="`+data[i].images+`"</td>
+				<td class = "nameRooms">`+data[i].numberOfRooms+`</td>
+			<td class = "nameGuests">`+data[i].numberOfGuest+`</td>
+			<td class = "namePrice">`+data[i].price+`</td>
+			<td><img id="blah" height="150px alt="your image" src="`+data[i].images+`"</td>
+
 			<td><button id="comments-apartment" class="btn btn-primary">View comments </button></td>
 			<td><button id="edit-apartment" class="btn btn-primary">Edit</button></td>
-			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td></tr>`;
+			<td><button id="delete-apartment" class="btn btn-primary">Delete </button></td>
+						<td class = "nameDate" name = "nameDate" hidden= "true">`+data[i].dates+`</td>
+			</tr>`;
 		else{
 			tempPassive+=`<tr id="`+data[i].id+`">
 			<td>`+data[i].status+`</td>
 			<td class = "tdCol">`+data[i].type+`</td>
-			<td>`+data[i].location.address.street+","+data[i].location.address.number+","+data[i].location.address.city+","+data[i].location.address.zipCode+`</td>
-			<td class = "nameAmenitie">`+partsOfStr+`</td>
+			<td>`+data[i].location.address.street+","+data[i].location.address.number+","+data[i].location.address.city.toUpperCase()+","+data[i].location.address.zipCode+`</td>
+			<td >`+partsOfStr+`</td>
 			<td>`+data[i].numberOfRooms+`</td>
 			<td>`+data[i].numberOfGuest+`</td>
 			<td>`+data[i].price+`</td>
@@ -254,6 +263,21 @@ function drawUsers(data){
 	}
 	$('#usersTable').html(temp);
 }
+function drawFilterAmenities(data){
+	console.log("draw for filter amenities")
+	 t = '';	
+	for(am in data){
+		$('#filterAmeniti').append($('<option>', {value:data[am].name, text:data[am].name}));
+	}
+}
+$.ajax({
+	url:'ProjectRents/getAllAmenities',
+	type :"GET",
+	contentType:'application/json',
+	success:function(data){
+		drawFilterAmenities(data);
+	}
+})
 var modal='';
 function someFunc(event){
 	if( $(event.target).attr("id")=="delete-apartment"){
@@ -386,7 +410,7 @@ $(document).ready(function(){
 	$('#content').attr('hidden', false);
 	$('.profileLook').attr('hidden', true);
 	$('#content-users').attr('hidden',true);
-	$('#myReservationsTable').attr('hidden',true);
+	$('#myReservations').attr('hidden',true);
 	$.ajax({
 		url:"ProjectRents/currentUser",
 		type : "GET",
@@ -409,7 +433,7 @@ $(document).ready(function(){
 	      $('a[href="#users"]').click(function(){
 			$('#content').attr('hidden', true);
 			$('.profileLook').attr('hidden', true);
-			$('#myReservationsTable').attr('hidden',true);
+			$('#myReservations').attr('hidden',true);
 			$('#content-users').attr('hidden',false);
 			
 			$.ajax({
@@ -426,7 +450,7 @@ $(document).ready(function(){
 		$('#myReservationsTable tbody').empty();
 		$('#content').attr('hidden',true);
 		$('#content-users').attr('hidden',true);
-		$('#myReservationsTable').attr('hidden',false);
+		$('#myReservations').attr('hidden',false);
 		$('.profileLook').attr('hidden', true);
 
 		$.ajax({
@@ -886,15 +910,28 @@ $(document).ready(function(){
 		  $('#content-users').attr('hidden', true);
 			$('#content').attr('hidden', false);
 			$('.profileLook').attr('hidden', true);
-			$('#myReservationsTable').attr('hidden',true);
+			$('#myReservations').attr('hidden',true);
 	  })
+	  $("#myReservations").on('change paste keyup','[name=filterRest]',function (event) {
+		  	var n=$("#searchByGuestUsername").val();
+					
+					if ($("#searchByGuestUsername").val()==""){
+						
+						var username=$("#myReservations td.nameGuest").parent();
+					}else{
+						var username=$("#myReservations td.nameGuest:contains('" + n + "')").parent()
+					}
+					username.show();
+			        $("#myReservations td.nameGuest").parent().not(username).hide();
+	  })
+	  
 	//////////////////// profile
 
 
 	  $('a[href="#profile"]').click(function(){
 			$('#content').attr('hidden', true);
 			$('.profileLook').attr('hidden', false);
-			$('#myReservationsTable').attr('hidden',true);
+			$('#myReservations').attr('hidden',true);
 			$('#content-users').attr('hidden',true);
 	    	$.ajax({
 	    		url: 'ProjectRents/currentUser',
@@ -1095,4 +1132,58 @@ let pomocna = function () {
         map.addLayer(vectorLayer);
 
     });
+    $("#content").on('change paste keyup','[name=filterRestApartment]',function (event) {
+        var a = $("#filterAmeniti").val();
+   
+        if ($("#filterAmeniti").val()=="Filter by amenitie"){
+        	var amenitie=$("#content td.nameAmenitie").parent();
+        }else{
+        	var amenitie=$("#content td.nameAmenitie:contains('" + a + "')").parent()
+        }
+        amenitie.show();
+        $("#content td.nameAmenitie").parent().not(amenitie).hide();
+    });
+    
+	$("#filterType").change(function () { //filter po tipu ap
+	if ($(this).val() == "Filter by type") {
+		$("#apartmentsTable td.tdCol").parent().show();
+	} else if ($(this).val() == "ROOM") {
+		console.log($(this).val());
+		$("#apartmentsTable td.tdCol:not(:contains('" + $(this).val() + "'))").parent().hide();
+		$("#apartmentsTable td.tdCol:contains('" + $(this).val() + "')").parent().show();
+	}
+	else {
+		$("#apartmentsTable td.tdCol:not(:contains('" + $(this).val() + "'))").parent().hide();
+		$("#apartmentsTable td.tdCol:contains('" + $(this).val() + "')").parent().show();
+	}
+});
+
+$("#filterTypePassive").change(function () { //filter po tipu ap
+    if ($(this).val() == "Filter by type") {
+        $("#apartmentsTable-passive td.tdCol").parent().show();
+    } else if ($(this).val() == "ROOM") {
+    	console.log($(this).val());
+        $("#apartmentsTable-passive td.tdCol:not(:contains('" + $(this).val() + "'))").parent().hide();
+        $("#apartmentsTable-passive td.tdCol:contains('" + $(this).val() + "')").parent().show();
+    }
+    else {
+        $("#apartmentsTable-passive td.tdCol:not(:contains('" + $(this).val() + "'))").parent().hide();
+        $("#apartmentsTable-passive td.tdCol:contains('" + $(this).val() + "')").parent().show();
+    }
+});
+
+$("#myReservations").on('change paste keyup','[name=filterRestResStatus]',function (event) {
+    var g=$("#filterRes").val();
+    console.log(g)
+    if ($("#filterRes").val()=="Filter by status"){
+    	var status=$("#myReservations td.nameStatusRes").parent();
+    }else{      
+    	var status=$("#myReservations td.nameStatusRes:contains('" + g + "')").parent()
+    }
+    
+   
+    status.show();
+    $("#myReservations td.nameStatusRes").parent().not(status).hide();
+});
+    
 };

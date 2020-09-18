@@ -10,15 +10,17 @@ function drawApartments(data){
 		var partsOfStr = list.join(',').replace(/,/g ,'<br>').split();
 		temp+=`<tr id="`+data[i].id+`">
 			<td>`+data[i].hostUsername+`</td>
-			<td>`+data[i].status+`</td>
-			<td>`+data[i].type+`</td>
-			<td>`+data[i].location.address.street+","+data[i].location.address.number+","+data[i].location.address.city+","+data[i].location.address.zipCode+`</td>
+				<td  class = "nameStatus">`+data[i].status+`</td>
+			<td  class = "nameType">`+data[i].type+`</td>
+			<td class = "nameLocation">`+data[i].location.address.street+","+data[i].location.address.number+","+data[i].location.address.city.toUpperCase()+","+data[i].location.address.zipCode+`</td>
 			<td class = "nameAmenitie">`+partsOfStr+`</td>
-			<td>`+data[i].numberOfRooms+`</td>
-			<td>`+data[i].numberOfGuest+`</td>
-			<td>`+data[i].price+`</td>
+			<td class = "nameRooms">`+data[i].numberOfRooms+`</td>
+			<td class = "nameGuests">`+data[i].numberOfGuest+`</td>
+			<td class = "namePrice">`+data[i].price+`</td>
 			<td><img id="blah" height="150px alt="your image" src="`+data[i].images+`"</td>
-			<td><button id="view-comment" class="btn btn-primary">View comments</button></td></tr>`;
+			<td><button id="view-comment" class="btn btn-primary">View comments</button></td>
+						<td class = "nameDate" name = "nameDate" hidden= "true">`+data[i].dates+`</td>
+</tr>`;
 	}
 	$('#apartmentsTable').html(temp);
 }
@@ -56,7 +58,7 @@ $(document).ready(function(){
 	
 	$('a[href="#apartments"]').click(function(){
 		$('form#login').attr("hidden", true);
-		$('#content').attr("hidden", false);
+		$('#content-apartmant').attr("hidden", false);
 		$('#content-registration').attr("hidden", true);
 		$.ajax({
 			url:'ProjectRents/allActiveApartments',
@@ -84,9 +86,9 @@ $('#apartmentsTable').on('click','button',function(event){
 				
 			}
 		})
-		
-		
 	}
+	
+	
 })
 })
 
