@@ -238,7 +238,17 @@
 	</div>
 	<br><br><br>
 	<div id = "myReservations" >
-	
+	<div style="width: 80%;height: 30px; margin: 0 auto;">
+		    					<select style="height: 30px;"  id="filterRes"  name="filterRestResStatus">
+						              <option value = "Filter by status">Filter by status</option>
+						              <option value="CREATED">CREATED</option>
+						              <option value="ACCEPTED">ACCEPTED</option>
+						              <option value="CANCELED">CANCELED</option>
+						              <option value="COMPLETED">COMPLETED</option>
+						              <option value="REJECTED">REJECTED</option>
+						      </select>
+			    </div>
+      	<br>
 	        <input type="text"  id="searchByGuestUsername" placeholder="Search by guest username" name="filterRest" style="width: 80%;margin-left: 150px;">
 			<br></br>
 	       <div id = "myReservationsTable" >

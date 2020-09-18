@@ -106,7 +106,7 @@ function drawAvailable(data,pom){
 					<td>`+data.numberOfStay+`</td>
 					<td>`+data.totalPrice+`</td>
 					<td>`+data.message+`</td>
-					<td>`+data.status+`</td>
+					<td class ="nameStatusRes">`+data.status+`</td>
 					<td><button  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
 					<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
 					<td><button disabled  id="end-reservation" class="btn btn-primary">End reservation</button></td>
@@ -120,7 +120,7 @@ function drawAvailable(data,pom){
 					<td>`+data.numberOfStay+`</td>
 					<td>`+data.totalPrice+`</td>
 					<td>`+data.message+`</td>
-					<td>`+data.status+`</td>
+				<td class ="nameStatusRes">`+data.status+`</td>
 					<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
 					<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
 					<td><button disabled  id="end-reservation" class="btn btn-primary">End reservation</button></td>
@@ -135,7 +135,7 @@ function drawAvailable(data,pom){
 					<td>`+data.numberOfStay+`</td>
 					<td>`+data.totalPrice+`</td>
 					<td>`+data.message+`</td>
-					<td>`+data.status+`</td>
+				<td class ="nameStatusRes">`+data.status+`</td>
 					<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
 					<td><button disabled  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
 					<td><button  disabled id="end-reservation" class="btn btn-primary">End reservation</button></td>
@@ -157,7 +157,7 @@ function drawAvailable(data,pom){
 					<td>`+data.numberOfStay+`</td>
 					<td>`+data.totalPrice+`</td>
 					<td>`+data.message+`</td>
-					<td>`+data.status+`</td>
+					<td class ="nameStatusRes">`+data.status+`</td>
 					<td><button  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
 					<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
 					<td><button   id="end-reservation" class="btn btn-primary">End reservation</button></td>
@@ -171,7 +171,7 @@ function drawAvailable(data,pom){
 					<td>`+data.numberOfStay+`</td>
 					<td>`+data.totalPrice+`</td>
 					<td>`+data.message+`</td>
-					<td>`+data.status+`</td>
+					<td class ="nameStatusRes">`+data.status+`</td>
 					<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
 					<td><button  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
 					<td><button   id="end-reservation" class="btn btn-primary">End reservation</button></td>
@@ -187,7 +187,7 @@ function drawAvailable(data,pom){
 					<td>`+data.numberOfStay+`</td>
 					<td>`+data.totalPrice+`</td>
 					<td>`+data.message+`</td>
-					<td>`+data.status+`</td>
+					<td class ="nameStatusRes">`+data.status+`</td>
 					<td><button disabled  id="accept-reservation" class="btn btn-primary">Accept reservation</button></td>
 					<td><button disabled  id="reject-reservation" class="btn btn-primary">Reject reservation</button></td>
 					<td><button  id="end-reservation" class="btn btn-primary">End reservation</button></td>
@@ -1161,6 +1161,20 @@ $("#filterTypePassive").change(function () { //filter po tipu ap
         $("#apartmentsTable-passive td.tdCol:not(:contains('" + $(this).val() + "'))").parent().hide();
         $("#apartmentsTable-passive td.tdCol:contains('" + $(this).val() + "')").parent().show();
     }
+});
+
+$("#myReservations").on('change paste keyup','[name=filterRestResStatus]',function (event) {
+    var g=$("#filterRes").val();
+    console.log(g)
+    if ($("#filterRes").val()=="Filter by status"){
+    	var status=$("#myReservations td.nameStatusRes").parent();
+    }else{      
+    	var status=$("#myReservations td.nameStatusRes:contains('" + g + "')").parent()
+    }
+    
+   
+    status.show();
+    $("#myReservations td.nameStatusRes").parent().not(status).hide();
 });
     
 };
