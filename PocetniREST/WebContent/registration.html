@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Registration</title>
+  <meta charset="utf-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
+  </script><link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<!--  link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+   
+   <link href="css/look.css" rel="stylesheet" id="look-css">
+   
+ 	<script src="apartmentsActive.js"></script>
+	<script src="registration.js"></script>
+</head>
+
+
+<body>
+<nav class="navbar navbar">
+	<div class="container">
+	<div class="navbar-header">	
+	 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="./home.html">Apartment Rent</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#apartments">APARTMENTS</a></li>
+        <li class="dropdown">
+	        <a class="dropdown-toggle" data-toggle="dropdown" role ="menu" href="#">
+	        <span class="glyphicon glyphicon-user user"></span>
+	        <span class="caret"></span>
+	        </a>
+	        <ul class="dropdown-menu">
+	          <li><a href="./login.html"">Log In</a></li>
+	            <li role="presentation" class="divider"></li>
+	          <li><a href="./registration.html">Registration</a></li>
+	        </ul>
+      	</li>
+      	
+      </ul>
+    </div>
+
+  </div>
+</nav>
+<div class="container-fluid text-center" id = "content-registration">    
+      <form class="form-signin" id="registration">  
+       <h2 class="form-signin-heading">Registration</h2>
+      <input type="text" class="form-control" id="username" placeholder="Username" required  oninvalid="this.setCustomValidity('Username is required.')" oninput="setCustomValidity('')"/>
+       <input type="text" class="form-control" id="name" placeholder="Name" required  oninvalid="this.setCustomValidity('Name is required.')" oninput="setCustomValidity('')"/>
+      <input type="text" class="form-control" id="surname" placeholder="Surname" required  oninvalid="this.setCustomValidity('Surname is required.')" oninput="setCustomValidity('')"/>      
+      <select name="gender" id="gender" class="form-control" required  oninvalid="this.setCustomValidity('Username is required.')" oninput="setCustomValidity('')">
+      	<option value="male" selected>Male</option>
+      	<option value="female">Female</option>
+      </select>
+      <input type="password" class="form-control" id="password" placeholder="Password" required  oninvalid="this.setCustomValidity('Password is required.')" oninput="setCustomValidity('')"/>    
+     <input type="password" class="form-control" id="passControl" placeholder="Confirm password" required  oninvalid="this.setCustomValidity('Confirm password is required.')" oninput="setCustomValidity('')"/>      
+    	<p id="error" class = "error-message"></p>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button> 
+    </form>
+    
+	<p id="success"></p>
+
+    </div> 
+    
+    <div id ="content" hidden="true">     
+      <!-- this is for #apartments content -->
+      	<br><br>
+      	   	<div  style="text-align: center">
+			<br><br><br>
+			 <div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+	        <table class="table  table-bordered" >
+	              <thead class="success">
+	                <tr class="success">
+	                  <th colspan="9" style="text-align: center;">APARTMENTS</th>
+	                </tr>
+	                	<tr class="success">
+	                	<th>Status</th>
+	                	<th>Apartment Type</th>
+	                	<th>Location</th>
+	                	<th>Number of rooms</th>
+	                	<th>Number of guests</th>
+	                	<th>Price</th>
+	                	<th>Comments</th>
+	               	 	</tr>
+	                </thead>
+	                <tbody id="apartmentsTable">
+	                </tbody>
+	            </table>
+     		</div> 
+			</div>
+			</div>    
+   
+</body>
+</html>

@@ -1,0 +1,423 @@
+<html lang="en">
+<head>
+  <title>Guest</title>
+  <meta charset="utf-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
+  </script><link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+   <link href= 
+'https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css' 
+         rel='stylesheet'> 
+    <script src= 
+"https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"> 
+    </script> 
+    <script src= 
+"https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"> 
+  
+  
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"/></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" rel="stylesheet"/>
+<!-- utorizacija.js -->
+	<script src="guest.js"></script>
+	<script src="sortByPrice.js"></script>
+		<script src="filtersApartmentRezervations.js"></script>
+		
+	   	 <script src="searchApartmentMix.js"></script>
+	
+	<link href="css/look.css" rel="stylesheet" id="look-css">
+</head>
+
+<style>
+
+.tabs-left, .tabs-right {
+  border-bottom: none;
+  padding-top: 2px;
+}
+.tabs-left {
+  border-right: 1px solid #ddd;
+}
+
+.tabs-left>li, .tabs-right>li {
+  float: none;
+  margin-bottom: 2px;
+}
+.tabs-left>li {
+  margin-right: -1px;
+}
+
+.tabs-left>li.active>a,
+.tabs-left>li.active>a:hover,
+.tabs-left>li.active>a:focus {
+  border-bottom-color: #ddd;
+  border-right-color: transparent;
+}
+
+.tabs-left>li>a {
+  border-radius: 4px 0 0 4px;
+  margin-right: 0;
+  display:block;
+}
+
+.center {
+   position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.clearfix {
+  overflow: auto;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*table */
+.a-table{
+ background-color:  #ffcce6;
+}
+
+</style>
+
+<body>
+<nav class="navbar navbar">
+	<div class="container">
+	<div class="navbar-header">	
+	 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="./home.html">Apartment Rent</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li id="myreservations"><a href="#myreservations">MY RESERVATIONS</a></li>
+           <li ><a href="#apartments">APARTMENTS</a></li>
+        <li class="dropdown">
+	        <a class="dropdown-toggle" data-toggle="dropdown" role ="menu" href="#">
+	        <span class="glyphicon glyphicon-user user"></span>
+	        <span class="caret"></span>
+	        </a>
+	        <ul class="dropdown-menu">
+	          	<li><a href="#profile" class ="profile">Profile</a></li>
+	            <li role="presentation" class="divider"></li>
+	          	<li  id = "logout"><a href="./login.html">Log out</a></li>
+	        </ul>
+      	</li>
+      	
+      </ul>
+    </div>
+
+  </div>
+</nav>
+ <div id ="content" hidden="false">     
+      <!-- this is for #apartments content -->
+      	<br><br>
+			
+		    <div id = "content-apartmant">
+				 <div style="width: 80%;height: 30px; margin: 0 auto;" name=filterRestApartment >
+		    					<select style="height: 30px;"  id="filterType" >
+						              <option value = "Filter by type">Filter by type</option>
+						              <option value="ROOM">ROOM</option>
+						              <option value="APARTMENT">APARTMENT</option>
+						      </select>
+			   <select style="height: 30px;float:left;margin-right: 10px;" name="filterRestApartment" id="filterAmeniti"> <option >Filter by amenitie</option></select>
+			    </div>
+			    
+			<br>
+			<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+		     <div style="width: 80%;height: 30px; margin: 0 auto;" id="searchDiv">
+           <p style ="float:left;margin-right: 5px;"> Price from:</p>
+     <input type="number" style="width: 5%;float:left;" name="filterSearch" id="filterPriceFrom" >
+       <p style ="float:left;margin-right: 5px;"">to:</p>
+     <input type="number" style="width: 5%;float:left;margin-right: 7px;"  name="filterSearch" id="filterPriceTo">
+        <p style ="float:left;margin-right: 5px;">Rooms from:</p>
+     <input type="number" style="width: 5%;float:left;margin-right: 7px;"  name="filterSearch" id="filterRoomFrom" >
+       <p style ="float:left;margin-right: 7px;">to:</p>
+     <input type="number" style="width: 5%;float:left;margin-right: 7px;"  name="filterSearch" id="filterRoomTo">
+   
+ <input type="number" style="width: 12%;float:left;margin-right: 7px;margin-bottom:15px;"  name="filterSearch" id="searchByGuests" placeholder="Search guests" >
+     <input type="text" style="width: 12%;float:left;margin-right: 7px;margin-bottom:15px;" name="filterSearch" id="searchByLocation" placeholder="Search city" >
+           <p style ="float:left;margin-right: 5px;">Date from:</p>
+   
+     <div class="input-group date form-group" id="datepicker2" style="height: 30px;float:left;width : 12%;margin-right: 7px;"
+    style = "background:transparent;text:transparent"/>
+    <input type="text" class="form-control" id="filterDateFrom"   name="filterSearch"  placeholder="Select day" required style = "background:transparent;text:transparent;"/>
+    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" style = "background:transparent;"/></i><span class="count"></span></span>
+</div>
+       <p style ="float:left;margin-right:7px;"">to:</p>
+     <div class="input-group date form-group" id="datepicker3" style="height: 30px;float:left;margin-right: 7px;width : 12%;"
+      >
+    <input type="text" class="form-control"  id="filterDateTo" name="filterSearch" placeholder="Select day" required />
+    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i><span class="count"></span></span>
+</div>
+        
+        </div>
+      	   	<div  style="text-align: center">
+			 <div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+	        <table class="table  table-bordered" >
+	              <thead class="success">
+	                <tr class="success">
+	                  <th colspan="11" style="text-align: center;">APARTMENTS</th>
+	                </tr>
+	                	<tr class="success">
+	                	<th>Host Name</th>
+	                	<th>Status</th>
+	                	<th>Apartment Type</th>
+	                	<th>Location</th>
+	                	<th>Amenities</th>
+	                	<th>Number of rooms</th>
+	                	<th>Number of guests</th>
+	                	<th name="sort">Price<span name="arrow" class="glyphicon glyphicon-arrow-down"/></th>
+	                	<th>Image</th>
+	                  	<th></th>
+	                  	<th></th>
+	               	 	</tr>
+	                </thead>
+	                <tbody id="apartmentsTable">
+	                </tbody>
+	            </table>
+	            </div>
+     		</div> 
+			</div>
+			</div>
+			<br><br>
+    <div id = "myReservations" hidden = "true">
+			<div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+	        <table class="table  table-bordered" >
+	              <thead class="success">
+	               <tr class="success">
+	                  <th colspan="9" style="text-align: center;">MY RESERVATIONS</th>
+	                </tr>
+				     <tr class = "success">
+			         <th>Apartment id</th>
+			          <th>Arrivale date</th>
+			          <th>Nights of stay</th>
+			           	<th name="sort">Total price<span name="arrow" class="glyphicon glyphicon-arrow-down"/></th>
+			          <th>Message for host</th>
+			          <th>Status</th>       
+			          <th></th>     
+			          <th></th>     
+			        </tr>
+			      </thead>
+			      <tbody id="tbodyMyReservations">
+			      </tbody>
+	            </table>
+     		</div> 
+     		</div>
+   	<!-- MODAL FOR RESERVATIONS -->
+   	
+   	  <div id="myModal" class="modal">
+  		<div class="modal-content" style="text-align: center;" >
+    	 
+    	 <table width="500" align="center">
+        <tr>
+          <th height="50" >Choose one of available Dates:</th>
+          <th height="50">
+			<div id='dropdown'>
+  				<select id="start-date" >
+ 			 </select>
+			</div>
+		  </th>
+        </tr>
+         <!-- 
+        <tr>
+        <th height="50">Select start date:</th>
+          <th height="50">
+       			<div id="start-date" class="delivery-datepicker">
+			</div>
+          </th>
+        </tr>
+        -->  
+        <tr>
+          <th height="50">Nights of stay:</th>
+          <th height="50"><input type ="number" id = "nights-of-stay" required></th>
+        </tr>
+        <tr>
+          <th height="50">Message for host:</th>
+          <th height="50"><input type ="text" id = "message-for-host" required></th>
+        </tr>
+       <span class="close">&times;</span>
+        </table>
+       <br>
+       	<p id="error-apartment" class = "error-message"></p> 
+       <button id="make-reservation2" class="btn btn-primary">MAKE RESERVATION</button>
+       <br>
+  	  </div> 
+   	</div>
+   	
+   	
+   		<!-- MODAL FOR LEAVING COMMENT -->
+   	
+   	<div id="modal2" class="modal">
+
+  		<!-- Modal content -->
+  		<div class="modal-content" style="text-align: center;" >
+    	 
+    	 <table width="500" align="center">
+    	  <tr>
+          <th height="50">Your comment:</th>
+          <th height="50"><input type ="text" id = "comment-left" required  oninvalid="this.setCustomValidity('Comment is required')" oninput="setCustomValidity('')"></th>
+        </tr>
+          <tr>
+          <th height="50" >Rate apartment:</th>
+          <th height="50"  >
+			<select name="rate" id="rate" class="form-control" required 
+				 oninvalid="this.setCustomValidity('Type is required.')" oninput="setCustomValidity('')">
+      			<option value="EXCELLENT">EXCELLENT</option>
+      			<option value="GOOD">GOOD</option>
+      			<option value="SATISFYING">SATISFYING</option>
+      			<option value="BAD">BAD</option>
+      			<option value="HORRIBLE">HORRIBLE</option>
+     		 </select>
+		  </th>
+        </tr>
+       <span class="close">&times;</span>
+        </table>
+        
+       <br>
+       <button id="send-comment" class="btn btn-primary">Send comment</button>
+       <br>
+        <p id="error-com"></p>
+  	  </div> 
+   	</div>
+   	
+   	
+   	
+   	
+    <!-- BUTTON PROFIL LOOK -->
+    <div>
+ <div  class="col-sm-18 profileLook" hidden = "true">
+   <h3 style="text-align: center">Profil view</h3>
+        <hr/>
+        <div class="col-xs-2">
+  <!-- Nav tabs  -->
+  <ul class="nav nav-tabs tabs-left sideways" role="tablist">
+    <li role="presentation" class="active"><a href="#edit-profile" aria-controls="edit-profile" role="tab" data-toggle="tab">Edit profile</a></li>
+    <li role="presentation"><a href="#change-password" aria-controls="change-password" role="tab" data-toggle="tab">Change password</a></li>
+  </ul>
+    </div>
+
+        <div class="col-xs-6 center">
+  <!-- Tab panes  -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="edit-profile" style="width: 150%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+			<form  id="form-profil-edit">  
+		       <p>Username</p>
+		      <input type="text" class="form-control" id="username" disabled/>
+		        <p>Name</p>
+		       <input type="text" class="form-control" id="name" required  oninvalid="this.setCustomValidity('Name is required.')" oninput="setCustomValidity('')" />
+		        <p>Surname</p>
+		      <input type="text" class="form-control" id="surname" required  oninvalid="this.setCustomValidity('Surname is required.')" oninput="setCustomValidity('')"/>     
+		      <p>Gender</p> 
+		      <select name="gender" id="gender" class="form-control" >
+		      	<option value="male" >Male</option>
+		      	<option value="female">Female</option>
+		      </select>
+		    	<p id="error" class = "error-message"></p>
+		    	<br>
+		      <button class="btn btn-lg btn-primary btn-block" type="submit" id = "submit-edit">Submit</button> 
+		    </form>
+	</div>
+	<!-- change password -->
+    <div role="tabpanel" class="tab-pane" id="change-password" style="width: 150%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+    		<form  id="form-change-password">  
+    		   <p>Old password</p>
+			<input type="password" class="form-control" id="old-password" placeholder="Password" required  oninvalid="this.setCustomValidity('Password is required.')" oninput="setCustomValidity('')"/>    
+     		   <p id="error-old" class = "error-message"></p>   
+     		   <p>New password</p>
+     		<input type="password" class="form-control" id="new-password" placeholder="New password" required  oninvalid="this.setCustomValidity('New password is required.')" oninput="setCustomValidity('')"/>      
+    			<p>Confirm new password</p>
+    		<input type="password" class="form-control" id="confirm-new-password" placeholder="Confirm new password" required  oninvalid="this.setCustomValidity('Confirm new password is required.')" oninput="setCustomValidity('')"/>      
+    		<p id="error-confirm" class = "error-message"></p>   
+    		<br>
+    		<button class="btn btn-lg btn-primary btn-block" type="submit" id = "submit-change" >Change password</button> 
+    		</form>
+	</div>
+  </div>
+
+  </div>
+
+        <div class="clearfix"></div>
+
+      </div>
+</div>
+        <!-- modals for comments-->	
+   	   	<div id="modal3" class="modal">
+
+  		<!-- Modal content -->
+  		<div class="modal-content"  >
+    	 
+    	 <table width="500" align="center">
+    	 <thead class="success" >
+    	 <tr style="text-align: center;">
+    	  <th>Guest</th>
+    	  <th>Comment</th>
+    	  <th>Grade</th>
+    	  </tr>
+    	  </thead>
+    	  <tbody id="tbodyComments">
+		 </tbody>
+		  <span class="close">&times;</span>
+		</table>
+		
+		 </div>
+		
+	</div>
+</body>
+</html>

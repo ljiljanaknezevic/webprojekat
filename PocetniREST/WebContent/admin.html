@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Admin</title>
+  <meta charset="utf-8">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js">
+  </script><link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+   <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+   <link href="css/look.css" rel="stylesheet" id="look-css">
+	  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js" type="text/javascript"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="Stylesheet" type="text/css" />
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.3.0/js/bootstrap-datepicker.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.css" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+<!-- 	<script src="aut.js"></script> -->
+	 <script src="admin.js"></script>
+	 <script src="searchApartmentMix.js"></script>
+	 <script src="searchUsers.js"></script>
+	 <script src="sortByPrice.js"></script>
+	<!--<script src="registration.js"></script>  -->
+</head>
+
+<style>
+.tabs-left, .tabs-right {
+  border-bottom: none;
+  padding-top: 2px;
+}
+.tabs-left {
+  border-right: 1px solid #ddd;
+}
+
+.tabs-left>li, .tabs-right>li {
+  float: none;
+  margin-bottom: 2px;
+}
+.tabs-left>li {
+  margin-right: -1px;
+}
+
+.tabs-left>li.active>a,
+.tabs-left>li.active>a:hover,
+.tabs-left>li.active>a:focus {
+  border-bottom-color: #ddd;
+  border-right-color: transparent;
+}
+
+.tabs-left>li>a {
+  border-radius: 4px 0 0 4px;
+  margin-right: 0;
+  display:block;
+}
+
+.center {
+   position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+.clearfix {
+  overflow: auto;
+}
+
+.form-signin {
+    max-width: auto;
+    padding: 0px 150px 50px;
+    margin: rgb(255, 255, 255);
+    background-color: #fff;
+}
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+.header-name{
+ color: #C21460;
+  line-height: 2.2;
+    font-family: Montserrat, sans-serif;
+}
+</style>
+<body>
+<nav class="navbar navbar">
+	<div class="container">
+	<div class="navbar-header">	
+	 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="admin.html">Apartment Rent</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+         <li><a href="#holiday">HOLIDAY DATES</a></li>
+         <li><a href="#reservationsClick">RESERVATIONS</a></li>
+        <li><a href="#registerNewHost">REGISTER NEW HOST</a></li>
+        
+        <!-- admins roles -->
+        <li id="#amenities"><a href="#amenities">AMENITIES</a></li>
+        <li id="users"><a href="#users">USERS</a></li>
+        <li><a href="#apartments">APARTMENTS</a></li>
+        <li class="dropdown">
+	        <a class="dropdown-toggle" data-toggle="dropdown" role ="menu" href="#">
+	        <span class="glyphicon glyphicon-user user"></span>
+	        <span class="caret"></span>
+	        </a>
+	        <ul class="dropdown-menu">
+	          <li><a href="#profile">Profile</a></li>
+	            <li role="presentation" class="divider"></li>
+	          <li id="logout"><a href="./login.html">Log out</a></li>
+	        </ul>
+      	</li>
+      	
+      </ul>
+    </div>
+
+  </div>
+</nav>
+	
+	<div id = "content-holiday" hidden = "true" style="background-image: url('./backs/back2.jpg');height: 100vh;
+	
+	 background-attachment: fixed;
+/*   -webkit-background-size: cover; */
+/*   -moz-background-size: cover; */
+/*   -o-background-size: cover; */
+  background-size: 100% 100%;
+   overflow-x: hidden;
+    overflow-y: hidden; position: fixed;  ">
+	<br><br>
+		<div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+		<p style = " font: 400 20px Lato, sans-serif;
+  line-height: 1.8;">Choose holiday dates :</p>
+		<br>
+		<div class="input-group date form-group" id="datepickerHoliday" style="height: 50px;">
+ 			   <input type="text" class="form-control" id="holi-days" name="Dates" placeholder="Select days" required style="height: 50px;" />
+ 			   <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i><span class="count" style="height: 50px;"></span></span>
+			</div>
+		<br>
+		<button class="btn btn-lg btn-primary btn-block" type="button" id = "done-holiday" >DONE</button> 
+		<p id = "#error-holi"></p>
+		</div>
+		
+	</div>
+      <!-- this is for #amenities content -->
+      	<br><br>
+      	   	<div id="dugmad" style="text-align: center" hidden="true">
+		    	<button id="addA"  class="btn btn-primary" type="button" style="alignment-baseline: central;" class="btn btn-default btn-sm">
+		       		Add amenities
+		    	</button>
+			
+			<br><br><br>
+			 <div style="width: 80%;height: 500px;overflow: auto; margin: 0 auto; ">
+	        <table class="table  table-bordered" >
+	              <thead class="success">
+	                <tr class="success">
+	                  <th colspan="9" style="text-align: center;">AMENITIES</th>
+	                </tr>
+	                	<tr class="success">
+	               		 <th  hidden = "true">Id</th>
+	                	<th>Name</th>
+	                  	<th></th>
+	                  	<th></th>
+	               	 	</tr>
+	                </thead>
+	                <tbody id="amenitiesTable">
+	                </tbody>
+	            </table>
+     		</div> 
+			</div>
+				   <!-- this is for end of #amenities content -->
+			
+		<div id ="content-apartmant" hidden = "true">     
+      <!-- this is for #apartments content -->
+			 <div style="width: 80%;height: 50px; margin: 0 auto;" >
+			 	<select style="height: 30px;float:left;margin-right: 10px;" name="filterRestApartment" id="filterStatus">
+				              <option>Filter by status</option>
+				              <option value="ACTIV">ACTIV</option>
+				              <option value="PASSIVE">PASSIVE</option>
+		 	</select>
+		    <select style="height: 30px;float:left;margin-right: 10px;" name="filterRestApartment" id="filterType" >
+						              <option >Filter by type</option>
+						              <option value="ROOM">ROOM</option>
+						              <option value="APARTMENT">APARTMENT</option>
+						      </select>
+						     
+		
+			 	<select style="height: 30px;float:left;margin-right: 10px;" name="filterRestApartment" id="filterAmeniti"> <option >Filter by amenitie</option></select>
+		 	
+<!-- 		 2 NACIN ZA FILTER AMENITIES PO POTREBI DEKOMENTARISATI -->
+<!-- 				<div id = "filterByAmenities"  style="height: 30px;float:left;margin-right: 10px;width: 50%;" > -->
+<!-- 			 		<b style="margin-right: 10px;float:left;margin-right: 10px;">Filter by amenities :</b>		 -->
+<!-- 			 		<div id = "amenitiesCheckBox"  style="height: 70px;float:left;overflow-y: scroll;overflow-x: hidden;width: 50%;border-style: solid; border-width: 1px; "> </div> -->
+<!-- 			 	</div>   -->
+			 	
+		    </div>
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+<!-- 		    mixSearch -->
+		    
+		     <div style="width: 80%;height: 30px; margin: 0 auto;" id="searchDiv">
+           <p style ="float:left;margin-right: 5px;"> Price from:</p>
+     <input type="number" style="width: 5%;float:left;" name="filterSearch" id="filterPriceFrom" >
+       <p style ="float:left;margin-right: 5px;"">to:</p>
+     <input type="number" style="width: 5%;float:left;margin-right: 7px;"  name="filterSearch" id="filterPriceTo">
+        <p style ="float:left;margin-right: 5px;">Rooms from:</p>
+     <input type="number" style="width: 5%;float:left;margin-right: 7px;"  name="filterSearch" id="filterRoomFrom" >
+       <p style ="float:left;margin-right: 7px;">to:</p>
+     <input type="number" style="width: 5%;float:left;margin-right: 7px;"  name="filterSearch" id="filterRoomTo">
+   
+ <input type="number" style="width: 12%;float:left;margin-right: 7px;margin-bottom:15px;"  name="filterSearch" id="searchByGuests" placeholder="Search guests" >
+     <input type="text" style="width: 12%;float:left;margin-right: 7px;margin-bottom:15px;" name="filterSearch" id="searchByLocation" placeholder="Search city" >
+           <p style ="float:left;margin-right: 5px;">Date from:</p>
+   
+     <div class="input-group date form-group" id="datepicker2" style="height: 30px;float:left;width : 12%;margin-right: 7px;"
+    style = "background:transparent;text:transparent"/>
+    <input type="text" class="form-control" id="filterDateFrom"   name="filterSearch"  placeholder="Select day" required style = "background:transparent;text:transparent;"/>
+    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" style = "background:transparent;"/></i><span class="count"></span></span>
+</div>
+       <p style ="float:left;margin-right:7px;"">to:</p>
+     <div class="input-group date form-group" id="datepicker3" style="height: 30px;float:left;margin-right: 7px;width : 12%;"
+      >
+    <input type="text" class="form-control"  id="filterDateTo" name="filterSearch" placeholder="Select day" required />
+    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i><span class="count"></span></span>
+</div>
+        </div>
+		 <div style="width: 90%;height: 450px;overflow: auto; margin: 0 auto; ">
+			
+	        <table class="table  table-bordered" >
+	              <thead class="success">
+	                <tr class="success">
+	                  <th colspan="12" style="text-align: center;">APARTMENTS</th>
+	                </tr>
+	                	<tr class="success">
+	                	<th>Host username</th>
+	                	<th>Status</th>
+	                	<th>Apartment Type</th>
+	                	<th>Location</th>
+	                	<th>Amenities</th>
+	                	<th>Number of rooms</th>
+	                	<th>Number of guests</th>
+	                	<th name="sort">Price<span name="arrow" class="glyphicon glyphicon-arrow-down"/></th>
+	                	<th>Image</th>
+	                  	<th></th>
+	                  	<th></th>
+	                  	<th></th>
+	               	 	</tr>
+	                </thead>
+	                <tbody id="apartmentsTable">
+	                </tbody>
+	            </table>
+     		</div> 
+			</div>
+			 <!-- this is for #apartments content -->
+			 
+			 	   <div id ="content-users" hidden = "true">     
+      <!-- this is for #apartments content -->
+        <div style="width: 80%;height: 30px; margin: 0 auto;" id="searchDiv">
+        <input type="text"  id="searchByUsername" placeholder="Search by username">
+      <input type="text"  id="searchByGender" placeholder="Search by gender">
+      <input type="text" id="searchByRole" placeholder="Search by role">
+        </div>
+      <br>
+<!--         <div style="width: 80%;height: 30px; margin: 0 auto;" id="pretragaRestDiv"> -->
+      
+<!-- 		<select style="height: 30px;" name="filterRest" id="filterGender" > -->
+<!-- 		              <option>Search by gender</option> -->
+<!-- 		              <option value="FEMALE">FEMALE</option> -->
+<!-- 		              <option value="MALE">MALE</option> -->
+<!-- 		      </select> -->
+<!--     	<select style="height: 30px;" name="filterRest" id="filterRole"> -->
+<!--               <option>Search by role</option> -->
+<!--               <option value="GUEST">GUEST</option> -->
+<!--               <option value="HOST">HOST</option> -->
+<!--               <option value="ADMIN">ADMIN</option> -->
+<!--       </select> -->
+<!--     </div> -->
+<!-- 			<br> -->
+			 <div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+	        <table class="table  table-bordered" >
+	              <thead class="success">
+	                <tr class="success">
+	                  <th colspan="9" style="text-align: center;">ALL USERS</th>
+	                </tr>
+	                	<tr class="success">
+					          <th>Username</th>
+					          <th>Name</th>
+					           <th>Surname</th>
+					          <th>Gender</th>
+					          <th>Role</th>            
+					          <th></th>            
+	               	 	</tr>
+	                </thead>
+	                <tbody id="usersTable">
+	                </tbody>
+	            </table>
+     		</div> 
+			</div>
+			
+			  <!-- BUTTON PROFIL LOOK -->
+    <div>
+ <div  class="col-sm-18 profileLook" hidden = "true">
+   <h3 style="text-align: center">Profil view</h3>
+        <hr/>
+        <div class="col-xs-2">
+  <!-- Nav tabs  -->
+  <ul class="nav nav-tabs tabs-left sideways" role="tablist">
+    <li role="presentation" class="active"><a href="#edit-profile" aria-controls="edit-profile" role="tab" data-toggle="tab">Edit profile</a></li>
+    <li role="presentation"><a href="#change-password" aria-controls="change-password" role="tab" data-toggle="tab">Change password</a></li>
+  </ul>
+    </div>
+
+        <div class="col-xs-6 center">
+  <!-- Tab panes  -->
+  <div class="tab-content">
+    <div role="tabpanel" class="tab-pane active" id="edit-profile" style="width: 150%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+			<form  id="form-profil-edit">  
+		       <p>Username</p>
+		      <input type="text" class="form-control" id="username" disabled/>
+		        <p>Name</p>
+		       <input type="text" class="form-control" id="name" required  oninvalid="this.setCustomValidity('Name is required.')" oninput="setCustomValidity('')" />
+		        <p>Surname</p>
+		      <input type="text" class="form-control" id="surname" required  oninvalid="this.setCustomValidity('Surname is required.')" oninput="setCustomValidity('')"/>     
+		      <p>Gender</p> 
+		      <select name="gender" id="gender" class="form-control" >
+		      	<option value="male" >Male</option>
+		      	<option value="female">Female</option>
+		      </select>
+		    	<p id="error" class = "error-message"></p>
+		    	<br>
+		      <button class="btn btn-lg btn-primary btn-block" type="submit" id = "submit-edit">Submit</button> 
+		    </form>
+	</div>
+	<!-- change password -->
+    <div role="tabpanel" class="tab-pane" id="change-password" style="width: 150%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+    		<form  id="form-change-password">  
+    		   <p>Old password</p>
+			<input type="password" class="form-control" id="old-password" placeholder="Password" required  oninvalid="this.setCustomValidity('Password is required.')" oninput="setCustomValidity('')"/>    
+     		   <p id="error-old" class = "error-message"></p>   
+     		   <p>New password</p>
+     		<input type="password" class="form-control" id="new-password" placeholder="New password" required  oninvalid="this.setCustomValidity('New password is required.')" oninput="setCustomValidity('')"/>      
+    			<p>Confirm new password</p>
+    		<input type="password" class="form-control" id="confirm-new-password" placeholder="Confirm new password" required  oninvalid="this.setCustomValidity('Confirm new password is required.')" oninput="setCustomValidity('')"/>      
+    		<p id="error-confirm" class = "error-message"></p>   
+    		<br>
+    		<button class="btn btn-lg btn-primary btn-block" type="submit" id = "submit-change" >Change password</button> 
+    		</form>
+	</div>
+  </div>
+
+  </div>
+
+        <div class="clearfix"></div>
+
+      </div>
+			
+			</div>
+
+    <!-- REGISTRATION HOST -->
+    <div class="container-fluid text-center" id = "content-hregistration" hidden="true">    
+      <form class="form-signin" id="registrationHost">  
+       <h2 class="form-signin-heading">Registration</h2>
+      <input type="text" class="form-control" id="husername" placeholder="Username" required  oninvalid="this.setCustomValidity('Username is required.')" oninput="setCustomValidity('')"/>
+       <p id="husernamerror"></p>
+       <input type="text" class="form-control" id="hname" placeholder="Name" required  oninvalid="this.setCustomValidity('Name is required.')" oninput="setCustomValidity('')"/>
+     <p id="hnamerror"></p>
+      <input type="text" class="form-control" id="hsurname" placeholder="Surname" required  oninvalid="this.setCustomValidity('Surname is required.')" oninput="setCustomValidity('')"/>      
+      <p id="hsurnamerror"></p>
+      <select name="gender" id="hgender" class="form-control" required  oninvalid="this.setCustomValidity('Username is required.')" oninput="setCustomValidity('')">
+      	<option value="male" selected>Male</option>
+      	<option value="female">Female</option>
+      </select>
+      <input type="password" class="form-control" id="hpassword" placeholder="Password" required  oninvalid="this.setCustomValidity('Password is required.')" oninput="setCustomValidity('')"/>    
+    <p id="hpasserror"></p>
+     <input type="password" class="form-control" id="hpassControl" placeholder="Confirm password" required  oninvalid="this.setCustomValidity('Confirm password is required.')" oninput="setCustomValidity('')"/>      
+    	<p id="herror" class = "herror-message"></p>
+      <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button> 
+    </form>
+    
+	<p id="success"></p>
+
+    </div> 
+    
+      <!-- RESERVATIONS -->	
+      <div id = "myReservations" >
+      <div style="width: 80%;height: 30px; margin: 0 auto;">
+		    					<select style="height: 30px;"  id="filterRes"  name="filterRestResStatus">
+						              <option value = "Filter by status">Filter by status</option>
+						              <option value="CREATED">CREATED</option>
+						              <option value="ACCEPTED">ACCEPTED</option>
+						              <option value="CANCELED">CANCELED</option>
+						              <option value="COMPLETED">COMPLETED</option>
+						              <option value="REJECTED">REJECTED</option>
+						      </select>
+			    </div>
+      	<br>
+	        <input type="text"  id="searchByGuestUsername" placeholder="Search by guest username" name="filterRestReservation" style="width: 80%;margin-left: 150px;">
+			<br></br>
+      <div id = "allReservations">
+		<div style="width: 80%;max-height: 500px;overflow: auto; margin: 0 auto; ">
+        <table class="table  table-bordered" >
+              <thead class="success">
+               <tr class="success">
+	                  <th colspan="8" style="text-align: center;">ALL RESERVATIONS</th>
+	                </tr>
+			     <tr class = "success">
+			     <th>Guest username</th>
+		          <th>Arrivale date</th>
+		          <th>Nights of stay</th>
+	              <th name="sort">Total price<span name="arrow" class="glyphicon glyphicon-arrow-down"/></th>
+		          <th>Message for host</th>
+		          <th>Status</th>       
+		        </tr>
+		      </thead>
+		      <tbody id="tbodyAllReservations">
+		      </tbody>
+            </table>
+    			</div> 
+     		</div>
+	 </div>
+
+
+    
+      <!-- modals for amenities -->
+     <div id="myModal" class="modal">
+
+  		<!-- Modal content -->
+  		<div class="modal-content" style="text-align: center;" >
+    	 <span class="close">&times;</span>
+    	 <table width="200" align="center">
+        <tr>
+          <th height="50">Name:</th>
+          <th height="50"><input type="text" id="amenities-name"></th>
+        </tr>
+       </table>
+       <br>
+       	<p id="error-amenities" class = "error-message"></p> 
+       <button id="addAmenities" class="btn btn-primary">Add amenities</button>
+       <br>
+  	  </div> 
+   	</div>
+
+  
+  		 <!-- modal for edit ameniti -->
+   
+        <div id="modal-amenities" class="modal">
+
+  		<!-- Modal content -->
+  		<div class="modal-content" style="text-align: center;" >
+    	 <span class="close">&times;</span>
+    	 <table width="200" align="center">
+        <tr>
+          <th height="50">Name:</th>
+          <th height="50"><input type="text" id="amenities-name-edit"></th>
+        </tr>
+        <tr>
+        	<th height="50" >Id:</th>
+         	 <th height="50" ><input type="text" id="amenities-id-edit" disabled></th>
+        <tr>
+       </table>
+       <br>
+       	<p id="error-amenities-edit" class = "error-message"></p> 
+       <button id="edit-amenities2" class="btn btn-primary">Edit amenities</button>
+       <br>
+  	  </div> 
+  	  </div>
+  	  
+  	  
+         <!-- modals for editing apartments -->
+     <div id="modal-apartment" class="modal">
+
+  		<!-- Modal content -->
+  		<div class="modal-content" style="text-align: center;" >
+    	 
+    	 <table width="500" align="center">
+        <tr id = "tr-status" hidden = "true">
+        <tr>
+          <th height="50">Host :</th>
+          <th height="50"><input type ="text" id = "host"  disabled></th>
+        </tr>
+        <tr>
+          <th height="50" >Status:</th>
+          <th height="50"  >
+			<select name="status" id="status" class="form-control" required 
+				 oninvalid="this.setCustomValidity('Type is required.')" oninput="setCustomValidity('')">
+      			<option value="ACTIV">ACTIV</option>
+      			<option value="PASSIVE">PASSIVE</option>
+     		 </select>
+		  </th>
+        </tr>
+        <tr >
+          <th height="50" >Type:</th>
+          <th height="50"  >
+			<select name="type" id="type" class="form-control" required 
+				 oninvalid="this.setCustomValidity('Type is required.')" oninput="setCustomValidity('')">
+      			<option value="apartment" selected>APARTMENT</option>
+      			<option value="room">ROOM</option>
+     		 </select>
+		  </th>
+        </tr>
+        <tr>
+          <th height="50">Number of rooms:</th>
+          <th height="50"><input type ="number" id = "number-od-rooms"  required></th>
+        </tr>
+        <tr>
+          <th height="50">Number of guests:</th>
+          <th height="50"><input type ="number" id = "number-od-guests" required></th>
+        </tr>
+      <tr>
+          <th height="50">Location :</th>
+          </tr>
+          <tr>
+          <th></th>
+          <th height="50"><input type ="text" id = "street-name" required  placeholder="Street name"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')">
+          </th>
+          </tr>
+           <tr>
+          <th></th>
+          <th height="50"><input type ="text" id = "street-number" required  placeholder="Street number"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')">
+          </th>
+          </tr>
+           <tr>
+          <th></th>
+          <th height="50"><input type ="text" id = "city" required  placeholder="City"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')">
+          </th>
+          </tr>
+           <tr>
+          <th></th>
+          <th height="50"><input type ="number" id = "zip-code" required  placeholder="Zip code"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')">
+          </th>
+          </tr>
+          <tr>
+          <th height="50"></th>
+          <th height="50"><input type ="number" id = "location-longitude" required placeholder="Longitude"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')"> </th>
+          </tr>
+             <tr>
+          <th height="50"></th>
+          <th height="50"><input type ="number" id = "location-latitude" required placeholder="Latitude"  oninvalid="this.setCustomValidity('Location is required.')" oninput="setCustomValidity('')"> </th>
+          </tr>
+         <tr>
+          <th height="50">Dates for rent :</th>
+          <th height="50">
+			<div class="input-group date form-group" id="datepicker">
+ 			   <input type="text" class="form-control" id="Dates" name="Dates" placeholder="Select days" required />
+ 			   <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i><span class="count"></span></span>
+			</div>
+			</th>
+        </tr>
+         <tr>
+          <th height="50">Price per night:</th>
+          <th height="50"><input type ="number" id = "price-per-night" required></th>
+        </tr>
+         <tr>
+          <th height="50">Check in time :</th>
+          <th height="50"><input type ="time" id = "check-in" required></th>
+        </tr>
+         <tr>
+          <th height="50">Check out time :</th>
+          <th height="50"><input type ="time" id = "check-out" required></th>
+        </tr>
+       <form method="post" enctype="multipart/form-data">
+		 	<tr>
+		   <th height="50"><label for="file">Images of apartment :</label></th>
+		  	<th height="50"><input type="file" id="file" name="file" multiple required onchange="readURL(this);" accept=".jpg, .jpeg, .png"></th>
+		  	<th><img id="blah" height="150px" alt="your image" /></th>
+		   </tr>
+		</form>
+         <tr>
+          <th height="50">Amenities of apartment :</th>
+          <th height="200">
+			           <div style="width: 100%;max-height: 200px;overflow: auto; margin: 0 auto; ">
+				        <table class="table  table-bordered a-table" >
+				              <thead class="success">
+				                <tr class="success">
+				                  <th colspan="9" style="text-align: center;">AMENITIES</th>
+				                </tr>
+				                	<tr class="success">
+				                  	<th></th>
+				                	<th>Name</th>
+				               	 	</tr>
+				                </thead>
+				                <tbody id="amenitiesTableApartment">
+				                </tbody>
+				            </table>
+          </th>
+        </tr>
+       <span class="close">&times;</span>
+        </table>
+       <br>
+       	<p id="error-apartment" class = "error-message"></p> 
+       <button id="add-apartment" class="btn btn-primary">ADD APARTMENT</button>
+       <br>
+  	  </div> 
+   	</div>
+   	
+   	   	
+   	      <!-- modals for comments-->	
+   	   	<div id="modal3" class="modal">
+
+  		<!-- Modal content -->
+  		<div class="modal-content"  >
+    	 
+    	 <table width="500" align="center">
+    	 <thead class="success" >
+    	 <tr style="text-align: center;">
+    	  <th>Guest</th>
+    	  <th>Comment</th>
+    	  <th>Grade</th>
+    	  </tr>
+    	  </thead>
+    	  <tbody id="tbodyComments">
+		 </tbody>
+		  <span class="close">&times;</span>
+		</table>
+		 </div>
+	</div>
+          
+      
+</body>
+</html>

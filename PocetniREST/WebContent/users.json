@@ -1,0 +1,45 @@
+[ {
+  "username" : "guest",
+  "password" : "guest",
+  "name" : "Mila",
+  "surname" : "Milic",
+  "gender" : "MALE",
+  "role" : "GUEST",
+  "blocked" : false
+}, 
+{
+  "username" : "gost",
+  "password" : "gost",
+  "name" : "Nikola",
+  "surname" : "Nikolic",
+  "gender" : "MALE",
+  "role" : "GUEST",
+  "blocked" : false
+},
+ {
+  "username" : "host",
+  "password" : "host",
+  "name" : "Filip",
+  "surname" : "Filipovic",
+  "gender" : "MALE",
+  "role" : "HOST",
+  "blocked" : false
+},
+ {
+  "username" : "domacin",
+  "password" : "domacin",
+  "name" : "Mina",
+  "surname" : "Filipovic",
+  "gender" : "FEMALE",
+  "role" : "HOST",
+  "blocked" : false
+},
+{
+  "username" : "admin",
+  "password" : "admin",
+  "name" : "Pera",
+  "surname" : "Peric",
+  "gender" : "MALE",
+  "role" : "ADMIN",
+  "blocked" : false
+} ]
